@@ -8,6 +8,17 @@
 
   document.querySelectorAll(".js-wsp").forEach(function (el) {
     el.setAttribute("href", WSP_URL);
+    el.addEventListener("click", function () {
+      if (window.mwTrack) window.mwTrack("contact_click", { method: "whatsapp" });
+    });
+  });
+
+  document.querySelectorAll(".footer-social a[href^='http']").forEach(function (el) {
+    el.addEventListener("click", function () {
+      if (!window.mwTrack) return;
+      var network = el.getAttribute("href").indexOf("instagram") !== -1 ? "instagram" : "tiktok";
+      window.mwTrack("social_click", { network: network });
+    });
   });
 
   /* ---------- Header + barra de oferta: estado de scroll ---------- */
@@ -84,6 +95,13 @@
 
   function formatPrice(n) {
     return "$" + n.toLocaleString("es-AR");
+  }
+
+  function cartItemsForTracking() {
+    return cartIds().map(function (id) {
+      var item = cart[id];
+      return { item_id: item.id, item_name: item.name, price: item.price, quantity: item.qty };
+    });
   }
 
   var cartBadge = document.getElementById("cartBadge");
@@ -256,6 +274,14 @@
       openCart();
       bumpBadge();
 
+      if (window.mwTrack) {
+        window.mwTrack("add_to_cart", {
+          currency: "ARS",
+          value: price,
+          items: [{ item_id: id, item_name: name, price: price, quantity: 1 }],
+        });
+      }
+
       var originalHTML = btn.innerHTML;
       btn.classList.add("is-added");
       btn.innerHTML =
@@ -306,6 +332,14 @@
     window.setTimeout(function () {
       if (ckName) ckName.focus();
     }, 350);
+
+    if (window.mwTrack) {
+      window.mwTrack("begin_checkout", {
+        currency: "ARS",
+        value: cartTotal(),
+        items: cartItemsForTracking(),
+      });
+    }
   }
 
   function closeCheckout() {
@@ -382,6 +416,14 @@
       if (checkoutSuccessView) checkoutSuccessView.hidden = false;
 
       window.open(url, "_blank", "noopener");
+
+      if (window.mwTrack) {
+        window.mwTrack("generate_lead", {
+          currency: "ARS",
+          value: cartTotal(),
+          items: cartItemsForTracking(),
+        });
+      }
 
       cart = {};
       saveCart();
