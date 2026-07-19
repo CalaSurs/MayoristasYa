@@ -10,7 +10,7 @@
    */
   var GA_MEASUREMENT_ID = "G-WN8KR754EJ";
 
-  var isConfigured = GA_MEASUREMENT_ID.indexOf("WN8KR754EJ") === -1;
+  var isConfigured = GA_MEASUREMENT_ID.indexOf("XXXXXXXXXX") === -1;
 
   window.dataLayer = window.dataLayer || [];
   function gtag() {
