@@ -1909,6 +1909,14 @@ body.cart-open {
   gap: 2rem;
 }
 
+.footer-col {
+  min-width: 0;
+}
+
+.footer-col a {
+  overflow-wrap: break-word;
+}
+
 .footer-col h4 {
   color: #fff;
   font-size: 0.95rem;
@@ -2000,10 +2008,26 @@ body.cart-open {
     bottom: 5.5rem;
     width: 52px;
     height: 52px;
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+    transition: opacity var(--transition), transform var(--transition);
+  }
+  .whatsapp-float.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
   }
   .whatsapp-float svg {
     width: 26px;
     height: 26px;
+  }
+}
+
+@media (max-width: 899px) and (prefers-reduced-motion: reduce) {
+  .whatsapp-float {
+    transition: opacity 0.01ms;
+    transform: none;
   }
 }
 
@@ -2190,8 +2214,8 @@ body.cart-open {
 }
 
 .qty-btn {
-  width: 22px;
-  height: 22px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2201,6 +2225,7 @@ body.cart-open {
   line-height: 1;
   color: var(--color-text-muted);
   transition: background var(--transition), color var(--transition);
+  flex-shrink: 0;
 }
 
 .qty-btn:hover {
@@ -2222,8 +2247,20 @@ body.cart-open {
 }
 
 .cart-item-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  margin: -8px;
+  border-radius: 50%;
   color: var(--color-text-soft);
-  transition: color var(--transition);
+  transition: color var(--transition), background var(--transition);
+}
+
+.cart-item-remove:hover {
+  background: #fef2f2;
 }
 
 .cart-item-remove:hover {
@@ -2367,7 +2404,7 @@ body.cart-open {
   padding: 0.85rem 1rem;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-sm);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-family: var(--font-body);
   margin-bottom: 0.3rem;
   transition: border-color var(--transition);

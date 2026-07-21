@@ -35,20 +35,25 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  /* ---------- Barra de compra fija (mobile) ---------- */
+  /* ---------- Barra de compra fija + botón de WhatsApp (mobile) ---------- */
   var buyBar = document.getElementById("mobileBuyBar");
   var heroEl = document.getElementById("hero");
-  if (buyBar && heroEl) {
+  var whatsappFloat = document.querySelector(".whatsapp-float");
+  if (heroEl && (buyBar || whatsappFloat)) {
     if ("IntersectionObserver" in window) {
       var buyBarObserver = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
-            buyBar.classList.toggle("is-visible", !entry.isIntersecting);
+            var pastHero = !entry.isIntersecting;
+            if (buyBar) buyBar.classList.toggle("is-visible", pastHero);
+            if (whatsappFloat) whatsappFloat.classList.toggle("is-visible", pastHero);
           });
         },
         { rootMargin: "-60% 0px 0px 0px" }
       );
       buyBarObserver.observe(heroEl);
+    } else if (whatsappFloat) {
+      whatsappFloat.classList.add("is-visible");
     }
   }
 
@@ -370,13 +375,15 @@
     lines.push("Email: " + email);
     lines.push("");
     lines.push("Voy a realizar la transferencia a la siguiente cuenta:");
-    lines.push("Alias: MayoristasYa");
-    lines.push("CBU: 0000147800000070818699");
-    lines.push("Titular: Maximiliano Gabriel");
+    lines.push("Alias: lautaro.calabria");
+    lines.push("CBU: 0000003100009573267564");
+    lines.push("Titular: Lautaro Lopez Calabria");
     lines.push("");
+    lines.push("Voy a mandar el comprobante de la transferencia por este mismo chat.");
     lines.push(
-      "Entiendo que dentro de las próximas 48 horas voy a recibir por este mismo chat la lista completa de los proveedores correspondientes a mi pack. Muchas gracias."
+      "Entiendo que dentro de las próximas 48 horas voy a recibir por este mismo chat la lista completa de los proveedores correspondientes a mi pack."
     );
+    lines.push("Si tengo alguna duda, te escribo por acá. Muchas gracias.");
     return lines.join("\n");
   }
 
@@ -422,6 +429,21 @@
           currency: "ARS",
           value: cartTotal(),
           items: cartItemsForTracking(),
+        });
+      }
+
+      if (window.mwSendOrder) {
+        var itemsSummary = cartItemsForTracking()
+          .map(function (item) {
+            return item.item_name + " x" + item.quantity;
+          })
+          .join(", ");
+
+        window.mwSendOrder({
+          name: name,
+          email: email,
+          items: itemsSummary,
+          total: cartTotal(),
         });
       }
 
