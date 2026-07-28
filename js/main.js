@@ -375,9 +375,9 @@
     lines.push("Email: " + email);
     lines.push("");
     lines.push("Voy a realizar la transferencia a la siguiente cuenta:");
-    lines.push("Alias: lautaro.calabria");
-    lines.push("CBU: 0000003100009573267564");
-    lines.push("Titular: Lautaro Lopez Calabria");
+    lines.push("Alias: YaMayoristas");
+    lines.push("CBU: 0000147800000070121065");
+    lines.push("Titular: Kevin Nahuel");
     lines.push("");
     lines.push("Voy a mandar el comprobante de la transferencia por este mismo chat.");
     lines.push(
