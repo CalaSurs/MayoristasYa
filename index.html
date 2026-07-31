@@ -39,7 +39,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/styles.css">
 
@@ -70,6 +70,11 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Ustedes venden los productos o me los envían?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. El comprador contacta y compra directo a cada proveedor de la base; MayoristasYa no vende productos ni interviene en esa compra, solo entrega el contacto organizado y verificado de cada proveedor." }
+    },
     {
       "@type": "Question",
       "name": "¿Cómo recibo el pack de proveedores?",
@@ -111,9 +116,9 @@
 <div class="top-fixed" id="topFixed">
   <div class="promo-bar" role="note">
     <div class="container">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2c-.3 2.5-1.6 3.8-3 5.2C7.4 8.8 6 10.5 6 13a6 6 0 0 0 12 0c0-2-1-3.5-2.3-4.8.3 1.5-.2 2.6-1 3.2.4-2-.3-4-1.7-5.4-.5 1.4-1.3 2-2 2.3.4-2.3-.2-4.4-2-6.3Z"/></svg>
-      <span class="full">OFERTA POR TIEMPO LIMITADO · HASTA 50% OFF EN TODOS LOS PACKS</span>
-      <span class="short">HASTA 50% OFF · POR TIEMPO LIMITADO</span>
+      <span aria-hidden="true">🔥</span>
+      <span class="full">OFERTA DE LANZAMIENTO: <strong>HASTA 50% OFF</strong> — SOLO POR TIEMPO LIMITADO</span>
+      <span class="short">HASTA <strong>50% OFF</strong> · POR TIEMPO LIMITADO</span>
     </div>
   </div>
 
@@ -134,11 +139,6 @@
       </nav>
 
       <div class="header-actions">
-        <a class="btn btn-primary header-cta" href="#precios">
-          Quiero la Lista
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-
         <button class="cart-btn" id="cartToggle" aria-label="Ver carrito de compras" aria-haspopup="dialog">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
           <span class="cart-badge" id="cartBadge">0</span>
@@ -160,7 +160,6 @@
     <li><a href="#rubros">Qué incluye</a></li>
     <li><a href="#como-funciona">Cómo funciona</a></li>
     <li><a href="#para-quien">Para quién es</a></li>
-    <li><a href="#testimonios">Testimonios</a></li>
     <li><a href="#faq">Preguntas frecuentes</a></li>
   </ul>
   <a class="btn btn-primary btn-block" href="#precios">Quiero la Lista</a>
@@ -173,11 +172,11 @@
     <div class="container">
       <div class="hero-copy reveal">
         <span class="hero-badge">
-          <span class="dot" aria-hidden="true"></span>
-          Pack digital · Entrega inmediata por WhatsApp
+          <span aria-hidden="true">🔥</span>
+          No es una tienda: es tu atajo
         </span>
-        <h1>La lista de <span class="hl hl-orange">+1000 proveedores</span> de <span class="hl hl-blue">+25 rubros</span> para emprender</h1>
-        <p class="hero-sub">Fábricas, mayoristas y distribuidoras organizadas en un solo pack digital. Comprá barato y vendé con ganancia desde hoy.</p>
+        <h1>Accedé ya a <span class="hl hl-orange">+1000</span> proveedores mayoristas de <span class="hl hl-blue">+25</span> rubros</h1>
+        <p class="hero-sub">🚀 No te vendemos productos: te ahorramos las semanas de búsqueda. Vos contactás y comprás directo a fábricas, importadores y mayoristas reales, al precio de origen.</p>
 
         <div class="hero-price">
           <span class="from">Packs desde</span>
@@ -192,14 +191,14 @@
           </a>
           <span class="hero-note">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
-            Elegís tu pack y lo recibís directo por WhatsApp
+            ✅ Acceso enviado por WhatsApp apenas confirmás
           </span>
         </div>
 
         <ul class="hero-trust">
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4Z"/></svg>
-            Información verificada
+            Contacto directo, sin intermediarios
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
@@ -207,7 +206,7 @@
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v4H4zM4 20h16M6 8v12M18 8v12M9 12h6"/></svg>
-            +25 rubros distintos
+            +25 rubros organizados
           </li>
         </ul>
       </div>
@@ -293,13 +292,61 @@
     </div>
   </section>
 
+  <!-- ===================== QUÉ ES ESTO ===================== -->
+  <section class="section-pad" id="que-es">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Qué es (y qué no es)</span>
+        <h2>Una herramienta, no una tienda</h2>
+        <p>Para que sepas exactamente qué estás comprando antes de decidir.</p>
+      </div>
+
+      <div class="grid whatis-grid reveal">
+        <div class="whatis-card whatis-no">
+          <span class="whatis-tag">Esto no es</span>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              <span>Una tienda online que te vende productos</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              <span>Un intermediario que compra o negocia por vos</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              <span>Un curso o una promesa de "hacerte rico"</span>
+            </li>
+          </ul>
+        </div>
+        <div class="whatis-card whatis-yes">
+          <span class="whatis-tag">Esto sí es</span>
+          <ul>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+              <span>Una base de datos organizada de +1000 proveedores mayoristas reales</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+              <span>Contactos de fábricas, importadores y mayoristas clasificados por rubro</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+              <span>El trabajo de búsqueda ya hecho: vos contactás y comprás directo, a tu ritmo</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== PRECIOS ===================== -->
-  <section class="section-pad bg-soft" id="precios">
+  <section class="section-pad bg-yellow" id="precios">
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Precios</span>
-        <h2>Elegí el pack ideal para vos</h2>
-        <p>Pago único, sin suscripciones. Cuanto más grande el pack, mayor el ahorro.</p>
+        <h2>Elegí cuántos contactos necesitás</h2>
+        <p>Pago único, sin suscripciones. Vos elegís el volumen — nosotros ya hicimos la organización.</p>
       </div>
 
       <div class="grid pricing-grid stagger reveal">
@@ -307,11 +354,11 @@
           <h3>Pack 100</h3>
           <p class="price-desc">Para arrancar y probar los rubros más pedidos.</p>
           <div class="price-row">
-            <span class="price-old">$10.000</span>
+            <span class="price-old">$9.999</span>
             <span class="price-off">-50%</span>
           </div>
           <div class="price-new">$4.999</div>
-          <span class="price-save">Ahorrás $5.001</span>
+          <span class="price-save">Ahorrás $5.000</span>
           <ul class="price-features">
             <li>100 proveedores mayoristas</li>
             <li>Rubros más populares</li>
@@ -329,18 +376,17 @@
           <h3>Pack 500</h3>
           <p class="price-desc">El equilibrio perfecto entre variedad y precio.</p>
           <div class="price-row">
-            <span class="price-old">$30.000</span>
-            <span class="price-off">-50%</span>
+            <span class="price-old">$24.999</span>
+            <span class="price-off">-40%</span>
           </div>
           <div class="price-new">$14.999</div>
-          <span class="price-save">Ahorrás $15.001</span>
+          <span class="price-save">Ahorrás $10.000</span>
           <ul class="price-features">
             <li>500 proveedores mayoristas</li>
             <li>+15 rubros distintos</li>
             <li>Entrega inmediata por WhatsApp</li>
             <li>Actualizaciones incluidas</li>
             <li>El más elegido por emprendedores</li>
-            <li class="popular-feature">🎁 Incluye guía "Cómo arrancar a revender"</li>
           </ul>
           <button type="button" class="btn btn-primary btn-block js-add-cart" data-id="500" data-name="Pack 500" data-price="14999" data-price-label="$14.999">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
@@ -352,20 +398,19 @@
           <h3>Pack 1000</h3>
           <p class="price-desc">La base más completa para escalar tu negocio.</p>
           <div class="price-row">
-            <span class="price-old">$40.000</span>
-            <span class="price-off">-50%</span>
+            <span class="price-old">$39.999</span>
+            <span class="price-off">-38%</span>
           </div>
-          <div class="price-new">$19.999</div>
-          <span class="price-save">Ahorrás $20.001</span>
+          <div class="price-new">$24.999</div>
+          <span class="price-save">Ahorrás $15.000</span>
           <ul class="price-features">
             <li>+1000 proveedores mayoristas</li>
             <li>+25 rubros distintos</li>
             <li>Entrega inmediata por WhatsApp</li>
             <li>Actualizaciones incluidas</li>
             <li>Ideal para negocios y tiendas online</li>
-            <li class="popular-feature">🎁 Incluye guía "Cómo arrancar a revender"</li>
           </ul>
-          <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="1000" data-name="Pack 1000" data-price="19999" data-price-label="$19.999">
+          <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="1000" data-name="Pack 1000" data-price="24999" data-price-label="$24.999">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
             Agregar al Carrito
           </button>
@@ -380,7 +425,7 @@
   </section>
 
   <!-- ===================== POR QUÉ COMPRAR DIRECTO ===================== -->
-  <section class="section-pad" id="por-que-directo">
+  <section class="section-pad bg-lavender" id="por-que-directo">
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Por qué comprar directo</span>
@@ -419,8 +464,8 @@
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Beneficios</span>
-        <h2>Por qué conviene comprar este pack</h2>
-        <p>Todo lo que necesitás para empezar a comprar mayorista, en un solo lugar y sin perder tiempo buscando proveedor por proveedor.</p>
+        <h2>Todo el trabajo de búsqueda, ya hecho</h2>
+        <p>Vos seguís siendo quien contacta y compra. Nosotros nos encargamos de organizar y verificar todo lo demás.</p>
       </div>
 
       <div class="grid benefits-grid stagger reveal">
@@ -539,30 +584,30 @@
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Cómo funciona</span>
-        <h2>Empezá a comprar mayorista en 4 pasos simples</h2>
-        <p>Un proceso rápido, claro y 100% acompañado por WhatsApp.</p>
+        <h2>De cero a tu primer proveedor, en 4 pasos</h2>
+        <p>Un proceso simple. A partir del paso 4, el trabajo de contactar y negociar es todo tuyo.</p>
       </div>
 
       <div class="grid steps-grid stagger reveal">
         <div class="step-card" style="--i:0">
           <div class="step-num" aria-hidden="true">1</div>
-          <h3>Comprás</h3>
-          <p>Elegís el pack completo de proveedores mayoristas y confirmás tu compra.</p>
+          <h3>Elegís tu pack</h3>
+          <p>Definís cuántos proveedores necesitás según tu negocio.</p>
         </div>
         <div class="step-card" style="--i:1">
           <div class="step-num" aria-hidden="true">2</div>
-          <h3>Escribís por WhatsApp</h3>
-          <p>Nos contactás, coordinamos el pago y resolvemos cualquier duda al instante.</p>
+          <h3>Coordinás por WhatsApp</h3>
+          <p>Confirmamos tu pedido y te pasamos los datos para la transferencia.</p>
         </div>
         <div class="step-card" style="--i:2">
           <div class="step-num" aria-hidden="true">3</div>
-          <h3>Recibís el pack</h3>
-          <p>Te enviamos el acceso completo con todos los proveedores organizados por rubro.</p>
+          <h3>Recibís el acceso</h3>
+          <p>Te enviamos la base completa, organizada por rubro y lista para usar.</p>
         </div>
         <div class="step-card" style="--i:3">
           <div class="step-num" aria-hidden="true">4</div>
-          <h3>Contactás proveedores</h3>
-          <p>Empezás a comprar mayorista y a armar tu catálogo para vender.</p>
+          <h3>Contactás vos mismo</h3>
+          <p>Negociás y comprás directo con cada proveedor, sin intermediarios.</p>
         </div>
       </div>
     </div>
@@ -607,70 +652,6 @@
     </div>
   </section>
 
-  <!-- ===================== TESTIMONIOS ===================== -->
-  <section class="section-pad" id="testimonios">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Testimonios</span>
-        <h2>Lo que dicen quienes usan el pack</h2>
-        <span class="testimonial-note">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
-          Testimonios de ejemplo, con fines ilustrativos
-        </span>
-      </div>
-
-      <div class="grid testimonial-grid stagger reveal">
-        <div class="testimonial-card" style="--i:0">
-          <span class="testimonial-tag">Ejemplo ilustrativo</span>
-          <div class="stars" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-          </div>
-          <p>"Arranqué sin saber por dónde buscar proveedores. Con el pack encontré varios rubros para probar y armar mi primer catálogo."</p>
-          <div class="testimonial-author">
-            <span class="avatar" aria-hidden="true">M</span>
-            <div><strong>Marina R.</strong><span>Emprendedora, ejemplo</span></div>
-          </div>
-        </div>
-
-        <div class="testimonial-card" style="--i:1">
-          <span class="testimonial-tag">Ejemplo ilustrativo</span>
-          <div class="stars" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-          </div>
-          <p>"Ya revendía ropa, pero sumé proveedores de accesorios y perfumería para ofrecer más variedad a mis clientes."</p>
-          <div class="testimonial-author">
-            <span class="avatar" aria-hidden="true">F</span>
-            <div><strong>Facundo G.</strong><span>Revendedor, ejemplo</span></div>
-          </div>
-        </div>
-
-        <div class="testimonial-card" style="--i:2">
-          <span class="testimonial-tag">Ejemplo ilustrativo</span>
-          <div class="stars" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-          </div>
-          <p>"Lo mejor fue la organización por rubro. Me ahorró muchísimo tiempo comparado con buscar todo por mi cuenta."</p>
-          <div class="testimonial-author">
-            <span class="avatar" aria-hidden="true">L</span>
-            <div><strong>Lucía P.</strong><span>Dueña de tienda online, ejemplo</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== FAQ ===================== -->
   <section class="section-pad bg-soft" id="faq">
     <div class="container">
@@ -681,6 +662,13 @@
       </div>
 
       <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            ¿Ustedes venden los productos o me los envían?
+            <span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+          </button>
+          <div class="faq-answer"><p>No. Vos comprás directo a cada proveedor de la base — nosotros no vendemos productos ni intervenimos en esa compra. Nuestro trabajo es entregarte el contacto organizado y verificado de cada uno para que ahorres el tiempo de buscarlos vos mismo.</p></div>
+        </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             ¿Cómo recibo el pack de proveedores?
@@ -730,8 +718,8 @@
   <!-- ===================== CTA FINAL ===================== -->
   <section class="cta-final">
     <div class="container reveal">
-      <h2>¿Listo para empezar a vender mayorista?</h2>
-      <p>Sumate a MayoristasYa y elegí hoy el pack de proveedores ideal para tu negocio.</p>
+      <h2>Dejá de buscar. Empezá a contactar.</h2>
+      <p>Accedé hoy a la base organizada de proveedores mayoristas y arrancá vos mismo, al precio de origen.</p>
       <div class="cta-final-actions">
         <a class="btn btn-primary btn-lg" href="#precios">
           Ver los 3 Packs
@@ -798,7 +786,6 @@
 
     <div class="footer-bottom">
       <p>© <span id="year"></span> MayoristasYa.com — Todos los derechos reservados.</p>
-      <p>Producto digital. Los testimonios de esta página son de carácter ilustrativo.</p>
     </div>
   </div>
 </footer>
