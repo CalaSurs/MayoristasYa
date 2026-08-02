@@ -157,6 +157,7 @@ section {
 
 .section-pad {
   padding-block: clamp(3.25rem, 7vw, 6rem);
+  scroll-margin-top: 130px;
 }
 
 .bg-cream {
@@ -346,6 +347,15 @@ section {
 
 .offer-banner .short {
   display: none;
+}
+
+@media (max-width: 560px) {
+  .offer-banner .full {
+    display: none;
+  }
+  .offer-banner .short {
+    display: inline;
+  }
 }
 
 /* ---------- Header / Nav ---------- */
@@ -561,9 +571,11 @@ section {
   position: fixed;
   inset: 0;
   top: 0;
+  height: 100vh;
+  height: 100dvh;
   background: var(--cream);
   z-index: 890;
-  padding: 7rem 1.5rem 2.5rem;
+  padding: 8rem 1.5rem 2.5rem;
   transform: translateY(-100%);
   opacity: 0;
   transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
@@ -690,6 +702,30 @@ body.cart-open {
   }
   .hero-copy {
     order: 1;
+  }
+}
+
+@media (max-width: 959px) {
+  .hero-copy {
+    text-align: center;
+  }
+  .hero-badge {
+    margin-inline: auto;
+  }
+  .hero-sub {
+    margin-inline: auto;
+  }
+  .hero-trust {
+    align-items: center;
+  }
+  .hero-trust li {
+    justify-content: center;
+  }
+  .hero-price {
+    justify-content: center;
+  }
+  .hero-actions {
+    justify-content: center;
   }
 }
 
@@ -1050,15 +1086,36 @@ body.cart-open {
   padding-block: clamp(2rem, 4vw, 3rem);
 }
 
-.stats-grid {
-  grid-template-columns: repeat(2, 1fr);
-  text-align: center;
+.stats-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
 
-@media (min-width: 700px) {
-  .stats-grid {
-    grid-template-columns: repeat(4, 1fr);
+.stats-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: stats-scroll 22s linear infinite;
+}
+
+@keyframes stats-scroll {
+  from {
+    transform: translateX(-50%);
   }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-track {
+    animation: none;
+  }
+}
+
+.stats-marquee:hover .stats-track {
+  animation-play-state: paused;
 }
 
 .stat-card {
@@ -1066,6 +1123,9 @@ body.cart-open {
   border-radius: var(--radius-card-sm);
   padding: 1.5rem 1rem;
   box-shadow: var(--sh-sm);
+  text-align: center;
+  flex-shrink: 0;
+  width: 200px;
 }
 
 .stat-num {
@@ -1845,8 +1905,9 @@ body.cart-open {
 
 @media (max-width: 640px) {
   .back-to-top {
-    right: 1.25rem;
-    bottom: 5.25rem;
+    left: 1.25rem;
+    right: auto;
+    bottom: 1.25rem;
   }
   .whatsapp-float {
     bottom: 1.25rem;
