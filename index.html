@@ -32,14 +32,14 @@
 <meta name="twitter:description" content="El pack más completo de proveedores mayoristas de Argentina. +1000 contactos verificados en +25 rubros.">
 <meta name="twitter:image" content="https://www.mayoristasya.com/images/og-image.jpg">
 
-<meta name="theme-color" content="#4338ca">
+<meta name="theme-color" content="#6c3ce0">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="images/favicon-512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/styles.css">
 
@@ -63,6 +63,24 @@
     "https://www.instagram.com/mayoristas.ya",
     "https://www.tiktok.com/@mayoristas.ya"
   ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Pack de Proveedores Mayoristas MayoristasYa",
+  "description": "Pack digital con contactos de proveedores mayoristas organizados en más de 25 rubros.",
+  "brand": { "@type": "Brand", "name": "MayoristasYa.com" },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "ARS",
+    "lowPrice": "4999",
+    "highPrice": "19999",
+    "offerCount": "3",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.mayoristasya.com/#precios"
+  }
 }
 </script>
 <script type="application/ld+json">
@@ -106,14 +124,15 @@
 </head>
 <body>
 <a class="skip-link" href="#main">Saltar al contenido principal</a>
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ===================== BARRA DE OFERTA + HEADER ===================== -->
 <div class="top-fixed" id="topFixed">
-  <div class="promo-bar" role="note">
+  <div class="offer-banner" id="offerBanner" role="note">
     <div class="container">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2c-.3 2.5-1.6 3.8-3 5.2C7.4 8.8 6 10.5 6 13a6 6 0 0 0 12 0c0-2-1-3.5-2.3-4.8.3 1.5-.2 2.6-1 3.2.4-2-.3-4-1.7-5.4-.5 1.4-1.3 2-2 2.3.4-2.3-.2-4.4-2-6.3Z"/></svg>
-      <span class="full">OFERTA POR TIEMPO LIMITADO · HASTA 50% OFF EN TODOS LOS PACKS</span>
-      <span class="short">HASTA 50% OFF · POR TIEMPO LIMITADO</span>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-.3 2.5-1.6 3.8-3 5.2C7.4 8.8 6 10.5 6 13a6 6 0 0 0 12 0c0-2-1-3.5-2.3-4.8.3 1.5-.2 2.6-1 3.2.4-2-.3-4-1.7-5.4-.5 1.4-1.3 2-2 2.3.4-2.3-.2-4.4-2-6.3Z"/></svg>
+      <span class="full">HASTA 50% OFF en todos los packs · Oferta por tiempo limitado</span>
+      <span class="short">HASTA 50% OFF en todos los packs</span>
     </div>
   </div>
 
@@ -125,9 +144,9 @@
 
       <nav class="main-nav" aria-label="Navegación principal">
         <ul>
-          <li><a href="#beneficios">Beneficios</a></li>
           <li><a href="#precios">Precios</a></li>
-          <li><a href="#rubros">Qué incluye</a></li>
+          <li><a href="#rubros">Rubros</a></li>
+          <li><a href="#beneficios">Beneficios</a></li>
           <li><a href="#como-funciona">Cómo funciona</a></li>
           <li><a href="#faq">Preguntas</a></li>
         </ul>
@@ -135,7 +154,7 @@
 
       <div class="header-actions">
         <a class="btn btn-primary header-cta" href="#precios">
-          Quiero la Lista
+          Ver los 3 packs
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
 
@@ -155,15 +174,26 @@
 
 <nav class="mobile-nav" id="mobileNav" aria-label="Navegación móvil">
   <ul>
-    <li><a href="#beneficios">Beneficios</a></li>
-    <li><a href="#precios">Precios</a></li>
-    <li><a href="#rubros">Qué incluye</a></li>
-    <li><a href="#como-funciona">Cómo funciona</a></li>
-    <li><a href="#para-quien">Para quién es</a></li>
-    <li><a href="#testimonios">Testimonios</a></li>
-    <li><a href="#faq">Preguntas frecuentes</a></li>
+    <li><a href="#precios"><span class="mn-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m20.6 12.3-8.9 8.9a1.5 1.5 0 0 1-2.1 0l-6.8-6.8a1.5 1.5 0 0 1 0-2.1l8.9-8.9H18a2 2 0 0 1 2 2v6.9Z"/><circle cx="14.5" cy="8.5" r="1.3"/></svg></span>Precios</a></li>
+    <li><a href="#rubros"><span class="mn-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span>Rubros</a></li>
+    <li><a href="#beneficios"><span class="mn-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4Z"/></svg></span>Beneficios</a></li>
+    <li><a href="#como-funciona"><span class="mn-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Cómo funciona</a></li>
+    <li><a href="#testimonios"><span class="mn-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg></span>Testimonios</a></li>
+    <li><a href="#faq"><span class="mn-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.3"/><path d="M12 17h.01"/></svg></span>Preguntas frecuentes</a></li>
   </ul>
-  <a class="btn btn-primary btn-block" href="#precios">Quiero la Lista</a>
+  <a class="btn btn-primary btn-block" href="#precios">Ver los 3 packs</a>
+
+  <div class="mobile-nav-social">
+    <a href="#" class="js-wsp" aria-label="Escribinos por WhatsApp" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/mayoristas.ya" target="_blank" rel="noopener" aria-label="Instagram de MayoristasYa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@mayoristas.ya" target="_blank" rel="noopener" aria-label="TikTok de MayoristasYa">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5v10.8a3.3 3.3 0 1 1-3.3-3.3c.16 0 .32 0 .48.03"/><path d="M13.5 3.5c.4 2.1 2.1 3.7 4.3 3.9"/></svg>
+    </a>
+  </div>
 </nav>
 
 <main id="main">
@@ -174,54 +204,53 @@
       <div class="hero-copy reveal">
         <span class="hero-badge">
           <span class="dot" aria-hidden="true"></span>
-          Pack digital · Entrega inmediata por WhatsApp
+          +1000 proveedores verificados
         </span>
-        <h1>La lista de <span class="hl hl-orange">+1000 proveedores</span> de <span class="hl hl-blue">+25 rubros</span> para emprender</h1>
+        <h1>La lista de <span class="hl">+1000 proveedores</span> de <span class="hl">+25 rubros</span> para emprender</h1>
         <p class="hero-sub">Fábricas, mayoristas y distribuidoras organizadas en un solo pack digital. Comprá barato y vendé con ganancia desde hoy.</p>
+
+        <ul class="hero-trust">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+            Contacto directo, sin intermediarios
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+            Acceso inmediato
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+            +25 rubros organizados
+          </li>
+        </ul>
 
         <div class="hero-price">
           <span class="from">Packs desde</span>
           <strong>$4.999</strong>
-          <span class="tag">Pago único</span>
+          <span class="chip">Pago único</span>
         </div>
 
         <div class="hero-actions">
           <a class="btn btn-primary btn-lg" href="#precios">
-            Ver los 3 Packs
+            Ver los 3 packs
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <span class="hero-note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
-            Elegís tu pack y lo recibís directo por WhatsApp
-          </span>
+          <a class="btn btn-outline btn-lg js-wsp" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+            Escribir por WhatsApp
+          </a>
         </div>
-
-        <ul class="hero-trust">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4Z"/></svg>
-            Información verificada
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-            Acceso inmediato
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v4H4zM4 20h16M6 8v12M18 8v12M9 12h6"/></svg>
-            +25 rubros distintos
-          </li>
-        </ul>
       </div>
 
       <div class="hero-visual reveal">
         <div class="doc-mockup">
-          <div class="doc-card doc-card-back" aria-hidden="true"></div>
-          <div class="doc-card doc-card-front" role="img" aria-label="Vista previa del pack: lista de proveedores organizada por rubro con cantidad de contactos en cada categoría">
-            <div class="doc-card-head">
-              <span class="tag">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/><path d="M14 2v6h6"/></svg>
+          <div class="doc-card">
+            <div class="doc-card-top">
+              <span class="doc-card-top-left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M15 2v5h5"/></svg>
                 Pack Digital
               </span>
-              <span>100% organizado</span>
+              <span class="doc-card-top-right">100% organizado</span>
             </div>
             <div class="doc-card-body">
               <div class="doc-brand">
@@ -231,70 +260,58 @@
               <h3>Lista de Proveedores 2026</h3>
               <p>+1000 contactos · +25 rubros</p>
               <hr>
-              <ul class="doc-rows">
-                <li><span>Indumentaria</span><i></i><b>120</b></li>
-                <li><span>Calzado</span><i></i><b>95</b></li>
-                <li><span>Tecnología</span><i></i><b>140</b></li>
-                <li><span>Bazar y juguetería</span><i></i><b>110</b></li>
-                <li><span>Perfumería</span><i></i><b>85</b></li>
+              <ul class="doc-rows stagger reveal">
+                <li style="--i:0"><span>Indumentaria</span><span class="doc-row-dots" aria-hidden="true"></span><b>120</b></li>
+                <li style="--i:1"><span>Calzado</span><span class="doc-row-dots" aria-hidden="true"></span><b>95</b></li>
+                <li style="--i:2"><span>Tecnología</span><span class="doc-row-dots" aria-hidden="true"></span><b>140</b></li>
+                <li style="--i:3"><span>Bazar y juguetería</span><span class="doc-row-dots" aria-hidden="true"></span><b>110</b></li>
+                <li style="--i:4"><span>Perfumería</span><span class="doc-row-dots" aria-hidden="true"></span><b>85</b></li>
               </ul>
-              <span class="doc-more">+ 20 rubros más</span>
+              <div class="doc-more-btn">+ 20 rubros más</div>
             </div>
           </div>
-          <div class="doc-badge-float">
+
+          <div class="float-pill pill-a">
+            <span class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v4H4zM4 20h16M6 8v12M18 8v12M9 12h6"/></svg>
+            </span>
+            <span>+25 Rubros<br><small>ropa, tech, hogar y más</small></span>
+          </div>
+          <div class="float-pill pill-b">
             <span class="ic" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
             </span>
-            <span>Te llega por<br><strong>WhatsApp</strong></span>
+            <span>Te llega por<br><small>WhatsApp</small></span>
           </div>
-        </div>
-
-        <div class="float-card card-a">
-          <span class="ic" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v4H4zM4 20h16M6 8v12M18 8v12M9 12h6"/></svg>
-          </span>
-          <span>+25 Rubros<br><small>ropa, tech, hogar y más</small></span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== STATS ===================== -->
-  <section class="stats-row" aria-label="Estadísticas del pack">
+  <section class="stats-row bg-cream-2" aria-label="Estadísticas del pack">
     <div class="container grid stats-grid stagger reveal">
       <div class="stat-card" style="--i:0">
-        <span class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>
-        </span>
         <div class="stat-num" data-count="1000" data-suffix="+">0</div>
         <div class="stat-label">Proveedores</div>
       </div>
       <div class="stat-card" style="--i:1">
-        <span class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v4H4zM4 20h16M6 8v12M18 8v12M9 12h6"/></svg>
-        </span>
         <div class="stat-num" data-count="25" data-suffix="+">0</div>
         <div class="stat-label">Rubros</div>
       </div>
       <div class="stat-card" style="--i:2">
-        <span class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
-        </span>
-        <div class="stat-num" data-count="100" data-suffix="%">0</div>
-        <div class="stat-label">Organizado</div>
+        <div class="stat-num" data-count="2000" data-suffix="+">0</div>
+        <div class="stat-label">Emprendedores</div>
       </div>
       <div class="stat-card" style="--i:3">
-        <span class="stat-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></svg>
-        </span>
-        <div class="stat-num" data-count="0" data-suffix=" min">0</div>
-        <div class="stat-label">De espera</div>
+        <div class="stat-num" data-count="4.9" data-suffix="★" data-decimals="1">0</div>
+        <div class="stat-label">Calificación</div>
       </div>
     </div>
   </section>
 
   <!-- ===================== PRECIOS ===================== -->
-  <section class="section-pad bg-soft" id="precios">
+  <section class="section-pad" id="precios">
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Precios</span>
@@ -320,12 +337,12 @@
           </ul>
           <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="100" data-name="Pack 100" data-price="4999" data-price-label="$4.999">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-            Agregar al Carrito
+            Agregar al carrito
           </button>
         </div>
 
         <div class="price-card popular" style="--i:1">
-          <span class="price-badge">Más elegido</span>
+          <span class="price-badge">⭐ Más elegido</span>
           <h3>Pack 500</h3>
           <p class="price-desc">El equilibrio perfecto entre variedad y precio.</p>
           <div class="price-row">
@@ -339,12 +356,11 @@
             <li>+15 rubros distintos</li>
             <li>Entrega inmediata por WhatsApp</li>
             <li>Actualizaciones incluidas</li>
-            <li>El más elegido por emprendedores</li>
-            <li class="popular-feature">🎁 Incluye guía "Cómo arrancar a revender"</li>
+            <li class="popular-feature">El más elegido por emprendedores</li>
           </ul>
           <button type="button" class="btn btn-primary btn-block js-add-cart" data-id="500" data-name="Pack 500" data-price="14999" data-price-label="$14.999">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-            Agregar al Carrito
+            Agregar al carrito
           </button>
         </div>
 
@@ -363,11 +379,38 @@
             <li>Entrega inmediata por WhatsApp</li>
             <li>Actualizaciones incluidas</li>
             <li>Ideal para negocios y tiendas online</li>
-            <li class="popular-feature">🎁 Incluye guía "Cómo arrancar a revender"</li>
           </ul>
           <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="1000" data-name="Pack 1000" data-price="19999" data-price-label="$19.999">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-            Agregar al Carrito
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
+
+      <div class="negocio-row">
+        <div class="price-card popular negocio-card" style="--i:3">
+          <span class="price-badge">Nuevo</span>
+          <button type="button" class="negocio-info-btn" id="negocioInfoBtn" aria-haspopup="dialog" aria-label="Más información sobre Negocio Mayorista">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.5h.01"/></svg>
+          </button>
+          <h3>Negocio Mayorista</h3>
+          <p class="price-desc">Armamos tu propio MayoristasYa: dominio, hosting, sitio y pack inicial de proveedores.</p>
+          <div class="price-row">
+            <span class="price-old">$159.999</span>
+            <span class="price-off">-50%</span>
+          </div>
+          <div class="price-new">$79.999</div>
+          <span class="price-save">Ahorrás $80.000</span>
+          <ul class="price-features">
+            <li>Dominio propio registrado a tu nombre</li>
+            <li>Hosting funcionando incluido</li>
+            <li>Sitio con tu marca, listo para vender</li>
+            <li>Pack inicial de proveedores</li>
+            <li class="popular-feature">Acompañamiento en la puesta en marcha</li>
+          </ul>
+          <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="negocio-mayorista" data-name="Negocio Mayorista" data-price="79999" data-price-label="$79.999">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
+            Agregar al carrito
           </button>
         </div>
       </div>
@@ -379,37 +422,41 @@
     </div>
   </section>
 
-  <!-- ===================== POR QUÉ COMPRAR DIRECTO ===================== -->
-  <section class="section-pad" id="por-que-directo">
+  <!-- ===================== RUBROS ===================== -->
+  <section class="section-pad bg-cream-2" id="rubros">
     <div class="container">
       <div class="section-head reveal">
-        <span class="eyebrow">Por qué comprar directo</span>
-        <h2>Comprar directo a mayoristas cambia todo</h2>
-        <span class="note-pill">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
-          Ejemplo ilustrativo de ahorro por producto
-        </span>
+        <span class="eyebrow">Qué incluye</span>
+        <h2>Proveedores organizados en +25 rubros</h2>
+        <p>Encontrá proveedores mayoristas para prácticamente cualquier tipo de negocio, todo clasificado por categoría.</p>
       </div>
 
-      <div class="compare-wrap reveal">
-        <div class="compare-card negative">
-          <span class="compare-tag">Comprándole a un revendedor</span>
-          <div class="compare-price">$8.000</div>
-          <p>Pagás el margen de quien ya le compró a un mayorista.</p>
-        </div>
-        <div class="compare-arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </div>
-        <div class="compare-card positive">
-          <span class="compare-tag">Comprándole directo al proveedor</span>
-          <div class="compare-price">$3.500</div>
-          <p>Accedés al mismo producto, al precio real de fábrica.</p>
-          <span class="compare-save">Ahorrás hasta $4.500 por producto</span>
-        </div>
-      </div>
-
-      <div class="compare-cta reveal">
-        <a href="#precios" class="btn btn-primary btn-lg">Ver los Packs</a>
+      <div class="grid category-grid stagger reveal">
+        <div class="category-card" style="--i:0"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Ropa</span><small>130 proveedores</small></div>
+        <div class="category-card" style="--i:1"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Zapatillas</span><small>95 proveedores</small></div>
+        <div class="category-card" style="--i:2"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Electrónica</span><small>140 proveedores</small></div>
+        <div class="category-card" style="--i:3"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Perfumería</span><small>85 proveedores</small></div>
+        <div class="category-card" style="--i:4"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Cosmética</span><small>78 proveedores</small></div>
+        <div class="category-card" style="--i:5"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Hogar</span><small>110 proveedores</small></div>
+        <div class="category-card" style="--i:6"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Ferretería</span><small>60 proveedores</small></div>
+        <div class="category-card" style="--i:7"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Juguetes</span><small>72 proveedores</small></div>
+        <div class="category-card" style="--i:8"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Tecnología</span><small>90 proveedores</small></div>
+        <div class="category-card" style="--i:9"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Accesorios</span><small>88 proveedores</small></div>
+        <div class="category-card" style="--i:10"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Celulares</span><small>65 proveedores</small></div>
+        <div class="category-card" style="--i:11"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Muebles</span><small>54 proveedores</small></div>
+        <div class="category-card" style="--i:12"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Iluminación</span><small>40 proveedores</small></div>
+        <div class="category-card" style="--i:13"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Mascotas</span><small>58 proveedores</small></div>
+        <div class="category-card" style="--i:14"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Alimentos</span><small>76 proveedores</small></div>
+        <div class="category-card" style="--i:15"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Librería</span><small>45 proveedores</small></div>
+        <div class="category-card" style="--i:16"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Bebidas</span><small>50 proveedores</small></div>
+        <div class="category-card" style="--i:17"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Deportes</span><small>82 proveedores</small></div>
+        <div class="category-card" style="--i:18"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Automotor</span><small>48 proveedores</small></div>
+        <div class="category-card" style="--i:19"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Herramientas</span><small>55 proveedores</small></div>
+        <div class="category-card" style="--i:20"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Bazar</span><small>110 proveedores</small></div>
+        <div class="category-card" style="--i:21"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Regalería</span><small>42 proveedores</small></div>
+        <div class="category-card" style="--i:22"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Camping</span><small>38 proveedores</small></div>
+        <div class="category-card" style="--i:23"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Bicicletas</span><small>36 proveedores</small></div>
+        <div class="category-card" style="--i:24"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Oficina</span><small>40 proveedores</small></div>
       </div>
     </div>
   </section>
@@ -419,189 +466,73 @@
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Beneficios</span>
-        <h2>Por qué conviene comprar este pack</h2>
-        <p>Todo lo que necesitás para empezar a comprar mayorista, en un solo lugar y sin perder tiempo buscando proveedor por proveedor.</p>
+        <h2>Por qué conviene comprar tu pack acá</h2>
       </div>
 
       <div class="grid benefits-grid stagger reveal">
         <div class="benefit-card" style="--i:0">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>
-          </div>
-          <h3>+1000 proveedores</h3>
-          <p>Una base enorme de contactos mayoristas lista para usar, sin necesidad de buscar uno por uno.</p>
+          <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+          <h3>Ahorrás tiempo</h3>
+          <p>Te ahorramos las semanas de búsqueda de proveedores confiables.</p>
         </div>
-
         <div class="benefit-card" style="--i:1">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v4H4zM4 20h16M6 8v12M18 8v12M9 12h6"/></svg>
-          </div>
-          <h3>+25 rubros distintos</h3>
-          <p>Ropa, tecnología, hogar, perfumería y muchos rubros más, organizados por categoría.</p>
+          <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4Z"/></svg></span>
+          <h3>Contacto directo</h3>
+          <p>Hablás directo con fábricas y mayoristas, sin intermediarios.</p>
         </div>
-
         <div class="benefit-card" style="--i:2">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          </div>
-          <h3>Ahorrás horas de búsqueda</h3>
-          <p>Toda la información recopilada y clasificada para que empieces a contactar proveedores en minutos.</p>
+          <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span>
+          <h3>Organización por rubro</h3>
+          <p>Todo clasificado para encontrar lo que buscás en segundos.</p>
         </div>
-
         <div class="benefit-card" style="--i:3">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
-          </div>
-          <h3>Información organizada</h3>
-          <p>Todo clasificado por rubro para que encuentres exactamente lo que estás buscando.</p>
+          <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg></span>
+          <h3>Entrega inmediata</h3>
+          <p>Recibís el pack completo por WhatsApp apenas confirmás tu compra.</p>
         </div>
-
         <div class="benefit-card" style="--i:4">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5"/></svg>
-          </div>
-          <h3>Actualizado</h3>
-          <p>Trabajamos para mantener el contenido del pack vigente y útil en el tiempo.</p>
+          <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></span>
+          <h3>Actualizaciones incluidas</h3>
+          <p>Trabajamos para mantener la información organizada y vigente.</p>
         </div>
-
         <div class="benefit-card" style="--i:5">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></svg>
-          </div>
-          <h3>Ideal para emprendedores</h3>
-          <p>Pensado para dar el primer paso en la reventa sin capital ni experiencia previa.</p>
-        </div>
-
-        <div class="benefit-card" style="--i:6">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4M20 7H8M8 21l-4-4 4-4M4 17h12"/></svg>
-          </div>
-          <h3>Ideal para revendedores</h3>
-          <p>Sumá nuevos proveedores y rubros para ampliar tu catálogo actual.</p>
-        </div>
-
-        <div class="benefit-card" style="--i:7">
-          <div class="benefit-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12M9 21v-8h6v8"/></svg>
-          </div>
-          <h3>Ideal para negocios</h3>
-          <p>Útil para locales y tiendas online que buscan mejorar precios de compra.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== QUÉ INCLUYE ===================== -->
-  <section class="section-pad bg-soft" id="rubros">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Qué incluye</span>
-        <h2>Proveedores organizados en +25 rubros</h2>
-        <p>Encontrá proveedores mayoristas para prácticamente cualquier tipo de negocio, todo clasificado por categoría.</p>
-      </div>
-
-      <div class="grid category-grid stagger reveal">
-        <div class="category-card" style="--i:0"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3.5 3.5 6.8l2.1 3.3 2-1.1V20a1 1 0 0 0 1 1h6.8a1 1 0 0 0 1-1V9l2 1.1 2.1-3.3L15 3.5c-.6 1.4-1.7 2.2-3 2.2s-2.4-.8-3-2.2Z"/></svg></span><span>Ropa</span></div>
-        <div class="category-card" style="--i:1"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c1-3 2.5-4 4-4 1 0 1.5.8 2.7.8 1.6 0 2.7-2.8 4.6-2.8 1.4 0 2 1 3.2 2.6.9 1.2 2 1.6 3.5 1.6v3.3H3Z"/><path d="M3 15v3.3"/></svg></span><span>Zapatillas</span></div>
-        <div class="category-card" style="--i:2"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span>Electrónica</span></div>
-        <div class="category-card" style="--i:3"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4v3h1.5A1.5 1.5 0 0 1 17 6.5V9c1.1 0 2 .9 2 2v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9c0-1.1.9-2 2-2V6.5A1.5 1.5 0 0 1 8.5 5H10Z"/><path d="M9 13h6"/></svg></span><span>Perfumería</span></div>
-        <div class="category-card" style="--i:4"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.6 3.6L17 8l-3 2.4.9 3.9L12 12.2 9.1 14.3l.9-3.9L7 8l3.4-1.4Z"/><path d="M4 19h1M19 19h1M6 21l1-2M18 21l-1-2"/></svg></span><span>Cosmética</span></div>
-        <div class="category-card" style="--i:5"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></span><span>Hogar</span></div>
-        <div class="category-card" style="--i:6"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6.5 18 3l3 3-3.5 3.5M14.5 6.5 4 17v3h3L17.5 9.5M14.5 6.5l3 3"/></svg></span><span>Ferretería</span></div>
-        <div class="category-card" style="--i:7"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="4"/><circle cx="16" cy="16" r="4"/><path d="m11 11 2 2"/></svg></span><span>Juguetes</span></div>
-        <div class="category-card" style="--i:8"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M9 20h6M12 16v4"/></svg></span><span>Tecnología</span></div>
-        <div class="category-card" style="--i:9"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M12 9v3l2 1"/><path d="M9 2h6M9 22h6"/></svg></span><span>Accesorios</span></div>
-        <div class="category-card" style="--i:10"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><span>Celulares</span></div>
-        <div class="category-card" style="--i:11"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v4"/><path d="M3 17h18v3H3zM5 20v1M19 20v1"/></svg></span><span>Muebles</span></div>
-        <div class="category-card" style="--i:12"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 1 3.7 10.7c-.6.5-1 1.2-1 2.3H9.3c0-1.1-.4-1.8-1-2.3A6 6 0 0 1 12 3Z"/></svg></span><span>Iluminación</span></div>
-        <div class="category-card" style="--i:13"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="1.8"/><circle cx="12" cy="5.5" r="1.8"/><circle cx="17" cy="7" r="1.8"/><circle cx="19" cy="12" r="1.8"/><path d="M12 21c-3 0-5.5-1.8-5.5-4.5 0-2 2-3 2.7-4.3.7-1.3 1.3-2.2 2.8-2.2s2.1.9 2.8 2.2c.7 1.3 2.7 2.3 2.7 4.3C17.5 19.2 15 21 12 21Z"/></svg></span><span>Mascotas</span></div>
-        <div class="category-card" style="--i:14"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v6a3 3 0 0 0 3 3v11M6 2v9M9 2v9M17 2c-2 1-3 3-3 6s1 4 3 4v10"/></svg></span><span>Alimentos</span></div>
-        <div class="category-card" style="--i:15"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h11v17H6a2 2 0 0 0-2 2Z"/><path d="M8 7h6M8 11h6"/></svg></span><span>Librería</span></div>
-        <div class="category-card" style="--i:16"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6l-1 6h-4Z"/><path d="M8 8h8l1 13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1Z"/><path d="M8.5 14h7"/></svg></span><span>Bebidas</span></div>
-        <div class="category-card" style="--i:17"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 4 4M17.5 6.5 20 4M6.5 17.5 4 20M17.5 17.5 20 20"/><rect x="3" y="3" width="4" height="4" rx="1" transform="rotate(45 5 5)"/><rect x="17" y="17" width="4" height="4" rx="1" transform="rotate(45 19 19)"/><path d="m8.5 8.5 7 7"/></svg></span><span>Deportes</span></div>
-        <div class="category-card" style="--i:18"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16V9l2-4h12l2 4v7"/><path d="M4 16h16v2a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H7v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z"/><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/></svg></span><span>Automotor</span></div>
-        <div class="category-card" style="--i:19"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6 4 4-8.5 8.5a2 2 0 0 1-1.4.6H5v-3.1a2 2 0 0 1 .6-1.4Z"/><path d="M14 6c1-1 3-1 4 0s1 3 0 4"/></svg></span><span>Herramientas</span></div>
-        <div class="category-card" style="--i:20"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18v13H3ZM3 8l3-5h12l3 5M12 8v13M8 3l-1 5M16 3l1 5"/></svg></span><span>Bazar</span></div>
-        <div class="category-card" style="--i:21"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16M12 9v11"/><path d="M12 9c-2 0-3.5-1-3.5-2.8S9.7 3 12 5c2.3-2 3.5-.6 3.5.9S14 9 12 9Z"/></svg></span><span>Regalería</span></div>
-        <div class="category-card" style="--i:22"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 3 20h18Z"/><path d="M12 4v16M8 20l4-9 4 9"/></svg></span><span>Camping</span></div>
-        <div class="category-card" style="--i:23"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17 10 8h4l4 9M9 12h6"/></svg></span><span>Bicicletas</span></div>
-
-        <div class="category-card more" style="--i:24">
-          <span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span>
-          <span>Y muchos rubros más</span>
+          <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></svg></span>
+          <h3>Ideal para revender</h3>
+          <p>Pensado para quienes quieren comprar barato y vender con ganancia.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== CÓMO FUNCIONA ===================== -->
-  <section class="section-pad" id="como-funciona">
+  <section class="section-pad bg-cream-2" id="como-funciona">
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Cómo funciona</span>
-        <h2>Empezá a comprar mayorista en 4 pasos simples</h2>
+        <h2>Empezá a comprar mayorista en 4 pasos</h2>
         <p>Un proceso rápido, claro y 100% acompañado por WhatsApp.</p>
       </div>
 
       <div class="grid steps-grid stagger reveal">
         <div class="step-card" style="--i:0">
           <div class="step-num" aria-hidden="true">1</div>
-          <h3>Comprás</h3>
-          <p>Elegís el pack completo de proveedores mayoristas y confirmás tu compra.</p>
+          <h3>Elegís tu pack</h3>
+          <p>Elegís el pack de proveedores que mejor se adapta a tu negocio.</p>
         </div>
         <div class="step-card" style="--i:1">
           <div class="step-num" aria-hidden="true">2</div>
-          <h3>Escribís por WhatsApp</h3>
-          <p>Nos contactás, coordinamos el pago y resolvemos cualquier duda al instante.</p>
+          <h3>Coordinás por WhatsApp</h3>
+          <p>Confirmás tus datos y coordinamos el pago de forma simple.</p>
         </div>
         <div class="step-card" style="--i:2">
           <div class="step-num" aria-hidden="true">3</div>
           <h3>Recibís el pack</h3>
-          <p>Te enviamos el acceso completo con todos los proveedores organizados por rubro.</p>
+          <p>Te llega organizado por rubro, listo para usar.</p>
         </div>
         <div class="step-card" style="--i:3">
           <div class="step-num" aria-hidden="true">4</div>
-          <h3>Contactás proveedores</h3>
-          <p>Empezás a comprar mayorista y a armar tu catálogo para vender.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== PARA QUIÉN ES ===================== -->
-  <section class="section-pad bg-soft" id="para-quien">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Para quién es</span>
-        <h2>Pensado para quienes quieren vender más</h2>
-        <p>Sea cual sea tu punto de partida, este pack te ahorra tiempo y te acerca a los proveedores correctos.</p>
-      </div>
-
-      <div class="grid audience-grid stagger reveal">
-        <div class="audience-card" style="--i:0">
-          <div class="aud-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/></svg></div>
-          <h3>Emprendedores</h3>
-          <p>Que quieren dar el primer paso en la reventa.</p>
-        </div>
-        <div class="audience-card" style="--i:1">
-          <div class="aud-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4M20 7H8M8 21l-4-4 4-4M4 17h12"/></svg></div>
-          <h3>Revendedores</h3>
-          <p>Que buscan ampliar su catálogo y mejorar precios.</p>
-        </div>
-        <div class="audience-card" style="--i:2">
-          <div class="aud-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div>
-          <h3>Nuevos negocios</h3>
-          <p>Que quieren empezar a vender por su cuenta.</p>
-        </div>
-        <div class="audience-card" style="--i:3">
-          <div class="aud-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12M9 21v-8h6v8"/></svg></div>
-          <h3>Comercios</h3>
-          <p>Que buscan renovar stock a mejor costo.</p>
-        </div>
-        <div class="audience-card" style="--i:4">
-          <div class="aud-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg></div>
-          <h3>Tiendas online</h3>
-          <p>Que necesitan proveedores confiables para escalar.</p>
+          <h3>Empezás a vender</h3>
+          <p>Contactás proveedores y arrancás a comprar al precio de origen.</p>
         </div>
       </div>
     </div>
@@ -613,10 +544,7 @@
       <div class="section-head reveal">
         <span class="eyebrow">Testimonios</span>
         <h2>Lo que dicen quienes usan el pack</h2>
-        <span class="testimonial-note">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
-          Testimonios de ejemplo, con fines ilustrativos
-        </span>
+        <p>Testimonios de ejemplo, con fines ilustrativos.</p>
       </div>
 
       <div class="grid testimonial-grid stagger reveal">
@@ -672,7 +600,7 @@
   </section>
 
   <!-- ===================== FAQ ===================== -->
-  <section class="section-pad bg-soft" id="faq">
+  <section class="section-pad bg-cream-2" id="faq">
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow">Preguntas frecuentes</span>
@@ -683,42 +611,42 @@
       <div class="faq-list reveal">
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            ¿Cómo recibo el pack de proveedores?
+            <span>¿Cómo recibo el pack de proveedores?</span>
             <span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
           </button>
           <div class="faq-answer"><p>Una vez confirmada la compra por WhatsApp, recibís el pack completo de forma digital, organizado por rubros y listo para usar.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            ¿El acceso es inmediato?
+            <span>¿El acceso es inmediato?</span>
             <span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
           </button>
           <div class="faq-answer"><p>Sí. Apenas coordinamos la compra por WhatsApp, te enviamos el acceso al pack sin demoras.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            ¿Los proveedores son mayoristas reales?
+            <span>¿Los proveedores son mayoristas reales?</span>
             <span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
           </button>
           <div class="faq-answer"><p>Sí, son proveedores y fábricas que venden por mayor, seleccionados y organizados por rubro para facilitar el contacto.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            ¿Puedo revender los productos?
+            <span>¿Puedo revender los productos que compre a estos proveedores?</span>
             <span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
           </button>
           <div class="faq-answer"><p>Sí, la mayoría de los proveedores del pack están orientados a la reventa y a la compra en cantidad.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            ¿Hay actualizaciones del pack?
+            <span>¿El pack tiene actualizaciones?</span>
             <span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
           </button>
           <div class="faq-answer"><p>Sí, trabajamos para mantener la información organizada y vigente a lo largo del tiempo.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            ¿Cómo realizo el pago?
+            <span>¿Cómo realizo el pago?</span>
             <span class="chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
           </button>
           <div class="faq-answer"><p>Todo el proceso de pago se coordina directamente por WhatsApp, de forma simple y personalizada.</p></div>
@@ -730,14 +658,18 @@
   <!-- ===================== CTA FINAL ===================== -->
   <section class="cta-final">
     <div class="container reveal">
-      <h2>¿Listo para empezar a vender mayorista?</h2>
-      <p>Sumate a MayoristasYa y elegí hoy el pack de proveedores ideal para tu negocio.</p>
+      <h2>¿Listo para empezar a vender?</h2>
+      <p>Elegí tu pack, coordinamos por WhatsApp y en minutos tenés tu lista de proveedores lista para usar.</p>
       <div class="cta-final-actions">
-        <a class="btn btn-primary btn-lg" href="#precios">
-          Ver los 3 Packs
+        <a class="btn btn-primary btn-lg btn-block" href="#precios" style="max-width:340px">
+          Ver los 3 packs
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <span class="cta-final-note">Desde $4.999 · Respuesta rápida por WhatsApp</span>
+        <a class="btn btn-outline btn-lg btn-block js-wsp" href="#" target="_blank" rel="noopener" style="max-width:340px">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <span class="cta-final-note">Pago único · Sin suscripciones · Acceso enviado por WhatsApp</span>
       </div>
     </div>
   </section>
@@ -770,9 +702,9 @@
         <div class="footer-col">
           <h4>Navegación</h4>
           <ul>
-            <li><a href="#beneficios">Beneficios</a></li>
             <li><a href="#precios">Precios</a></li>
-            <li><a href="#rubros">Qué incluye</a></li>
+            <li><a href="#rubros">Rubros</a></li>
+            <li><a href="#beneficios">Beneficios</a></li>
             <li><a href="#como-funciona">Cómo funciona</a></li>
             <li><a href="#faq">Preguntas frecuentes</a></li>
           </ul>
@@ -808,51 +740,59 @@
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Zm-5.55 12.2h0a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.61 6.61 0 1 1 12.28-3.5 6.56 6.56 0 0 1-6.69 6.6Zm3.6-4.93c-.2-.1-1.17-.58-1.35-.64s-.31-.1-.44.1-.5.64-.61.77-.23.15-.42.05a5.4 5.4 0 0 1-1.6-.98 6 6 0 0 1-1.1-1.37c-.12-.2 0-.3.09-.4.1-.1.2-.23.3-.35.1-.12.13-.2.2-.33a.36.36 0 0 0 0-.35c-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.33h-.38a.72.72 0 0 0-.52.24 2.2 2.2 0 0 0-.68 1.63c0 .96.7 1.9.8 2.03.1.13 1.38 2.1 3.34 2.95.47.2.83.32 1.12.41.47.15.9.13 1.24.08.38-.06 1.17-.48 1.34-.94.16-.46.16-.86.12-.94-.05-.1-.18-.15-.38-.25Z"/></svg>
 </a>
 
-<!-- ===================== BARRA DE COMPRA (MOBILE) ===================== -->
-<div class="mobile-buy-bar" id="mobileBuyBar">
-  <span class="mbb-price">
-    <small id="mbbLabel">Packs desde</small>
-    <strong id="mbbValue">$4.999</strong>
-  </span>
-  <button type="button" class="btn btn-primary" id="mbbAction">Ver Packs</button>
+<!-- ===================== BOTÓN VOLVER ARRIBA ===================== -->
+<button type="button" class="back-to-top" id="backToTop" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<!-- ===================== TOASTS ===================== -->
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<!-- ===================== INFO NEGOCIO MAYORISTA ===================== -->
+<div class="modal-backdrop" id="negocioInfoBackdrop"></div>
+<div class="info-modal" id="negocioInfoModal" role="dialog" aria-modal="true" aria-labelledby="negocioInfoTitle" aria-hidden="true">
+  <button class="modal-close" id="negocioInfoClose" aria-label="Cerrar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <h3 id="negocioInfoTitle">¿Qué es el Negocio Mayorista?</h3>
+  <p class="info-modal-lead">Tu propio sitio tipo MayoristasYa, listo para vender packs de proveedores con tu marca desde el primer día.</p>
+  <ul class="info-modal-list">
+    <li><strong>Dominio propio.</strong> Registramos un dominio .com a tu nombre.</li>
+    <li><strong>Hosting incluido.</strong> Tu sitio queda online y funcionando, sin que tengas que configurar nada técnico.</li>
+    <li><strong>Sitio con tu marca.</strong> Mismo diseño y flujo de compra que MayoristasYa, con tu logo y tus textos.</li>
+    <li><strong>Pack inicial de proveedores.</strong> Arrancás con contenido real para vender desde el día uno.</li>
+    <li><strong>Acompañamiento.</strong> Te ayudamos a poner todo en marcha y resolvemos tus dudas durante el lanzamiento.</li>
+  </ul>
+  <p class="info-modal-note">Pago único de $79.999 (antes $159.999). Coordinamos todo por WhatsApp.</p>
+  <a href="#" class="btn btn-whatsapp btn-block js-wsp" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+    Consultar por WhatsApp
+  </a>
 </div>
 
-<!-- ===================== CARRITO ===================== -->
-<div class="cart-backdrop" id="cartBackdrop"></div>
-<aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Carrito de compras">
-  <div class="cart-drawer-head">
-    <h3>Tu Carrito</h3>
-    <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-  <div class="cart-drawer-body" id="cartBody">
-    <div class="cart-empty">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-      <p>Tu carrito está vacío</p>
-      <a href="#precios" class="btn btn-outline" id="cartEmptyCta">Ver los Packs</a>
-    </div>
-  </div>
-  <div class="cart-drawer-foot" id="cartFoot" hidden>
-    <div class="cart-total-row">
+<!-- ===================== CARRITO (paso 1) ===================== -->
+<div class="modal-backdrop" id="cartBackdrop"></div>
+<div class="cart-modal" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+  <button class="modal-close" id="cartClose" aria-label="Cerrar carrito">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+
+  <div id="cartStepView">
+    <h3 id="cartTitle">Tu carrito</h3>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-total-row" id="cartTotalRow" hidden>
       <span>Total</span>
       <strong id="cartTotal">$0</strong>
     </div>
-    <button type="button" class="btn btn-primary btn-block" id="cartCheckoutBtn">Finalizar Compra</button>
+    <button type="button" class="btn btn-primary btn-block" id="cartConfirmBtn" hidden>Confirmar pedido</button>
   </div>
-</aside>
 
-<!-- ===================== CHECKOUT ===================== -->
-<div class="modal-backdrop" id="checkoutBackdrop"></div>
-<div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-hidden="true">
-  <button class="modal-close" id="checkoutClose" aria-label="Cerrar">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-  </button>
-
-  <div id="checkoutFormView">
-    <h3 id="checkoutTitle">Finalizar Compra</h3>
-    <p class="checkout-sub">Completá tus datos para coordinar el pago y la entrega por WhatsApp.</p>
-
+  <div id="checkoutStepView" hidden>
+    <button type="button" class="checkout-back" id="checkoutBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 6-6 6 6 6M5 12h14"/></svg>
+      Volver al carrito
+    </button>
+    <h3>Finalizar compra</h3>
     <div class="checkout-summary" id="checkoutSummary"></div>
 
     <form id="checkoutForm" novalidate>
@@ -864,9 +804,9 @@
       <input type="email" id="ckEmail" name="email" autocomplete="email" placeholder="tu@email.com">
       <span class="field-error" id="ckEmailError"></span>
 
-      <button type="submit" class="btn btn-primary btn-block btn-lg">
+      <button type="submit" class="btn btn-whatsapp btn-block btn-lg">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
         Confirmar y continuar a WhatsApp
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </button>
       <p class="checkout-note">Vas a ser redirigido a WhatsApp para coordinar el pago y la entrega.</p>
     </form>
@@ -878,7 +818,7 @@
     </span>
     <h3>¡Todo listo!</h3>
     <p>Se abrió WhatsApp con tu pedido. Si no se abrió automáticamente, tocá el botón de abajo.</p>
-    <a href="#" class="btn btn-primary btn-block" id="checkoutWspLink" target="_blank" rel="noopener">Abrir WhatsApp</a>
+    <a href="#" class="btn btn-whatsapp btn-block" id="checkoutWspLink" target="_blank" rel="noopener">Abrir WhatsApp</a>
   </div>
 </div>
 

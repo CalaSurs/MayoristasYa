@@ -1,10 +1,19 @@
 (function () {
   "use strict";
 
-  /* ---------- WhatsApp CTA links ---------- */
-  var WSP_NUMBER = "5491128520849";
-  var WSP_MESSAGE = "Hola, quiero comprar el Pack de +1000 Proveedores de MayoristasYa.";
-  var WSP_URL = "https://wa.me/" + WSP_NUMBER + "?text=" + encodeURIComponent(WSP_MESSAGE);
+  /* ---------- Configuración editable ---------- */
+  var CONFIG = {
+    businessName: "MayoristasYa",
+    whatsappNumber: "5491128520849",
+    whatsappDefaultMessage: "Hola, quiero comprar el Pack de +1000 Proveedores de MayoristasYa.",
+    transfer: {
+      alias: "lautaro.calabria",
+      cbu: "0000003100009573267564",
+      titular: "Lautaro Lopez Calabria",
+    },
+  };
+
+  var WSP_URL = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(CONFIG.whatsappDefaultMessage);
 
   document.querySelectorAll(".js-wsp").forEach(function (el) {
     el.setAttribute("href", WSP_URL);
@@ -21,40 +30,53 @@
     });
   });
 
-  /* ---------- Header + barra de oferta: estado de scroll ---------- */
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Barra de progreso de scroll + header ---------- */
+  var scrollProgress = document.getElementById("scrollProgress");
   var topFixed = document.getElementById("topFixed");
-  if (topFixed) {
-    var onScroll = function () {
-      if (window.scrollY > 12) {
-        topFixed.classList.add("is-scrolled");
-      } else {
-        topFixed.classList.remove("is-scrolled");
-      }
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+
+  function onScroll() {
+    if (topFixed) topFixed.classList.toggle("is-scrolled", window.scrollY > 12);
+    if (scrollProgress) {
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      scrollProgress.style.width = pct + "%";
+    }
+    if (backToTop) backToTop.classList.toggle("is-visible", window.scrollY > 600);
   }
 
-  /* ---------- Barra de compra fija + botón de WhatsApp (mobile) ---------- */
-  var buyBar = document.getElementById("mobileBuyBar");
-  var heroEl = document.getElementById("hero");
-  var whatsappFloat = document.querySelector(".whatsapp-float");
-  if (heroEl && (buyBar || whatsappFloat)) {
-    if ("IntersectionObserver" in window) {
-      var buyBarObserver = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            var pastHero = !entry.isIntersecting;
-            if (buyBar) buyBar.classList.toggle("is-visible", pastHero);
-            if (whatsappFloat) whatsappFloat.classList.toggle("is-visible", pastHero);
-          });
-        },
-        { rootMargin: "-60% 0px 0px 0px" }
-      );
-      buyBarObserver.observe(heroEl);
-    } else if (whatsappFloat) {
-      whatsappFloat.classList.add("is-visible");
-    }
+  /* ---------- Botón volver arriba ---------- */
+  var backToTop = document.getElementById("backToTop");
+  if (backToTop) {
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Toasts ---------- */
+  var toastStack = document.getElementById("toastStack");
+
+  function showToast(message) {
+    if (!toastStack) return;
+    var toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerHTML =
+      '<span class="toast-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></span>' +
+      "<p>" + message + "</p>";
+    toastStack.appendChild(toast);
+    requestAnimationFrame(function () {
+      toast.classList.add("is-visible");
+    });
+    window.setTimeout(function () {
+      toast.classList.remove("is-visible");
+      window.setTimeout(function () {
+        toast.remove();
+      }, 350);
+    }, 3200);
   }
 
   /* ---------- Carrito de compras ---------- */
@@ -111,35 +133,17 @@
 
   var cartBadge = document.getElementById("cartBadge");
   var cartToggle = document.getElementById("cartToggle");
-  var cartDrawer = document.getElementById("cartDrawer");
+  var cartModal = document.getElementById("cartModal");
   var cartBackdrop = document.getElementById("cartBackdrop");
   var cartClose = document.getElementById("cartClose");
-  var cartBody = document.getElementById("cartBody");
-  var cartFoot = document.getElementById("cartFoot");
+  var cartList = document.getElementById("cartList");
+  var cartTotalRow = document.getElementById("cartTotalRow");
   var cartTotalEl = document.getElementById("cartTotal");
-  var cartCheckoutBtn = document.getElementById("cartCheckoutBtn");
-  var mbbLabel = document.getElementById("mbbLabel");
-  var mbbValue = document.getElementById("mbbValue");
-  var mbbAction = document.getElementById("mbbAction");
-
-  function updateMobileBuyBar() {
-    if (!mbbLabel || !mbbValue || !mbbAction) return;
-    var count = cartCount();
-    if (count > 0) {
-      mbbLabel.textContent = count + (count === 1 ? " pack en el carrito" : " packs en el carrito");
-      mbbValue.textContent = formatPrice(cartTotal());
-      mbbAction.textContent = "Ver Carrito";
-      mbbAction.onclick = openCart;
-    } else {
-      mbbLabel.textContent = "Packs desde";
-      mbbValue.textContent = "$4.999";
-      mbbAction.textContent = "Ver Packs";
-      mbbAction.onclick = function () {
-        var target = document.getElementById("precios");
-        if (target) target.scrollIntoView({ behavior: "smooth" });
-      };
-    }
-  }
+  var cartConfirmBtn = document.getElementById("cartConfirmBtn");
+  var cartStepView = document.getElementById("cartStepView");
+  var checkoutStepView = document.getElementById("checkoutStepView");
+  var checkoutBack = document.getElementById("checkoutBack");
+  var checkoutSuccessView = document.getElementById("checkoutSuccessView");
 
   function renderCart() {
     var ids = cartIds();
@@ -150,15 +154,15 @@
       cartBadge.classList.toggle("is-visible", count > 0);
     }
 
-    if (cartBody) {
+    if (cartList) {
       if (ids.length === 0) {
-        cartBody.innerHTML =
+        cartList.innerHTML =
           '<div class="cart-empty">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>' +
           "<p>Tu carrito está vacío</p>" +
-          '<a href="#precios" class="btn btn-outline">Ver los Packs</a>' +
           "</div>";
-        if (cartFoot) cartFoot.hidden = true;
+        if (cartTotalRow) cartTotalRow.hidden = true;
+        if (cartConfirmBtn) cartConfirmBtn.hidden = true;
       } else {
         var html = "";
         ids.forEach(function (id) {
@@ -175,22 +179,17 @@
             '<span class="qty-val">' + item.qty + "</span>" +
             '<button type="button" class="qty-btn" data-action="inc" aria-label="Sumar unidad de ' + item.name + '">+</button>' +
             "</div>" +
-            '<div style="display:flex;align-items:center;gap:.6rem;">' +
             '<span class="cart-item-total">' + formatPrice(item.qty * item.price) + "</span>" +
             '<button type="button" class="cart-item-remove" data-action="remove" aria-label="Quitar ' + item.name + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m2 0-1 13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7"/></svg></button>' +
             "</div>" +
-            "</div>" +
             "</div>";
         });
-        cartBody.innerHTML = html;
-        if (cartFoot) {
-          cartFoot.hidden = false;
-          if (cartTotalEl) cartTotalEl.textContent = formatPrice(cartTotal());
-        }
+        cartList.innerHTML = html;
+        if (cartTotalRow) cartTotalRow.hidden = false;
+        if (cartConfirmBtn) cartConfirmBtn.hidden = false;
+        if (cartTotalEl) cartTotalEl.textContent = formatPrice(cartTotal());
       }
     }
-
-    updateMobileBuyBar();
   }
 
   function bumpBadge() {
@@ -200,26 +199,33 @@
     cartBadge.classList.add("bump");
   }
 
+  function showCartStep() {
+    if (cartStepView) cartStepView.hidden = false;
+    if (checkoutStepView) checkoutStepView.hidden = true;
+    if (checkoutSuccessView) checkoutSuccessView.hidden = true;
+  }
+
   function openCart() {
-    if (!cartDrawer) return;
-    closeCheckout();
-    cartDrawer.classList.add("is-open");
+    if (!cartModal) return;
+    showCartStep();
+    renderCart();
+    cartModal.classList.add("is-open");
     if (cartBackdrop) cartBackdrop.classList.add("is-open");
-    cartDrawer.setAttribute("aria-hidden", "false");
+    cartModal.setAttribute("aria-hidden", "false");
     document.body.classList.add("cart-open");
   }
 
   function closeCart() {
-    if (!cartDrawer) return;
-    cartDrawer.classList.remove("is-open");
+    if (!cartModal) return;
+    cartModal.classList.remove("is-open");
     if (cartBackdrop) cartBackdrop.classList.remove("is-open");
-    cartDrawer.setAttribute("aria-hidden", "true");
+    cartModal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("cart-open");
   }
 
   if (cartToggle) {
     cartToggle.addEventListener("click", function () {
-      if (cartDrawer && cartDrawer.classList.contains("is-open")) {
+      if (cartModal && cartModal.classList.contains("is-open")) {
         closeCart();
       } else {
         openCart();
@@ -229,13 +235,32 @@
   if (cartClose) cartClose.addEventListener("click", closeCart);
   if (cartBackdrop) cartBackdrop.addEventListener("click", closeCart);
 
-  if (cartBody) {
-    cartBody.addEventListener("click", function (e) {
-      var link = e.target.closest("a");
-      if (link) {
-        closeCart();
-        return;
-      }
+  /* ---------- Modal info Negocio Mayorista ---------- */
+  var negocioInfoBtn = document.getElementById("negocioInfoBtn");
+  var negocioInfoModal = document.getElementById("negocioInfoModal");
+  var negocioInfoBackdrop = document.getElementById("negocioInfoBackdrop");
+  var negocioInfoClose = document.getElementById("negocioInfoClose");
+
+  function openNegocioInfo() {
+    if (!negocioInfoModal) return;
+    negocioInfoModal.classList.add("is-open");
+    if (negocioInfoBackdrop) negocioInfoBackdrop.classList.add("is-open");
+    negocioInfoModal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeNegocioInfo() {
+    if (!negocioInfoModal) return;
+    negocioInfoModal.classList.remove("is-open");
+    if (negocioInfoBackdrop) negocioInfoBackdrop.classList.remove("is-open");
+    negocioInfoModal.setAttribute("aria-hidden", "true");
+  }
+
+  if (negocioInfoBtn) negocioInfoBtn.addEventListener("click", openNegocioInfo);
+  if (negocioInfoClose) negocioInfoClose.addEventListener("click", closeNegocioInfo);
+  if (negocioInfoBackdrop) negocioInfoBackdrop.addEventListener("click", closeNegocioInfo);
+
+  if (cartList) {
+    cartList.addEventListener("click", function (e) {
       var itemEl = e.target.closest(".cart-item");
       if (!itemEl) return;
       var id = itemEl.getAttribute("data-id");
@@ -276,8 +301,8 @@
       }
       saveCart();
       renderCart();
-      openCart();
       bumpBadge();
+      showToast(name + " agregado — Tocá el carrito para finalizar");
 
       if (window.mwTrack) {
         window.mwTrack("add_to_cart", {
@@ -298,15 +323,10 @@
     });
   });
 
-  /* ---------- Checkout ---------- */
-  var checkoutModal = document.getElementById("checkoutModal");
-  var checkoutBackdrop = document.getElementById("checkoutBackdrop");
-  var checkoutClose = document.getElementById("checkoutClose");
-  var checkoutForm = document.getElementById("checkoutForm");
+  /* ---------- Checkout (paso 2) ---------- */
   var checkoutSummary = document.getElementById("checkoutSummary");
-  var checkoutFormView = document.getElementById("checkoutFormView");
-  var checkoutSuccessView = document.getElementById("checkoutSuccessView");
   var checkoutWspLink = document.getElementById("checkoutWspLink");
+  var checkoutForm = document.getElementById("checkoutForm");
   var ckName = document.getElementById("ckName");
   var ckEmail = document.getElementById("ckEmail");
   var ckNameError = document.getElementById("ckNameError");
@@ -324,19 +344,15 @@
     checkoutSummary.innerHTML = html;
   }
 
-  function openCheckout() {
-    if (!checkoutModal || cartIds().length === 0) return;
-    closeCart();
-    renderCheckoutSummary();
-    if (checkoutFormView) checkoutFormView.hidden = false;
+  function showCheckoutStep() {
+    if (!cartModal || cartIds().length === 0) return;
+    if (cartStepView) cartStepView.hidden = true;
+    if (checkoutStepView) checkoutStepView.hidden = false;
     if (checkoutSuccessView) checkoutSuccessView.hidden = true;
-    checkoutModal.classList.add("is-open");
-    if (checkoutBackdrop) checkoutBackdrop.classList.add("is-open");
-    checkoutModal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("cart-open");
+    renderCheckoutSummary();
     window.setTimeout(function () {
       if (ckName) ckName.focus();
-    }, 350);
+    }, 300);
 
     if (window.mwTrack) {
       window.mwTrack("begin_checkout", {
@@ -347,21 +363,12 @@
     }
   }
 
-  function closeCheckout() {
-    if (!checkoutModal) return;
-    checkoutModal.classList.remove("is-open");
-    if (checkoutBackdrop) checkoutBackdrop.classList.remove("is-open");
-    checkoutModal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("cart-open");
-  }
-
-  if (cartCheckoutBtn) cartCheckoutBtn.addEventListener("click", openCheckout);
-  if (checkoutClose) checkoutClose.addEventListener("click", closeCheckout);
-  if (checkoutBackdrop) checkoutBackdrop.addEventListener("click", closeCheckout);
+  if (cartConfirmBtn) cartConfirmBtn.addEventListener("click", showCheckoutStep);
+  if (checkoutBack) checkoutBack.addEventListener("click", showCartStep);
 
   function buildOrderMessage(name, email) {
     var lines = [];
-    lines.push("Hola, quiero confirmar mi compra en MayoristasYa.");
+    lines.push("Hola, quiero confirmar mi compra en " + CONFIG.businessName + ".");
     lines.push("");
     lines.push("Pedido:");
     cartIds().forEach(function (id) {
@@ -375,15 +382,13 @@
     lines.push("Email: " + email);
     lines.push("");
     lines.push("Voy a realizar la transferencia a la siguiente cuenta:");
-    lines.push("Alias: lautaro.calabria");
-    lines.push("CBU: 0000003100009573267564");
-    lines.push("Titular: Lautaro Lopez Calabria");
+    lines.push("Alias: " + CONFIG.transfer.alias);
+    lines.push("CBU: " + CONFIG.transfer.cbu);
+    lines.push("Titular: " + CONFIG.transfer.titular);
     lines.push("");
-    lines.push("Voy a mandar el comprobante de la transferencia por este mismo chat.");
     lines.push(
-      "Entiendo que dentro de las próximas 48 horas voy a recibir por este mismo chat la lista completa de los proveedores correspondientes a mi pack."
+      "Entiendo que dentro de las próximas 48 horas voy a recibir por este mismo chat la lista completa de los proveedores correspondientes a mi pack. Muchas gracias."
     );
-    lines.push("Si tengo alguna duda, te escribo por acá. Muchas gracias.");
     return lines.join("\n");
   }
 
@@ -416,10 +421,10 @@
       if (!valid) return;
 
       var message = buildOrderMessage(name, email);
-      var url = "https://wa.me/" + WSP_NUMBER + "?text=" + encodeURIComponent(message);
+      var url = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(message);
 
       if (checkoutWspLink) checkoutWspLink.setAttribute("href", url);
-      if (checkoutFormView) checkoutFormView.hidden = true;
+      if (checkoutStepView) checkoutStepView.hidden = true;
       if (checkoutSuccessView) checkoutSuccessView.hidden = false;
 
       window.open(url, "_blank", "noopener");
@@ -456,36 +461,39 @@
   loadCart();
   renderCart();
 
-  /* ---------- Mobile nav toggle ---------- */
+  /* ---------- Menú mobile ---------- */
   var navToggle = document.getElementById("navToggle");
   var mobileNav = document.getElementById("mobileNav");
 
   function closeNav() {
+    if (!navToggle || !mobileNav) return;
     navToggle.setAttribute("aria-expanded", "false");
     mobileNav.classList.remove("is-open");
     document.body.classList.remove("nav-open");
   }
 
-  navToggle.addEventListener("click", function () {
-    var isOpen = navToggle.getAttribute("aria-expanded") === "true";
-    navToggle.setAttribute("aria-expanded", String(!isOpen));
-    mobileNav.classList.toggle("is-open");
-    document.body.classList.toggle("nav-open");
-  });
+  if (navToggle && mobileNav) {
+    navToggle.addEventListener("click", function () {
+      var isOpen = navToggle.getAttribute("aria-expanded") === "true";
+      navToggle.setAttribute("aria-expanded", String(!isOpen));
+      mobileNav.classList.toggle("is-open");
+      document.body.classList.toggle("nav-open");
+    });
 
-  mobileNav.querySelectorAll("a").forEach(function (link) {
-    link.addEventListener("click", closeNav);
-  });
+    mobileNav.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", closeNav);
+    });
+  }
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
       closeNav();
       closeCart();
-      closeCheckout();
+      closeNegocioInfo();
     }
   });
 
-  /* ---------- FAQ accordion ---------- */
+  /* ---------- FAQ acordeón ---------- */
   document.querySelectorAll(".faq-item").forEach(function (item) {
     var question = item.querySelector(".faq-question");
     var answer = item.querySelector(".faq-answer");
@@ -514,7 +522,6 @@
   });
 
   /* ---------- Scroll reveal ---------- */
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var revealEls = document.querySelectorAll(".reveal");
 
   if (reduceMotion || !("IntersectionObserver" in window)) {
@@ -538,12 +545,13 @@
     });
   }
 
-  /* ---------- Animated counters ---------- */
+  /* ---------- Contadores animados ---------- */
   var counters = document.querySelectorAll(".stat-num[data-count]");
 
   function animateCounter(el) {
-    var target = parseInt(el.getAttribute("data-count"), 10);
+    var target = parseFloat(el.getAttribute("data-count"));
     var suffix = el.getAttribute("data-suffix") || "";
+    var decimals = parseInt(el.getAttribute("data-decimals"), 10) || 0;
     var duration = 1400;
     var start = null;
 
@@ -551,12 +559,14 @@
       if (!start) start = timestamp;
       var progress = Math.min((timestamp - start) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
-      var value = Math.floor(eased * target);
-      el.textContent = value.toLocaleString("es-AR") + suffix;
+      var value = eased * target;
+      var display = decimals > 0 ? value.toFixed(decimals) : Math.floor(value).toLocaleString("es-AR");
+      el.textContent = display + suffix;
       if (progress < 1) {
         window.requestAnimationFrame(step);
       } else {
-        el.textContent = target.toLocaleString("es-AR") + suffix;
+        var finalDisplay = decimals > 0 ? target.toFixed(decimals) : target.toLocaleString("es-AR");
+        el.textContent = finalDisplay + suffix;
       }
     }
     window.requestAnimationFrame(step);
@@ -565,8 +575,10 @@
   if (counters.length) {
     if (reduceMotion || !("IntersectionObserver" in window)) {
       counters.forEach(function (el) {
-        var target = parseInt(el.getAttribute("data-count"), 10);
-        el.textContent = target.toLocaleString("es-AR") + (el.getAttribute("data-suffix") || "");
+        var target = parseFloat(el.getAttribute("data-count"));
+        var decimals = parseInt(el.getAttribute("data-decimals"), 10) || 0;
+        var display = decimals > 0 ? target.toFixed(decimals) : target.toLocaleString("es-AR");
+        el.textContent = display + (el.getAttribute("data-suffix") || "");
       });
     } else {
       var counterObserver = new IntersectionObserver(
