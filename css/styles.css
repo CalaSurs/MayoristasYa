@@ -1124,6 +1124,9 @@ body.cart-open {
   padding: 1.5rem 1rem;
   box-shadow: var(--sh-sm);
   text-align: center;
+}
+
+.stats-track .stat-card {
   flex-shrink: 0;
   width: 200px;
 }
@@ -1170,6 +1173,188 @@ body.cart-open {
 
 .negocio-card {
   padding: 2rem;
+}
+
+/* Cuota mensual de mantenimiento */
+.negocio-monthly {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--body);
+  background: var(--clay-tint);
+  border-radius: var(--radius-input);
+  padding: 0.75rem 0.9rem;
+}
+
+.negocio-monthly svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--clay);
+}
+
+.negocio-monthly strong {
+  color: var(--clay-dark);
+  font-weight: 800;
+}
+
+/* --- Mobile / tablet: se mantiene la card apilada tal cual estaba --- */
+@media (max-width: 899.98px) {
+  .negocio-main,
+  .negocio-aside {
+    display: contents;
+  }
+
+  .negocio-card h3 {
+    order: 1;
+  }
+  .negocio-card .price-desc {
+    order: 2;
+  }
+  .negocio-card .price-row {
+    order: 3;
+  }
+  .negocio-card .price-new {
+    order: 4;
+  }
+  .negocio-card .price-save {
+    order: 5;
+    margin-bottom: 0.85rem;
+  }
+  .negocio-card .negocio-monthly {
+    order: 6;
+    margin-bottom: 1.4rem;
+  }
+  .negocio-card .price-features {
+    order: 7;
+  }
+  .negocio-card .js-add-cart {
+    order: 8;
+  }
+}
+
+/* --- Desktop: card ancha en dos columnas --- */
+@media (min-width: 900px) {
+  .negocio-row {
+    max-width: 1180px;
+    margin-top: 3.25rem;
+  }
+
+  .negocio-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.95fr);
+    align-items: center;
+    gap: 2.75rem;
+    padding: 2.75rem 3rem;
+  }
+
+  .negocio-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: calc(var(--radius-card) - 2px);
+    background: radial-gradient(120% 130% at 0% 0%, rgba(108, 60, 224, 0.07), transparent 55%);
+    pointer-events: none;
+  }
+
+  .negocio-main,
+  .negocio-aside {
+    position: relative;
+    z-index: 1;
+  }
+
+  .negocio-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .negocio-main,
+  .negocio-aside {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .negocio-card h3 {
+    font-size: 1.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .negocio-card .price-desc {
+    font-size: 0.98rem;
+    min-height: 0;
+    max-width: 54ch;
+    margin-bottom: 1.6rem;
+  }
+
+  .negocio-card .price-features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem 1.5rem;
+    margin-bottom: 0;
+    flex-grow: 0;
+  }
+
+  .negocio-card .price-features li {
+    font-size: 0.92rem;
+  }
+
+  .negocio-aside {
+    background: linear-gradient(180deg, #fff, var(--cream-2));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card-sm);
+    padding: 1.85rem 1.65rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .negocio-aside .price-row {
+    justify-content: center;
+    margin-bottom: 0.2rem;
+  }
+
+  .negocio-aside .price-new {
+    font-size: 2.7rem;
+  }
+
+  .negocio-aside .price-save {
+    align-self: center;
+    margin: 0.65rem 0 1rem;
+  }
+
+  .negocio-aside .negocio-monthly {
+    text-align: left;
+    background: #fff;
+    border: 1px dashed var(--clay);
+    margin-bottom: 1.4rem;
+  }
+
+  .negocio-aside .btn-outline {
+    background: var(--clay);
+    color: #fff;
+    border-color: var(--clay-dark);
+    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-sm);
+  }
+
+  .negocio-aside .btn-outline:hover,
+  .negocio-aside .btn-outline:focus-visible {
+    background: var(--clay-hover);
+    color: #fff;
+    border-color: var(--clay-dark);
+    box-shadow: 0 7px 0 0 var(--clay-dark), var(--sh-md);
+  }
+
+  .negocio-aside .btn-outline:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 0 var(--clay-dark);
+  }
+
+  .negocio-aside .btn-outline.is-added {
+    background: var(--sage);
+    border-color: #189449;
+    box-shadow: 0 5px 0 0 #189449, var(--sh-sm);
+  }
 }
 
 .negocio-info-btn {
@@ -2195,6 +2380,14 @@ body.cart-open {
 .cart-item-info span {
   font-size: 0.78rem;
   color: var(--muted);
+}
+
+.cart-item-note {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--clay-dark);
 }
 
 .cart-item-right {

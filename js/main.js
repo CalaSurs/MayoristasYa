@@ -5,7 +5,7 @@
   var CONFIG = {
     businessName: "MayoristasYa",
     whatsappNumber: "5491128520849",
-    whatsappDefaultMessage: "Hola, quiero comprar el Pack de +1000 Proveedores de MayoristasYa.",
+    whatsappDefaultMessage: "Hola! Quería hacer una consulta sobre los packs de proveedores de MayoristasYa.",
     transfer: {
       alias: "lautaro.calabria",
       cbu: "0000003100009573267564",
@@ -172,6 +172,7 @@
             '<div class="cart-item-info">' +
             "<strong>" + item.name + "</strong>" +
             "<span>" + item.priceLabel + " c/u</span>" +
+            (item.id === "negocio-mayorista" ? '<small class="cart-item-note">+ $30.000/mes de mantenimiento</small>' : "") +
             "</div>" +
             '<div class="cart-item-right">' +
             '<div class="qty-stepper">' +
@@ -376,6 +377,9 @@
       lines.push("- " + item.name + " (x" + item.qty + "): " + formatPrice(item.qty * item.price));
     });
     lines.push("Total: " + formatPrice(cartTotal()));
+    if (cart["negocio-mayorista"]) {
+      lines.push("(El Negocio Mayorista incluye además $30.000 por mes de mantenimiento de la página.)");
+    }
     lines.push("");
     lines.push("Datos de contacto:");
     lines.push("Nombre: " + name);
