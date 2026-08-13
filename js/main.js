@@ -7,9 +7,9 @@
     whatsappNumber: "5491128520849",
     whatsappDefaultMessage: "Hola! Quería hacer una consulta sobre los packs de proveedores de MayoristasYa.",
     transfer: {
-      alias: "lautaro.calabria",
-      cbu: "0000003100009573267564",
-      titular: "Lautaro Lopez Calabria",
+      alias: "calabria.lautaro",
+      cbu: "0000168300000028167293",
+      titular: "Gisela Angela Calabria",
     },
   };
 
