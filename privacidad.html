@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Google Analytics (GA4) - configurar ID en js/analytics.js -->
 <script src="js/analytics.js"></script>
+<!-- Chat en vivo (Tawk.to) - configurar URL en js/chat.js -->
+<script src="js/chat.js" defer></script>
 <title>Política de Privacidad | MayoristasYa.com</title>
 <meta name="description" content="Política de privacidad de MayoristasYa.com: cómo recopilamos, usamos y protegemos tus datos personales.">
 <meta name="robots" content="index, follow">
@@ -37,12 +39,14 @@
     </a>
 
     <h1>Política de Privacidad</h1>
-    <p class="updated">Última actualización: 14 de julio de 2026</p>
+    <p class="updated">Última actualización: 28 de agosto de 2026</p>
 
     <p>En MayoristasYa.com nos comprometemos a proteger la privacidad de quienes visitan y utilizan nuestro sitio. Esta política explica qué información recopilamos y cómo la utilizamos.</p>
 
     <h2>1. Información que recopilamos</h2>
     <p>Al contactarnos por WhatsApp, podemos recibir tu número de teléfono, nombre y los mensajes que nos envíes de forma voluntaria para coordinar la compra del pack de proveedores.</p>
+    <p>Si completás el formulario de compra del sitio, recibimos el nombre y el correo electrónico que ingreses.</p>
+    <p>Si usás el chat en vivo de la página, se registran los mensajes que escribas junto con datos técnicos de la visita (como la página desde la que escribís y tu navegador). El chat también guarda cookies en tu dispositivo para mantener la conversación abierta si volvés al sitio.</p>
 
     <h2>2. Uso de la información</h2>
     <ul>
@@ -55,7 +59,13 @@
     <p>Adoptamos medidas razonables para resguardar la información que nos compartís y no la utilizamos con fines distintos a los descriptos en esta política.</p>
 
     <h2>4. Compartir información con terceros</h2>
-    <p>No vendemos ni compartimos tus datos personales con terceros, salvo que sea necesario para procesar tu compra o por requerimiento legal.</p>
+    <p>No vendemos tus datos personales. Para que el sitio funcione utilizamos servicios de terceros que, por su propia naturaleza, procesan parte de esa información:</p>
+    <ul>
+      <li><strong>Tawk.to</strong> (tawk.to), que provee el chat en vivo y almacena las conversaciones.</li>
+      <li><strong>Google Analytics</strong>, que nos da estadísticas anónimas de uso del sitio.</li>
+      <li><strong>WhatsApp</strong> (Meta), cuando elegís contactarnos por ese medio.</li>
+    </ul>
+    <p>Cada uno de ellos trata los datos según sus propias políticas de privacidad. Fuera de estos casos, solo compartimos información si es necesario para procesar tu compra o por requerimiento legal.</p>
 
     <h2>5. Tus derechos</h2>
     <p>Podés solicitar acceso, corrección o eliminación de tus datos personales escribiéndonos a <a href="mailto:calamayoristasya@gmail.com">calamayoristasya@gmail.com</a>.</p>
@@ -75,6 +85,13 @@
     </div>
   </div>
 </footer>
+
+<button type="button" class="chat-float" id="chatFloat" aria-label="Abrir el chat y hablar con nosotros">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20.5 11.3c0 4.03-3.8 7.3-8.5 7.3-.9 0-1.77-.12-2.58-.34L4.6 20.4l1.24-3.4A6.93 6.93 0 0 1 3.5 11.3C3.5 7.27 7.3 4 12 4s8.5 3.27 8.5 7.3Z"/>
+    <path d="M9.3 10.9q2.7 3.1 5.4 0"/>
+  </svg>
+</button>
 
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>

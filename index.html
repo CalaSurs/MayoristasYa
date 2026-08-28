@@ -7,6 +7,8 @@
 <script src="js/analytics.js" defer></script>
 <!-- Registro automático de pedidos (Google Sheets) - configurar URL en js/orders.js -->
 <script src="js/orders.js" defer></script>
+<!-- Chat en vivo (Tawk.to) - configurar URL en js/chat.js -->
+<script src="js/chat.js" defer></script>
 <title>Proveedores Mayoristas Argentina | +1000 Contactos</title>
 <meta name="description" content="Lista de proveedores mayoristas para revender: ropa, calzado, tecnología, hogar y +25 rubros. Desde $4.999, pago único y entrega al instante por WhatsApp.">
 <meta name="author" content="MayoristasYa.com">
@@ -156,11 +158,6 @@
           Ver los 3 packs
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-
-        <button class="cart-btn" id="cartToggle" aria-label="Ver carrito de compras" aria-haspopup="dialog">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-          <span class="cart-badge" id="cartBadge">0</span>
-        </button>
 
         <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Abrir menú de navegación">
           <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -354,9 +351,9 @@
             <li>Recibís todo al instante por WhatsApp</li>
             <li>Ideal si querés probar antes de escalar</li>
           </ul>
-          <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="100" data-name="Pack 100" data-price="4999" data-price-label="$4.999">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-            Agregar al carrito
+          <button type="button" class="btn btn-outline btn-block js-buy" data-id="100" data-name="Pack 100" data-price="4999" data-price-label="$4.999">
+            Comprar ahora
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
 
@@ -377,9 +374,9 @@
             <li>Actualizaciones gratis de por vida</li>
             <li class="popular-feature">El más elegido por quienes están empezando</li>
           </ul>
-          <button type="button" class="btn btn-primary btn-block js-add-cart" data-id="500" data-name="Pack 500" data-price="14999" data-price-label="$14.999">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-            Agregar al carrito
+          <button type="button" class="btn btn-primary btn-block js-buy" data-id="500" data-name="Pack 500" data-price="14999" data-price-label="$14.999">
+            Comprar ahora
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
 
@@ -400,9 +397,9 @@
             <li>Ideal para negocios y tiendas online</li>
             <li class="popular-feature">Guía para arrancar a revender, incluida</li>
           </ul>
-          <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="1000" data-name="Pack 1000" data-price="19999" data-price-label="$19.999">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-            Agregar al carrito
+          <button type="button" class="btn btn-outline btn-block js-buy" data-id="1000" data-name="Pack 1000" data-price="19999" data-price-label="$19.999">
+            Comprar ahora
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
       </div>
@@ -436,9 +433,9 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
               <span><strong>+ $30.000 por mes</strong> de mantenimiento: dominio, hosting, soporte y actualizaciones de tu página.</span>
             </p>
-            <button type="button" class="btn btn-outline btn-block js-add-cart" data-id="negocio-mayorista" data-name="Negocio Mayorista" data-price="79999" data-price-label="$79.999">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3h2l2.2 12.2a2 2 0 0 0 2 1.65h7.7a2 2 0 0 0 1.98-1.7L20 8H6.1"/></svg>
-              Agregar al carrito
+            <button type="button" class="btn btn-outline btn-block js-buy" data-id="negocio-mayorista" data-name="Negocio Mayorista" data-price="79999" data-price-label="$79.999">
+              Comprar ahora
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </div>
         </div>
@@ -764,18 +761,18 @@
   </div>
 </footer>
 
-<!-- ===================== WHATSAPP FLOTANTE ===================== -->
-<a href="#" class="whatsapp-float js-wsp" target="_blank" rel="noopener" aria-label="Comprar por WhatsApp">
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Zm-5.55 12.2h0a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.61 6.61 0 1 1 12.28-3.5 6.56 6.56 0 0 1-6.69 6.6Zm3.6-4.93c-.2-.1-1.17-.58-1.35-.64s-.31-.1-.44.1-.5.64-.61.77-.23.15-.42.05a5.4 5.4 0 0 1-1.6-.98 6 6 0 0 1-1.1-1.37c-.12-.2 0-.3.09-.4.1-.1.2-.23.3-.35.1-.12.13-.2.2-.33a.36.36 0 0 0 0-.35c-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.33h-.38a.72.72 0 0 0-.52.24 2.2 2.2 0 0 0-.68 1.63c0 .96.7 1.9.8 2.03.1.13 1.38 2.1 3.34 2.95.47.2.83.32 1.12.41.47.15.9.13 1.24.08.38-.06 1.17-.48 1.34-.94.16-.46.16-.86.12-.94-.05-.1-.18-.15-.38-.25Z"/></svg>
-</a>
+<!-- ===================== CHAT FLOTANTE ===================== -->
+<button type="button" class="chat-float" id="chatFloat" aria-label="Abrir el chat y hablar con nosotros">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20.5 11.3c0 4.03-3.8 7.3-8.5 7.3-.9 0-1.77-.12-2.58-.34L4.6 20.4l1.24-3.4A6.93 6.93 0 0 1 3.5 11.3C3.5 7.27 7.3 4 12 4s8.5 3.27 8.5 7.3Z"/>
+    <path d="M9.3 10.9q2.7 3.1 5.4 0"/>
+  </svg>
+</button>
 
 <!-- ===================== BOTÓN VOLVER ARRIBA ===================== -->
 <button type="button" class="back-to-top" id="backToTop" aria-label="Volver arriba">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
-
-<!-- ===================== TOASTS ===================== -->
-<div class="toast-stack" id="toastStack" aria-live="polite"></div>
 
 <!-- ===================== INFO NEGOCIO MAYORISTA ===================== -->
 <div class="modal-backdrop" id="negocioInfoBackdrop"></div>
@@ -801,29 +798,15 @@
   </a>
 </div>
 
-<!-- ===================== CARRITO (paso 1) ===================== -->
-<div class="modal-backdrop" id="cartBackdrop"></div>
-<div class="cart-modal" id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
-  <button class="modal-close" id="cartClose" aria-label="Cerrar carrito">
+<!-- ===================== CHECKOUT ===================== -->
+<div class="modal-backdrop" id="checkoutBackdrop"></div>
+<div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-hidden="true">
+  <button class="modal-close" id="checkoutClose" aria-label="Cerrar">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
   </button>
 
-  <div id="cartStepView">
-    <h3 id="cartTitle">Tu carrito</h3>
-    <div class="cart-list" id="cartList"></div>
-    <div class="cart-total-row" id="cartTotalRow" hidden>
-      <span>Total</span>
-      <strong id="cartTotal">$0</strong>
-    </div>
-    <button type="button" class="btn btn-primary btn-block" id="cartConfirmBtn" hidden>Confirmar pedido</button>
-  </div>
-
-  <div id="checkoutStepView" hidden>
-    <button type="button" class="checkout-back" id="checkoutBack">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 6-6 6 6 6M5 12h14"/></svg>
-      Volver al carrito
-    </button>
-    <h3>Finalizar compra</h3>
+  <div id="checkoutStepView">
+    <h3 id="checkoutTitle">Finalizar compra</h3>
     <div class="checkout-summary" id="checkoutSummary"></div>
 
     <form id="checkoutForm" novalidate>

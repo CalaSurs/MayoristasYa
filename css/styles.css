@@ -292,10 +292,6 @@ section {
   width: 100%;
 }
 
-.btn.is-added {
-  background: var(--sage);
-  box-shadow: 0 5px 0 0 #189449, var(--sh-sm);
-}
 
 .chip {
   display: inline-flex;
@@ -450,79 +446,6 @@ section {
     grid-column: 1;
     grid-row: 1;
   }
-
-  .cart-btn {
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: end;
-  }
-}
-
-.cart-btn {
-  position: relative;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--sh-sm);
-  transition: transform 0.15s var(--bounce), border-color 0.15s var(--ease);
-}
-
-.cart-btn:hover {
-  transform: translateY(-2px);
-  border-color: var(--clay);
-}
-
-.cart-btn svg {
-  width: 20px;
-  height: 20px;
-  color: var(--ink);
-}
-
-.cart-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 4px;
-  border-radius: 50%;
-  background: var(--clay);
-  color: #fff;
-  font-size: 0.68rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.6);
-  transition: transform 0.25s var(--bounce), opacity 0.2s var(--ease);
-  box-shadow: 0 2px 0 0 var(--clay-dark);
-}
-
-.cart-badge.is-visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.cart-badge.bump {
-  animation: badge-bump 0.4s var(--bounce);
-}
-
-@keyframes badge-bump {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.35);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 .nav-toggle {
@@ -670,7 +593,7 @@ section {
 }
 
 body.nav-open,
-body.cart-open {
+body.checkout-open {
   overflow: hidden;
 }
 
@@ -1231,7 +1154,7 @@ body.cart-open {
   .negocio-card .price-features {
     order: 7;
   }
-  .negocio-card .js-add-cart {
+  .negocio-card .js-buy {
     order: 8;
   }
 }
@@ -1348,12 +1271,6 @@ body.cart-open {
   .negocio-aside .btn-outline:active {
     transform: translateY(5px);
     box-shadow: 0 0 0 0 var(--clay-dark);
-  }
-
-  .negocio-aside .btn-outline.is-added {
-    background: var(--sage);
-    border-color: #189449;
-    box-shadow: 0 5px 0 0 #189449, var(--sh-sm);
   }
 }
 
@@ -2011,30 +1928,51 @@ body.cart-open {
   }
 }
 
-/* ---------- WhatsApp flotante ---------- */
-.whatsapp-float {
+/* ---------- Chat flotante ---------- */
+.chat-float {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--whatsapp);
+  background: var(--clay);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--sh-md);
+  box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md);
   z-index: 850;
-  animation: wsp-bob 2.4s ease-in-out infinite;
+  /* Flota suave + late un aro hacia afuera. El aro es un box-shadow, así no
+     hace falta ningún elemento extra adentro del botón. */
+  animation: chat-bob 2.6s ease-in-out infinite, chat-pulse 2.6s var(--ease) infinite;
 }
 
-.whatsapp-float svg {
+.chat-float svg {
   width: 30px;
   height: 30px;
-  color: #fff;
+  transition: transform 0.18s var(--bounce);
 }
 
-@keyframes wsp-bob {
+.chat-float:hover {
+  background: var(--clay-hover);
+}
+
+.chat-float:hover svg,
+.chat-float:focus-visible svg {
+  transform: scale(1.12);
+}
+
+.chat-float:active {
+  box-shadow: 0 0 0 0 var(--clay-dark), var(--sh-sm);
+}
+
+/* Mientras la ventana de chat está abierta */
+.chat-float.is-hidden {
+  display: none;
+}
+
+@keyframes chat-bob {
   0%,
   100% {
     transform: translateY(0);
@@ -2044,8 +1982,19 @@ body.cart-open {
   }
 }
 
+/* rgba de --clay (#6c3ce0): el aro necesita transparencia propia */
+@keyframes chat-pulse {
+  0% {
+    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md), 0 0 0 0 rgba(108, 60, 224, 0.5);
+  }
+  70%,
+  100% {
+    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md), 0 0 0 20px rgba(108, 60, 224, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .whatsapp-float {
+  .chat-float {
     animation: none;
   }
 }
@@ -2094,78 +2043,19 @@ body.cart-open {
     right: auto;
     bottom: 1.25rem;
   }
-  .whatsapp-float {
+  .chat-float {
     bottom: 1.25rem;
     right: 1.25rem;
     width: 54px;
     height: 54px;
   }
-  .whatsapp-float svg {
+  .chat-float svg {
     width: 27px;
     height: 27px;
   }
 }
 
-/* ---------- Toast ---------- */
-.toast-stack {
-  position: fixed;
-  top: 1.25rem;
-  right: 1.25rem;
-  z-index: 1200;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  max-width: min(360px, calc(100vw - 2.5rem));
-}
-
-.toast {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  background: #fff;
-  border-radius: var(--radius-card-sm);
-  box-shadow: var(--sh-md);
-  padding: 1rem 1.1rem;
-  transform: translateX(120%);
-  opacity: 0;
-  transition: transform 0.3s var(--bounce), opacity 0.3s var(--ease);
-}
-
-.toast.is-visible {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.toast .toast-ic {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #dcf7e6;
-  color: var(--sage);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.toast .toast-ic svg {
-  width: 17px;
-  height: 17px;
-}
-
-.toast p {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .toast {
-    transition: opacity 0.2s linear;
-  }
-}
-
-/* ---------- Carrito (paso 1) y Checkout (paso 2) ---------- */
+/* ---------- Checkout ---------- */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -2181,7 +2071,7 @@ body.cart-open {
   pointer-events: auto;
 }
 
-.cart-modal {
+.checkout-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -2199,13 +2089,13 @@ body.cart-open {
   transition: opacity 0.3s var(--ease), transform 0.3s var(--bounce);
 }
 
-.cart-modal.is-open {
+.checkout-modal.is-open {
   opacity: 1;
   pointer-events: auto;
   transform: translate(-50%, -50%) scale(1);
 }
 
-.cart-modal .modal-close {
+.checkout-modal .modal-close {
   position: absolute;
   top: 1.1rem;
   right: 1.1rem;
@@ -2220,16 +2110,16 @@ body.cart-open {
   transition: transform 0.15s var(--bounce);
 }
 
-.cart-modal .modal-close:hover {
+.checkout-modal .modal-close:hover {
   transform: rotate(90deg);
 }
 
-.cart-modal .modal-close svg {
+.checkout-modal .modal-close svg {
   width: 17px;
   height: 17px;
 }
 
-.cart-modal h3 {
+.checkout-modal h3 {
   font-size: 1.35rem;
   margin-bottom: 1.35rem;
   padding-right: 2rem;
@@ -2340,146 +2230,18 @@ body.cart-open {
   margin-bottom: 1.25rem;
 }
 
-.cart-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  margin-bottom: 1.5rem;
-}
-
-.cart-empty {
-  text-align: center;
-  padding: 2rem 1rem;
-  color: var(--muted);
-}
-
-.cart-empty svg {
-  width: 46px;
-  height: 46px;
-  margin: 0 auto 1rem;
-  color: var(--line-2);
-}
-
-.cart-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  background: #fff;
-  border-radius: var(--radius-input);
-  padding: 0.9rem 1rem;
-  box-shadow: var(--sh-sm);
-}
-
-.cart-item-info strong {
-  display: block;
-  font-size: 0.92rem;
-  color: var(--ink);
-}
-
-.cart-item-info span {
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-.cart-item-note {
-  display: block;
-  margin-top: 0.2rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--clay-dark);
-}
-
-.cart-item-right {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-shrink: 0;
-}
-
-.qty-stepper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--cream-2);
-  border-radius: var(--radius-pill);
-  padding: 0.3rem 0.5rem;
-}
-
-.qty-btn {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #fff;
-  font-weight: 800;
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--sh-sm);
-  transition: transform 0.15s var(--bounce);
-}
-
-.qty-btn:hover {
-  transform: scale(1.1);
-}
-
-.qty-val {
-  min-width: 1.2em;
-  text-align: center;
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
-.cart-item-total {
-  font-weight: 800;
-  font-size: 0.88rem;
-  color: var(--ink);
-}
-
-.cart-item-remove {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  transition: color 0.15s var(--ease), background 0.15s var(--ease);
-}
-
-.cart-item-remove:hover {
-  color: #d13a3a;
-  background: #fdeaea;
-}
-
-.cart-item-remove svg {
-  width: 15px;
-  height: 15px;
-}
-
-.cart-total-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  border-radius: var(--radius-input);
-  padding: 1rem 1.1rem;
-  margin-bottom: 1.25rem;
-  font-weight: 700;
-}
-
-.cart-total-row strong {
-  font-family: var(--font-heading);
-  font-size: 1.3rem;
-  color: var(--ink);
-}
-
 .checkout-summary {
   background: #fff;
   border-radius: var(--radius-input);
   padding: 1rem 1.1rem;
   margin-bottom: 1.5rem;
+}
+
+.checkout-summary .cs-note {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clay-dark);
+  padding: 0.25rem 0;
 }
 
 .checkout-summary .cs-row {
@@ -2501,7 +2263,7 @@ body.cart-open {
   padding-top: 0.6rem;
 }
 
-.cart-modal label {
+.checkout-modal label {
   display: block;
   font-size: 0.85rem;
   font-weight: 700;
@@ -2509,7 +2271,7 @@ body.cart-open {
   margin-bottom: 0.4rem;
 }
 
-.cart-modal input {
+.checkout-modal input {
   width: 100%;
   padding: 0.85rem 1rem;
   border: 2px solid var(--line);
@@ -2521,11 +2283,11 @@ body.cart-open {
   transition: border-color 0.15s var(--ease);
 }
 
-.cart-modal input:focus {
+.checkout-modal input:focus {
   border-color: var(--clay);
 }
 
-.cart-modal input.has-error {
+.checkout-modal input.has-error {
   border-color: #d13a3a;
 }
 
@@ -2538,7 +2300,7 @@ body.cart-open {
   font-weight: 600;
 }
 
-.cart-modal .btn {
+.checkout-modal .btn {
   margin-top: 0.5rem;
 }
 
@@ -2547,26 +2309,6 @@ body.cart-open {
   font-size: 0.8rem;
   color: var(--muted);
   margin-top: 0.85rem;
-}
-
-.checkout-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--muted);
-  margin-bottom: 1rem;
-  transition: color 0.15s var(--ease);
-}
-
-.checkout-back:hover {
-  color: var(--clay);
-}
-
-.checkout-back svg {
-  width: 15px;
-  height: 15px;
 }
 
 .checkout-success {
