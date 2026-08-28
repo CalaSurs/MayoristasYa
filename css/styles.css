@@ -1930,8 +1930,11 @@ body.checkout-open {
 
 /* ---------- Chat flotante ---------- */
 .chat-float {
+  --pulse: 20px;
+  --bob: -8px;
   position: fixed;
-  bottom: 1.5rem;
+  /* env(): deja aire sobre la barra de gestos del iPhone */
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
   right: 1.5rem;
   width: 60px;
   height: 60px;
@@ -1963,7 +1966,11 @@ body.checkout-open {
   transform: scale(1.12);
 }
 
+/* Al apretarlo frenamos la animación: si no, los keyframes pisan el
+   box-shadow y el botón no se "hunde". */
 .chat-float:active {
+  animation: none;
+  transform: translateY(4px);
   box-shadow: 0 0 0 0 var(--clay-dark), var(--sh-sm);
 }
 
@@ -1978,7 +1985,7 @@ body.checkout-open {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(var(--bob));
   }
 }
 
@@ -1989,7 +1996,7 @@ body.checkout-open {
   }
   70%,
   100% {
-    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md), 0 0 0 20px rgba(108, 60, 224, 0);
+    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md), 0 0 0 var(--pulse) rgba(108, 60, 224, 0);
   }
 }
 
@@ -2041,17 +2048,21 @@ body.checkout-open {
   .back-to-top {
     left: 1.25rem;
     right: auto;
-    bottom: 1.25rem;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
   }
+  /* En pantalla chica el botón va más discreto: más chico, con menos rebote
+     y un aro más cerrado, para que no compita con el contenido. */
   .chat-float {
-    bottom: 1.25rem;
+    --pulse: 13px;
+    --bob: -5px;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     right: 1.25rem;
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
   }
   .chat-float svg {
-    width: 27px;
-    height: 27px;
+    width: 25px;
+    height: 25px;
   }
 }
 
