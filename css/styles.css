@@ -1979,6 +1979,29 @@ body.checkout-open {
   display: none;
 }
 
+/* Tocaste el botón y el chat todavía está cargando: late el ícono
+   para avisar que ya viene, en vez de no pasar nada. */
+.chat-float.is-loading {
+  animation: none;
+  cursor: default;
+}
+
+.chat-float.is-loading svg {
+  animation: chat-loading 0.9s ease-in-out infinite;
+}
+
+@keyframes chat-loading {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes chat-bob {
   0%,
   100% {

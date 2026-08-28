@@ -20,20 +20,57 @@
 
   var floatBtn = null;
   var chatAbierto = false;
+  var tawkListo = false;
+  var tawkFallo = false;
+  var abrirAlCargar = false;
+  var esperaFallback = null;
 
-  /* Abre el chat. Si no cargó (sin internet, bloqueador de scripts),
-     cae a WhatsApp en vez de no hacer nada. Sirve desde cualquier botón:
-     <button onclick="mwChatOpen()">Hablar con nosotros</button> */
-  window.mwChatOpen = function () {
-    if (window.Tawk_API && typeof window.Tawk_API.maximize === "function") {
-      chatAbierto = true;
-      window.Tawk_API.showWidget();
-      window.Tawk_API.maximize();
-      if (window.mwTrack) window.mwTrack("chat_open", { method: "tawk" });
-      return;
-    }
+  function abrirTawk() {
+    chatAbierto = true;
+    window.Tawk_API.showWidget();
+    window.Tawk_API.maximize();
+    if (window.mwTrack) window.mwTrack("chat_open", { method: "tawk" });
+  }
+
+  function abrirWhatsapp() {
     var wsp = document.querySelector(".js-wsp[href^='https']");
     if (wsp) window.open(wsp.getAttribute("href"), "_blank", "noopener");
+  }
+
+  function marcarCargando(activo) {
+    if (floatBtn) floatBtn.classList.toggle("is-loading", activo);
+  }
+
+  /**
+   * Abre el chat DENTRO de la página, nunca en una pestaña nueva.
+   *
+   * Tawk carga de forma asíncrona: si tocás el botón antes de que termine,
+   * no hay que mandar a WhatsApp (eso abría otra pestaña), hay que esperar
+   * y abrirlo apenas esté listo. WhatsApp queda solo como último recurso,
+   * si el script realmente falló o tardó más de 8 segundos.
+   */
+  window.mwChatOpen = function () {
+    if (tawkListo) {
+      abrirTawk();
+      return;
+    }
+    if (tawkFallo) {
+      abrirWhatsapp();
+      return;
+    }
+
+    abrirAlCargar = true;
+    marcarCargando(true);
+
+    if (!esperaFallback) {
+      esperaFallback = window.setTimeout(function () {
+        if (tawkListo) return;
+        tawkFallo = true;
+        abrirAlCargar = false;
+        marcarCargando(false);
+        abrirWhatsapp();
+      }, 8000);
+    }
   };
 
   /* Guarda los datos del comprador en la conversación, así cuando
@@ -49,7 +86,10 @@
     }
   };
 
-  if (!isConfigured) return;
+  if (!isConfigured) {
+    tawkFallo = true;
+    return;
+  }
 
   window.Tawk_API = window.Tawk_API || {};
   window.Tawk_LoadStart = new Date();
@@ -72,6 +112,7 @@
      así que insistimos un rato. Dejamos de insistir apenas el visitante
      abre el chat, para no cerrárselo en la cara. */
   window.Tawk_API.onLoad = function () {
+    tawkListo = true;
     ocultarBurbujaTawk();
 
     var intentos = 0;
@@ -82,6 +123,14 @@
       }
       ocultarBurbujaTawk();
     }, 500);
+
+    /* Si el visitante ya había tocado el botón mientras cargaba,
+       le abrimos el chat ahora sin que tenga que tocar de nuevo. */
+    if (abrirAlCargar) {
+      abrirAlCargar = false;
+      marcarCargando(false);
+      abrirTawk();
+    }
   };
 
   /* Mientras la ventana de chat está abierta escondemos nuestro botón,
@@ -109,5 +158,16 @@
   s.src = TAWK_EMBED_URL;
   s.charset = "UTF-8";
   s.setAttribute("crossorigin", "*");
+
+  /* Solo si el script de verdad no se pudo bajar caemos a WhatsApp. */
+  s.onerror = function () {
+    tawkFallo = true;
+    marcarCargando(false);
+    if (abrirAlCargar) {
+      abrirAlCargar = false;
+      abrirWhatsapp();
+    }
+  };
+
   document.head.appendChild(s);
 })();
