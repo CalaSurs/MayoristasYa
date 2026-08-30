@@ -248,11 +248,6 @@
         });
       }
 
-      /* Si el chat está activo, queda registrado quién es y qué compró,
-         así cuando escriben ya tenés el contexto. */
-      if (window.mwChatSetVisitor) {
-        window.mwChatSetVisitor({ name: name, email: email, pack: selectedItem.name });
-      }
     });
   }
 

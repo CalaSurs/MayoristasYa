@@ -157,7 +157,9 @@ section {
 
 .section-pad {
   padding-block: clamp(3.25rem, 7vw, 6rem);
-  scroll-margin-top: 130px;
+  /* Al navegar por los links del menú el banner ya está plegado,
+     así que solo hay que dejar lugar para el header. */
+  scroll-margin-top: 100px;
 }
 
 .bg-cream {
@@ -321,6 +323,11 @@ section {
 .offer-banner {
   background: var(--clay);
   color: #fff;
+  /* Se pliega al bajar y vuelve al llegar arriba de todo.
+     El max-height sobra para una línea de texto, incluso en celular. */
+  max-height: 4rem;
+  overflow: hidden;
+  transition: max-height 0.28s var(--ease), opacity 0.22s var(--ease);
 }
 
 .offer-banner .container {
@@ -372,6 +379,13 @@ section {
 .top-fixed.is-scrolled .site-header {
   box-shadow: var(--sh-sm);
   padding-block: 0.65rem;
+}
+
+/* Apenas te movés del tope, el banner se pliega. Al volver arriba de todo
+   (is-scrolled se saca a los 12px) vuelve a aparecer. */
+.top-fixed.is-scrolled .offer-banner {
+  max-height: 0;
+  opacity: 0;
 }
 
 .site-header .container {
@@ -1928,10 +1942,8 @@ body.checkout-open {
   }
 }
 
-/* ---------- Chat flotante ---------- */
-.chat-float {
-  --pulse: 20px;
-  --bob: -8px;
+/* ---------- WhatsApp flotante ---------- */
+.whatsapp-float {
   position: fixed;
   /* env(): deja aire sobre la barra de gestos del iPhone */
   bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
@@ -1939,92 +1951,33 @@ body.checkout-open {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--clay);
-  color: #fff;
+  background: var(--whatsapp);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md);
+  box-shadow: var(--sh-md);
   z-index: 850;
-  /* Flota suave + late un aro hacia afuera. El aro es un box-shadow, así no
-     hace falta ningún elemento extra adentro del botón. */
-  animation: chat-bob 2.6s ease-in-out infinite, chat-pulse 2.6s var(--ease) infinite;
+  animation: wsp-bob 2.4s ease-in-out infinite;
 }
 
-.chat-float svg {
+.whatsapp-float svg {
   width: 30px;
   height: 30px;
-  transition: transform 0.18s var(--bounce);
+  color: #fff;
 }
 
-.chat-float:hover {
-  background: var(--clay-hover);
-}
-
-.chat-float:hover svg,
-.chat-float:focus-visible svg {
-  transform: scale(1.12);
-}
-
-/* Al apretarlo frenamos la animación: si no, los keyframes pisan el
-   box-shadow y el botón no se "hunde". */
-.chat-float:active {
-  animation: none;
-  transform: translateY(4px);
-  box-shadow: 0 0 0 0 var(--clay-dark), var(--sh-sm);
-}
-
-/* Mientras la ventana de chat está abierta */
-.chat-float.is-hidden {
-  display: none;
-}
-
-/* Tocaste el botón y el chat todavía está cargando: late el ícono
-   para avisar que ya viene, en vez de no pasar nada. */
-.chat-float.is-loading {
-  animation: none;
-  cursor: default;
-}
-
-.chat-float.is-loading svg {
-  animation: chat-loading 0.9s ease-in-out infinite;
-}
-
-@keyframes chat-loading {
-  0%,
-  100% {
-    opacity: 0.4;
-    transform: scale(0.9);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes chat-bob {
+@keyframes wsp-bob {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(var(--bob));
-  }
-}
-
-/* rgba de --clay (#6c3ce0): el aro necesita transparencia propia */
-@keyframes chat-pulse {
-  0% {
-    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md), 0 0 0 0 rgba(108, 60, 224, 0.5);
-  }
-  70%,
-  100% {
-    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-md), 0 0 0 var(--pulse) rgba(108, 60, 224, 0);
+    transform: translateY(-8px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chat-float {
+  .whatsapp-float {
     animation: none;
   }
 }
@@ -2073,19 +2026,15 @@ body.checkout-open {
     right: auto;
     bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
   }
-  /* En pantalla chica el botón va más discreto: más chico, con menos rebote
-     y un aro más cerrado, para que no compita con el contenido. */
-  .chat-float {
-    --pulse: 13px;
-    --bob: -5px;
+  .whatsapp-float {
     bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
     right: 1.25rem;
-    width: 52px;
-    height: 52px;
+    width: 54px;
+    height: 54px;
   }
-  .chat-float svg {
-    width: 25px;
-    height: 25px;
+  .whatsapp-float svg {
+    width: 27px;
+    height: 27px;
   }
 }
 
