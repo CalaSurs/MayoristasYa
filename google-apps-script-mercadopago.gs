@@ -1,24 +1,41 @@
 /**
  * MayoristasYa - Cobro con Mercado Pago + entrega automática del pack
  * ---------------------------------------------------------------------
- * Este archivo REEMPLAZA a google-apps-script.gs cuando actives Mercado Pago.
- * Hace todo lo que hacía el anterior (registrar pedidos, mandar el pack por
- * mail, tilde manual de "Pagado") y además:
+ * Qué hace:
+ *   1. Registra cada pedido en la planilla.
+ *   2. Crea el link de pago de Mercado Pago cuando alguien compra.
+ *   3. Escucha el aviso de Mercado Pago cuando el pago se aprueba.
+ *   4. Verifica el pago contra la API de Mercado Pago (nunca confía en el aviso).
+ *   5. Marca "Pagado" y manda por mail el archivo que corresponda a ese pack.
+ *   6. Sigue funcionando el tilde manual de "Pagado" para las ventas por
+ *      transferencia o WhatsApp.
  *
- *   1. Crea el link de pago de Mercado Pago cuando alguien compra.
- *   2. Escucha el aviso de Mercado Pago cuando el pago se aprueba.
- *   3. Verifica el pago contra la API de Mercado Pago (nunca confía en el aviso).
- *   4. Marca "Pagado" y manda el pack por mail, solo.
+ * IMPORTANTE - DÓNDE VA ESTE CÓDIGO:
+ *   Este script tiene que estar creado DESDE ADENTRO de la planilla:
+ *   abrí la planilla y andá a Extensiones > Apps Script.
+ *   Si lo creás suelto desde script.google.com no va a funcionar, porque
+ *   no tendría ninguna planilla asociada donde escribir los pedidos.
+ *
+ *   La planilla necesita una hoja llamada "Pedidos" con estas 9 columnas:
+ *   Fecha | Nombre | Email | Pedido | Total | Pagado | Enviado | Ref | ID de pago
  *
  * ANTES DE USARLO:
  *   a) Configuración del proyecto > Propiedades del script > agregar
- *      MP_ACCESS_TOKEN = tu Access Token de producción (empieza con APP_USR-).
+ *      MP_ACCESS_TOKEN = tu Access Token (empieza con TEST- o APP_USR-).
  *      NUNCA pongas el token acá adentro ni en el sitio.
- *   b) Completá PACK_FILE_ID, SITE_URL y EMAIL_ADMIN acá abajo.
- *   c) Implementar > Nueva implementación > Aplicación web:
+ *   b) Implementar > Nueva implementación > Aplicación web:
  *        - Ejecutar como: Yo
  *        - Quién tiene acceso: Cualquier persona
- *      Copiá la URL /exec y pegala en SCRIPT_URL y en js/checkout-mp.js del sitio.
+ *      Copiá la URL /exec que te da y pasásela a Claude, para que la
+ *      configure en js/pagos.js del sitio. NO hace falta pegarla acá adentro.
+ *   c) Activadores (ícono del reloj) > Agregar activador:
+ *        - Función: onEditInstallable
+ *        - Origen del evento: Desde la hoja de cálculo
+ *        - Tipo de evento: Al editar
+ *      Esto habilita el tilde manual de "Pagado" para ventas por transferencia.
+ *
+ * Todo lo demás (precios, archivos de cada pack, tu sitio, tu mail) ya está
+ * completo más abajo. No tenés que tocar nada.
  */
 
 /* ====================== CONFIGURACIÓN ====================== */
@@ -26,30 +43,62 @@
 var SHEET_NAME = "Pedidos";
 var EMAIL_SUBJECT = "Tu pack de proveedores - MayoristasYa";
 
-// ID del archivo real (PDF/Excel) del pack en tu Google Drive.
-// Lo sacás de la URL: drive.google.com/file/d/ESTE_ES_EL_ID/view
-var PACK_FILE_ID = "PEGA_ACA_EL_ID_DE_TU_ARCHIVO";
-
 // Tu sitio, sin barra final. Se usa para volver después de pagar.
-var SITE_URL = "https://www.mayoristasya.com";
+var SITE_URL = "https://mayoristasya.com";
 
-// La URL /exec de este mismo script (la copiás al implementarlo).
-var SCRIPT_URL = "PEGA_ACA_LA_URL_EXEC_DE_ESTE_SCRIPT";
+/**
+ * NO HACE FALTA COMPLETAR ESTO.
+ *
+ * El script averigua su propia dirección solo, con ScriptApp.getService().
+ * La necesita para decirle a Mercado Pago "avisame acá cuando se apruebe
+ * el pago".
+ *
+ * Dejalo vacío y olvidate. Solo si algún día el aviso de Mercado Pago no
+ * llegara, pegá acá la URL /exec y volvé a implementar.
+ */
+var SCRIPT_URL = "";
 
 // Te llega un mail a vos cada vez que se aprueba una venta. Dejalo vacío para no recibirlo.
 var EMAIL_ADMIN = "calamayoristasya@gmail.com";
 
 /**
- * Precios oficiales. El sitio manda SOLO el id del pack, nunca el precio:
- * si el precio viniera del formulario, cualquiera podría editarlo desde el
- * navegador y pagar $1. Acá está la única fuente de verdad.
- * Si cambiás un precio en index.html, cambialo también acá.
+ * Los packs: precio y archivo que se entrega.
+ *
+ * El sitio manda SOLO el id del pack, nunca el precio: si el precio viniera
+ * del formulario, cualquiera podría editarlo desde el navegador y pagar $1.
+ * Acá está la única fuente de verdad. Si cambiás un precio en index.html,
+ * cambialo también acá.
+ *
+ * archivoId sale de la URL del archivo en tu Drive:
+ *   drive.google.com/file/d/ESTE_ES_EL_ID/view
+ *
+ * Los archivos NO hace falta compartirlos ni hacerlos públicos: el script
+ * corre con tu propia cuenta, así que los puede adjuntar aunque sean privados.
+ *
+ * El Negocio Mayorista va con archivoId null porque no es un archivo, es un
+ * servicio: en ese caso se manda un mail avisando que te vas a contactar.
  */
 var PACKS = {
-  "100": { nombre: "Pack 100", precio: 4999 },
-  "500": { nombre: "Pack 500", precio: 14999 },
-  "1000": { nombre: "Pack 1000", precio: 19999 },
-  "negocio-mayorista": { nombre: "Negocio Mayorista", precio: 79999 },
+  "100": {
+    nombre: "Pack 100",
+    precio: 4999,
+    archivoId: "177h9bJ6CcsOeH-pDE6Yi4mGh0sdCPFGn",
+  },
+  "500": {
+    nombre: "Pack 500",
+    precio: 14999,
+    archivoId: "1EjW_vAQ8DES99IFqqWL0ALyMKv4NCWWX",
+  },
+  "1000": {
+    nombre: "Pack 1000",
+    precio: 19999,
+    archivoId: "1yuPWVJWEXmzeSzRHkWvGYJTPddYWfSh2",
+  },
+  "negocio-mayorista": {
+    nombre: "Negocio Mayorista",
+    precio: 79999,
+    archivoId: null,
+  },
 };
 
 var COL_FECHA = 1;
@@ -140,7 +189,7 @@ function crearPreferencia(e) {
     ],
     payer: { name: nombre, email: email },
     external_reference: ref,
-    notification_url: SCRIPT_URL,
+    notification_url: getScriptUrl(),
     back_urls: {
       success: SITE_URL + "/gracias.html",
       pending: SITE_URL + "/gracias.html",
@@ -220,27 +269,53 @@ function procesarPago(pagoId) {
 
 /* ====================== 3. ENTREGAR EL PACK ====================== */
 
-/** Manda el mail con el pack adjunto y deja la fila marcada como enviada. */
+/** Busca el pack por su nombre, que es lo que quedó guardado en la planilla. */
+function buscarPackPorNombre(nombre) {
+  var ids = Object.keys(PACKS);
+  for (var i = 0; i < ids.length; i++) {
+    if (PACKS[ids[i]].nombre === nombre) return PACKS[ids[i]];
+  }
+  return null;
+}
+
+/** Manda el mail con el pack que corresponda y marca la fila como enviada. */
 function entregarPack(sheet, row) {
   var nombre = sheet.getRange(row, COL_NOMBRE).getValue();
   var email = sheet.getRange(row, COL_EMAIL).getValue();
   var pedido = sheet.getRange(row, COL_PEDIDO).getValue();
 
-  var body =
-    "Hola " + nombre + "!\n\n" +
-    "Gracias por tu compra en MayoristasYa (" + pedido + ").\n" +
-    "Te enviamos adjunto tu pack completo de proveedores, organizado y listo para usar.\n\n" +
-    "Cualquier duda, escribinos por WhatsApp.\n\n" +
-    "Saludos,\nEquipo MayoristasYa";
+  var pack = buscarPackPorNombre(pedido);
+  if (!pack) {
+    console.error("No reconozco el pedido '" + pedido + "'. Fila " + row + " sin enviar.");
+    return;
+  }
 
-  var file = DriveApp.getFileById(PACK_FILE_ID);
+  var opciones = { to: email, subject: EMAIL_SUBJECT };
 
-  MailApp.sendEmail({
-    to: email,
-    subject: EMAIL_SUBJECT,
-    body: body,
-    attachments: [file.getAs(file.getMimeType())],
-  });
+  if (pack.archivoId) {
+    var file = DriveApp.getFileById(pack.archivoId);
+    opciones.body =
+      "Hola " + nombre + "!\n\n" +
+      "Gracias por tu compra en MayoristasYa (" + pedido + ").\n" +
+      "Te enviamos adjunto tu pack completo de proveedores, organizado por rubro y listo para usar.\n\n" +
+      "Cada proveedor tiene su contacto directo: les escribís vos, sin intermediarios.\n\n" +
+      "Cualquier duda, escribinos por WhatsApp.\n\n" +
+      "Saludos,\nEquipo MayoristasYa";
+    opciones.attachments = [file.getAs(file.getMimeType())];
+  } else {
+    /* Negocio Mayorista: no hay archivo, hay que ponerse en contacto. */
+    opciones.subject = "Recibimos tu compra del Negocio Mayorista - MayoristasYa";
+    opciones.body =
+      "Hola " + nombre + "!\n\n" +
+      "Gracias por tu compra del Negocio Mayorista.\n\n" +
+      "En las próximas horas nos vamos a comunicar con vos para arrancar: registrar tu dominio, " +
+      "armar tu sitio con tu marca y dejarte todo funcionando.\n\n" +
+      "Si querés adelantar, respondenos este mail o escribinos por WhatsApp contándonos " +
+      "qué nombre querés para tu negocio.\n\n" +
+      "Saludos,\nEquipo MayoristasYa";
+  }
+
+  MailApp.sendEmail(opciones);
 
   sheet.getRange(row, COL_ENVIADO).setValue(true);
 
@@ -275,6 +350,15 @@ function onEditInstallable(e) {
 }
 
 /* ====================== AUXILIARES ====================== */
+
+/**
+ * La dirección de este script. Si no la completaste arriba, la averigua sola.
+ * Es lo que le pasamos a Mercado Pago como notification_url.
+ */
+function getScriptUrl() {
+  if (SCRIPT_URL && SCRIPT_URL.indexOf("PEGA_ACA") === -1) return SCRIPT_URL;
+  return ScriptApp.getService().getUrl();
+}
 
 function getToken() {
   var t = PropertiesService.getScriptProperties().getProperty("MP_ACCESS_TOKEN");

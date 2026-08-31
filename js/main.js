@@ -194,33 +194,84 @@
     return lines.join("\n");
   }
 
+  /* Valida los dos campos y devuelve {name, email} o null si algo está mal.
+     La usan tanto el botón de Mercado Pago como el de WhatsApp. */
+  function validarDatos() {
+    var name = ckName.value.trim();
+    var email = ckEmail.value.trim();
+    var valid = true;
+
+    if (name.length < 3) {
+      if (ckNameError) ckNameError.textContent = "Ingresá tu nombre completo.";
+      ckName.classList.add("has-error");
+      valid = false;
+    } else {
+      if (ckNameError) ckNameError.textContent = "";
+      ckName.classList.remove("has-error");
+    }
+
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(email)) {
+      if (ckEmailError) ckEmailError.textContent = "Ingresá un email válido.";
+      ckEmail.classList.add("has-error");
+      valid = false;
+    } else {
+      if (ckEmailError) ckEmailError.textContent = "";
+      ckEmail.classList.remove("has-error");
+    }
+
+    return valid ? { name: name, email: email } : null;
+  }
+
+  /* ---------- Botón: pagar con Mercado Pago ---------- */
+  var btnPagarMP = document.getElementById("btnPagarMP");
+  var checkoutSep = document.getElementById("checkoutSep");
+  var checkoutNote = document.getElementById("checkoutNote");
+
+  /* El botón solo aparece si ya pegaste la URL del script en js/pagos.js. */
+  if (btnPagarMP && window.mwPagoConfigurado) {
+    btnPagarMP.hidden = false;
+    if (checkoutSep) checkoutSep.hidden = false;
+    if (checkoutNote) {
+      checkoutNote.textContent =
+        "Pagás con tarjeta, dinero en cuenta o transferencia. El pack te llega por mail apenas se acredita.";
+    }
+
+    btnPagarMP.addEventListener("click", function () {
+      var datos = validarDatos();
+      if (!datos || !selectedItem) return;
+
+      if (window.mwTrack) {
+        window.mwTrack("add_payment_info", {
+          currency: "ARS",
+          value: selectedItem.price,
+          payment_type: "mercadopago",
+          items: itemsForTracking(),
+        });
+      }
+
+      btnPagarMP.disabled = true;
+      btnPagarMP.textContent = "Llevándote a Mercado Pago...";
+
+      /* Esto navega la página entera al Apps Script, que redirige a
+         Mercado Pago. No hace falta mostrar la pantalla de éxito. */
+      window.mwPagarConMercadoPago({
+        packId: selectedItem.id,
+        nombre: datos.name,
+        email: datos.email,
+      });
+    });
+  }
+
   if (checkoutForm) {
     checkoutForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      var name = ckName.value.trim();
-      var email = ckEmail.value.trim();
-      var valid = true;
 
-      if (name.length < 3) {
-        if (ckNameError) ckNameError.textContent = "Ingresá tu nombre completo.";
-        ckName.classList.add("has-error");
-        valid = false;
-      } else {
-        if (ckNameError) ckNameError.textContent = "";
-        ckName.classList.remove("has-error");
-      }
+      var datos = validarDatos();
+      if (!datos) return;
 
-      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRe.test(email)) {
-        if (ckEmailError) ckEmailError.textContent = "Ingresá un email válido.";
-        ckEmail.classList.add("has-error");
-        valid = false;
-      } else {
-        if (ckEmailError) ckEmailError.textContent = "";
-        ckEmail.classList.remove("has-error");
-      }
-
-      if (!valid) return;
+      var name = datos.name;
+      var email = datos.email;
 
       var message = buildOrderMessage(name, email);
       var url = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(message);

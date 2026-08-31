@@ -267,6 +267,50 @@ section {
   box-shadow: 0 0 0 0 var(--line-2);
 }
 
+/* Celeste de Mercado Pago, para que el botón se reconozca al instante */
+.btn-mp {
+  background: #00a9e0;
+  color: #fff;
+  box-shadow: 0 5px 0 0 #0077a3, var(--sh-sm);
+}
+
+.btn-mp:hover,
+.btn-mp:focus-visible {
+  background: #12b8ec;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 0 #0077a3, var(--sh-md);
+}
+
+.btn-mp:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 0 #0077a3;
+}
+
+.btn-mp:disabled {
+  opacity: 0.7;
+  cursor: default;
+  transform: none;
+}
+
+/* Separador "o" entre los dos medios de pago */
+.checkout-sep {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.9rem 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.checkout-sep::before,
+.checkout-sep::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
 .btn-whatsapp {
   background: var(--whatsapp);
   color: #fff;
@@ -2036,6 +2080,93 @@ body.checkout-open {
     width: 27px;
     height: 27px;
   }
+}
+
+/* ---------- Página de gracias (vuelta desde Mercado Pago) ---------- */
+.gracias-box {
+  max-width: 620px;
+  margin-inline: auto;
+  text-align: center;
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: clamp(2rem, 5vw, 3rem);
+  box-shadow: var(--sh-sm), var(--sh-inset);
+}
+
+.gracias-box .ok-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #dcf7e6;
+  color: var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.gracias-box .ok-icon svg {
+  width: 34px;
+  height: 34px;
+}
+
+.gracias-lead {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.gracias-pasos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  text-align: left;
+  background: var(--cream-2);
+  border-radius: var(--radius-card-sm);
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.gracias-pasos li {
+  font-size: 0.92rem;
+  color: var(--body);
+  line-height: 1.55;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.gracias-pasos li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #dcf7e6;
+  color: var(--sage);
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gracias-ayuda {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.gracias-volver {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.gracias-volver:hover {
+  color: var(--clay);
 }
 
 /* ---------- Checkout ---------- */

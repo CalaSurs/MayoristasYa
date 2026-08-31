@@ -7,6 +7,8 @@
 <script src="js/analytics.js?v=20260829" defer></script>
 <!-- Registro automático de pedidos (Google Sheets) - configurar URL en js/orders.js -->
 <script src="js/orders.js?v=20260829" defer></script>
+<!-- Pago con Mercado Pago - configurar URL en js/pagos.js -->
+<script src="js/pagos.js?v=20260829" defer></script>
 <title>Proveedores Mayoristas Argentina | +1000 Contactos</title>
 <meta name="description" content="Lista de proveedores mayoristas para revender: ropa, calzado, tecnología, hogar y +25 rubros. Desde $4.999, pago único y entrega al instante por WhatsApp.">
 <meta name="author" content="MayoristasYa.com">
@@ -813,11 +815,18 @@
       <input type="email" id="ckEmail" name="email" autocomplete="email" placeholder="tu@email.com">
       <span class="field-error" id="ckEmailError"></span>
 
+      <button type="button" class="btn btn-mp btn-block btn-lg" id="btnPagarMP" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h3"/></svg>
+        Pagar con Mercado Pago
+      </button>
+
+      <p class="checkout-sep" id="checkoutSep" hidden><span>o</span></p>
+
       <button type="submit" class="btn btn-whatsapp btn-block btn-lg">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
-        Confirmar y continuar a WhatsApp
+        Coordinar por WhatsApp
       </button>
-      <p class="checkout-note">Vas a ser redirigido a WhatsApp para coordinar el pago y la entrega.</p>
+      <p class="checkout-note" id="checkoutNote">Vas a ser redirigido a WhatsApp para coordinar el pago y la entrega.</p>
     </form>
   </div>
 
