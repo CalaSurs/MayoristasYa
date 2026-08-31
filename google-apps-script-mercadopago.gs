@@ -391,22 +391,60 @@ function jsonOk() {
   );
 }
 
+/* Estilos de las dos pantallas intermedias. Se ven un segundo, pero en
+   celular tienen que verse bien igual. */
+var CSS_INTERMEDIA =
+  "<style>" +
+  "body{font-family:system-ui,-apple-system,sans-serif;margin:0;min-height:100vh;" +
+  "display:flex;align-items:center;justify-content:center;padding:1.5rem;" +
+  "background:#f3f5f1;color:#16233c;text-align:center;line-height:1.6}" +
+  "p{margin:0 0 1rem}a{color:#6c3ce0;font-weight:600}" +
+  "</style>";
+
+/**
+ * Manda al comprador a Mercado Pago.
+ *
+ * DOS DETALLES QUE IMPORTAN EN CELULAR:
+ *
+ * 1. Apps Script muestra esta página DENTRO de un iframe suyo. Si redirigimos
+ *    con un meta refresh, Mercado Pago cargaría adentro de ese iframe y se
+ *    vería con formato de escritorio, apretado y sin zoom. Por eso redirigimos
+ *    con JavaScript apuntando a window.top: así reemplazamos la pestaña entera.
+ *
+ * 2. HtmlService borra las etiquetas <meta> que uno escriba a mano. El viewport
+ *    hay que agregarlo con .addMetaTag(), si no el celular renderiza a 980px
+ *    de ancho como si fuera una compu.
+ *
+ * Usamos location.replace en vez de href para que el botón "atrás" del
+ * navegador no traiga al comprador de vuelta a esta pantalla intermedia.
+ */
 function htmlRedirect(url) {
   var safe = String(url).replace(/"/g, "&quot;");
-  return HtmlService.createHtmlOutput(
-    '<!doctype html><meta charset="utf-8">' +
-      '<meta http-equiv="refresh" content="0; url=' + safe + '">' +
-      '<title>Redirigiendo a Mercado Pago...</title>' +
-      '<p style="font-family:system-ui;padding:2rem">Te estamos llevando a Mercado Pago...<br><br>' +
-      '<a href="' + safe + '">Si no pasa nada en unos segundos, tocá acá.</a></p>' +
-      '<script>window.top.location.href="' + safe + '";<\/script>'
-  );
+  var html =
+    CSS_INTERMEDIA +
+    "<div>" +
+    "<p>Te estamos llevando a Mercado Pago...</p>" +
+    '<p><a href="' + safe + '" target="_top">Si no pasa nada en unos segundos, tocá acá.</a></p>' +
+    "</div>" +
+    "<script>" +
+    'var u = "' + safe + '";' +
+    "try { window.top.location.replace(u); } catch (e) { window.location.replace(u); }" +
+    "<\/script>";
+
+  return HtmlService.createHtmlOutput(html)
+    .setTitle("Redirigiendo a Mercado Pago...")
+    .addMetaTag("viewport", "width=device-width, initial-scale=1");
 }
 
 function htmlError(mensaje) {
-  return HtmlService.createHtmlOutput(
-    '<!doctype html><meta charset="utf-8"><title>Ups</title>' +
-      '<p style="font-family:system-ui;padding:2rem">' + mensaje + '<br><br>' +
-      '<a href="' + SITE_URL + '">Volver al sitio</a></p>'
-  );
+  var html =
+    CSS_INTERMEDIA +
+    "<div>" +
+    "<p>" + mensaje + "</p>" +
+    '<p><a href="' + SITE_URL + '" target="_top">Volver al sitio</a></p>' +
+    "</div>";
+
+  return HtmlService.createHtmlOutput(html)
+    .setTitle("Ups")
+    .addMetaTag("viewport", "width=device-width, initial-scale=1");
 }
