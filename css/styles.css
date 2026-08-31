@@ -58,6 +58,13 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* El atributo hidden tiene que ganarle a cualquier display que pongamos
+   después. Sin esto, un .btn con display:inline-flex se muestra igual
+   aunque esté marcado como oculto. */
+[hidden] {
+  display: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
