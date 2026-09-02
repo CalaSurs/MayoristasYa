@@ -4,11 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- Google Analytics (GA4) - configurar ID en js/analytics.js -->
-<script src="js/analytics.js?v=20260830" defer></script>
+<script src="js/analytics.js?v=20260902b" defer></script>
 <!-- Registro automático de pedidos (Google Sheets) - configurar URL en js/orders.js -->
-<script src="js/orders.js?v=20260830" defer></script>
-<!-- Pago con Mercado Pago - configurar URL en js/pagos.js -->
-<script src="js/pagos.js?v=20260830" defer></script>
+<script src="js/orders.js?v=20260902b" defer></script>
 <title>Proveedores Mayoristas Argentina | +1000 Contactos</title>
 <meta name="description" content="Lista de proveedores mayoristas para revender: ropa, calzado, tecnología, hogar y +25 rubros. Desde $4.999, pago único y entrega al instante por WhatsApp.">
 <meta name="author" content="MayoristasYa.com">
@@ -33,16 +31,16 @@
 <meta name="twitter:description" content="Lista de proveedores mayoristas para revender: ropa, calzado, tecnología, hogar y +25 rubros. Desde $4.999, entrega al instante por WhatsApp.">
 <meta name="twitter:image" content="https://www.mayoristasya.com/images/og-image.jpg">
 
-<meta name="theme-color" content="#6c3ce0">
+<meta name="theme-color" content="#6d4bd8">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="images/favicon-512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/styles.css?v=20260830">
+<link rel="stylesheet" href="css/styles.css?v=20260902b">
 
 <script type="application/ld+json">
 {
@@ -127,17 +125,20 @@
 <a class="skip-link" href="#main">Saltar al contenido principal</a>
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- ===================== BARRA DE OFERTA + HEADER ===================== -->
-<div class="top-fixed" id="topFixed">
-  <div class="offer-banner" id="offerBanner" role="note">
-    <div class="container">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-.3 2.5-1.6 3.8-3 5.2C7.4 8.8 6 10.5 6 13a6 6 0 0 0 12 0c0-2-1-3.5-2.3-4.8.3 1.5-.2 2.6-1 3.2.4-2-.3-4-1.7-5.4-.5 1.4-1.3 2-2 2.3.4-2.3-.2-4.4-2-6.3Z"/></svg>
-      <span class="full">HASTA 50% OFF en todos los packs · Oferta por tiempo limitado</span>
-      <span class="short">HASTA 50% OFF en todos los packs</span>
-    </div>
+<!-- ===================== BARRA DE OFERTA ===================== -->
+<div class="offer-banner" id="offerBanner" role="note">
+  <div class="container">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-.3 2.5-1.6 3.8-3 5.2C7.4 8.8 6 10.5 6 13a6 6 0 0 0 12 0c0-2-1-3.5-2.3-4.8.3 1.5-.2 2.6-1 3.2.4-2-.3-4-1.7-5.4-.5 1.4-1.3 2-2 2.3.4-2.3-.2-4.4-2-6.3Z"/></svg>
+    <span class="full">HASTA 50% OFF en todos los packs · Oferta por tiempo limitado</span>
+    <span class="short">HASTA 50% OFF en todos los packs</span>
   </div>
+</div>
 
-  <header class="site-header" id="siteHeader">
+<!-- ===================== HEADER =====================
+     Va suelto, NO dentro de un wrapper: un elemento sticky solo se pega
+     mientras su contenedor está en pantalla. Metido en un div corto, el
+     header se despegaba apenas pasabas esa altura. -->
+<header class="site-header" id="siteHeader">
     <div class="container">
       <a href="#main" class="logo" aria-label="MayoristasYa.com - Inicio">
         <img src="images/logo-full.png" alt="MayoristasYa - Tus proveedores al instante" class="logo-img" width="523" height="110" fetchpriority="high">
@@ -165,8 +166,7 @@
         </button>
       </div>
     </div>
-  </header>
-</div>
+</header>
 
 <nav class="mobile-nav" id="mobileNav" aria-label="Navegación móvil">
   <ul>
@@ -194,101 +194,128 @@
 
 <main id="main">
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero" id="hero">
+  <!-- ===================== PORTADA ===================== -->
+  <section class="portada" id="hero">
     <div class="container">
-      <div class="hero-copy reveal">
-        <span class="hero-badge">
-          <span class="dot" aria-hidden="true"></span>
-          +1000 proveedores verificados
-        </span>
-        <h1>La lista de <span class="hl">+1000 proveedores</span> de <span class="hl">+25 rubros</span> para emprender</h1>
-        <p class="hero-sub">Fábricas, mayoristas y distribuidoras organizadas en un solo pack digital. Comprá barato y vendé con ganancia desde hoy.</p>
 
-        <ul class="hero-trust">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
-            Contacto directo, sin intermediarios
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
-            Acceso inmediato
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
-            +25 rubros organizados
-          </li>
-        </ul>
-
-        <div class="hero-price">
-          <span class="from">Packs desde</span>
-          <strong>$4.999</strong>
-          <span class="chip">Pago único</span>
-        </div>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary btn-lg" href="#precios">
-            Ver los 3 packs
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-outline btn-lg js-wsp" href="#" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
-            Escribir por WhatsApp
-          </a>
-        </div>
+      <div class="pt-sello">
+        <span class="pt-sello-linea">Edición 2026</span>
+        <span class="pt-sello-linea">Argentina</span>
       </div>
 
-      <div class="hero-visual reveal">
-        <div class="doc-mockup">
-          <div class="doc-card">
-            <div class="doc-card-top">
-              <span class="doc-card-top-left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M15 2v5h5"/></svg>
-                Pack Digital
-              </span>
-              <span class="doc-card-top-right">100% organizado</span>
-            </div>
-            <div class="doc-card-body">
-              <div class="doc-brand">
-                <img src="images/favicon-180.png" alt="" class="doc-brand-mark" aria-hidden="true" width="180" height="180">
-                <strong>MayoristasYa</strong>
+      <div class="pt-grid">
+
+        <div class="pt-izq">
+          <p class="pt-kicker">Guía de proveedores mayoristas</p>
+
+          <h1 class="pt-titulo">
+            <span class="pt-l1">+1000</span>
+            <span class="pt-l2">proveedores</span>
+            <span class="pt-l3">de <em>+25 rubros</em></span>
+          </h1>
+
+          <p class="pt-bajada">
+            Fábricas, mayoristas y distribuidoras de todo el país, ordenadas por
+            rubro y con el contacto directo de cada una. Comprás al precio de
+            origen y revendés con ganancia.
+          </p>
+
+          <div class="pt-acciones">
+            <a class="btn btn-primary btn-lg" href="#precios">
+              Ver la lista de precios
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-outline btn-lg js-wsp" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+              Escribir por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="pt-der">
+
+          <!-- Vista previa del PDF: las fichas se van encendiendo solas -->
+          <div class="pt-visual" aria-hidden="true">
+            <span class="pt-blob pt-blob-a"></span>
+            <span class="pt-blob pt-blob-b"></span>
+
+            <!-- El marco lleva el flote: así los chips se mueven pegados a la tarjeta -->
+            <div class="pt-marco">
+            <div class="pt-tarjeta">
+              <div class="ptt-top">
+                <span class="ptt-pdf">PDF</span>
+                <span class="ptt-arch">lista-proveedores-2026.pdf</span>
+                <span class="ptt-pag">1 / 34</span>
               </div>
-              <h3>Lista de Proveedores 2026</h3>
-              <p>+1000 contactos · +25 rubros</p>
-              <hr>
-              <ul class="doc-rows stagger reveal">
-                <li style="--i:0"><span>Indumentaria</span><span class="doc-row-dots" aria-hidden="true"></span><b>120</b></li>
-                <li style="--i:1"><span>Calzado</span><span class="doc-row-dots" aria-hidden="true"></span><b>95</b></li>
-                <li style="--i:2"><span>Tecnología</span><span class="doc-row-dots" aria-hidden="true"></span><b>140</b></li>
-                <li style="--i:3"><span>Bazar y juguetería</span><span class="doc-row-dots" aria-hidden="true"></span><b>110</b></li>
-                <li style="--i:4"><span>Perfumería</span><span class="doc-row-dots" aria-hidden="true"></span><b>85</b></li>
-              </ul>
-              <div class="doc-more-btn">+ 20 rubros más</div>
+
+              <div class="ptt-hoja">
+                <span class="ptt-sello"><b>✓</b> Verificado 2026</span>
+                <div class="ptt-encabezado">
+                  <span class="ptt-tag">Indumentaria</span>
+                  <p class="ptt-titulo">Proveedores verificados</p>
+                  <p class="ptt-sub">120 contactos en esta sección</p>
+                </div>
+
+                <ul class="ptt-filas">
+                  <li style="--d:0s">
+                    <span class="ptf-ini">DS</span>
+                    <span class="ptf-datos">
+                      <b>Distribuidora San Martín</b>
+                      <small>Once, CABA · Mínimo 10 unidades</small>
+                    </span>
+                    <span class="ptf-tel">11 5•••-••••</span>
+                  </li>
+                  <li style="--d:1.6s">
+                    <span class="ptf-ini">TN</span>
+                    <span class="ptf-datos">
+                      <b>Textiles del Norte</b>
+                      <small>Flores, CABA · Mínimo 6 unidades</small>
+                    </span>
+                    <span class="ptf-tel">11 4•••-••••</span>
+                  </li>
+                  <li style="--d:3.2s">
+                    <span class="ptf-ini">MG</span>
+                    <span class="ptf-datos">
+                      <b>Mayorista Gutiérrez</b>
+                      <small>Avellaneda · Mínimo 12 unidades</small>
+                    </span>
+                    <span class="ptf-tel">11 6•••-••••</span>
+                  </li>
+                  <li style="--d:4.8s">
+                    <span class="ptf-ini">CB</span>
+                    <span class="ptf-datos">
+                      <b>Confecciones Belgrano</b>
+                      <small>Villa Crespo · Sin mínimo</small>
+                    </span>
+                    <span class="ptf-tel">11 3•••-••••</span>
+                  </li>
+                </ul>
+
+                <div class="ptt-pie">
+                  <span class="ptt-barra"><span class="ptt-barra-fill"></span></span>
+                  <span class="ptt-mas">+996 contactos</span>
+                </div>
+              </div>
+            </div>
+
             </div>
           </div>
 
-          <div class="float-pill pill-a">
-            <span class="ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v4H4zM4 20h16M6 8v12M18 8v12M9 12h6"/></svg>
-            </span>
-            <span>+25 Rubros<br><small>ropa, tech, hogar y más</small></span>
-          </div>
-          <div class="float-pill pill-b">
-            <span class="ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
-            </span>
-            <span>Te llega por<br><small>WhatsApp</small></span>
-          </div>
         </div>
+
       </div>
+
     </div>
   </section>
 
   <!-- ===================== STATS ===================== -->
   <section class="stats-row bg-cream-2" aria-label="Estadísticas del pack">
     <div class="container">
-      <div class="stats-marquee reveal">
-        <div class="stats-track">
+      <!-- Carrusel continuo. El grupo va tres veces: el primero es el real y
+           los otros dos son copias para que el loop no muestre huecos. -->
+      <div class="marquesina reveal">
+        <div class="marquesina-pista marquesina-stats">
+
           <div class="stat-card">
             <div class="stat-num" data-count="1000" data-suffix="+">0</div>
             <div class="stat-label">Proveedores</div>
@@ -305,195 +332,232 @@
             <div class="stat-num" data-count="4.9" data-suffix="★" data-decimals="1">0</div>
             <div class="stat-label">Calificación</div>
           </div>
+
           <div class="stat-card" aria-hidden="true">
-            <div class="stat-num" data-count="1000" data-suffix="+">0</div>
+            <div class="stat-num">1.000+</div>
             <div class="stat-label">Proveedores</div>
           </div>
           <div class="stat-card" aria-hidden="true">
-            <div class="stat-num" data-count="25" data-suffix="+">0</div>
+            <div class="stat-num">25+</div>
             <div class="stat-label">Rubros</div>
           </div>
           <div class="stat-card" aria-hidden="true">
-            <div class="stat-num" data-count="2000" data-suffix="+">0</div>
+            <div class="stat-num">2.000+</div>
             <div class="stat-label">Emprendedores</div>
           </div>
           <div class="stat-card" aria-hidden="true">
-            <div class="stat-num" data-count="4.9" data-suffix="★" data-decimals="1">0</div>
+            <div class="stat-num">4.9★</div>
             <div class="stat-label">Calificación</div>
           </div>
+
+          <div class="stat-card" aria-hidden="true">
+            <div class="stat-num">1.000+</div>
+            <div class="stat-label">Proveedores</div>
+          </div>
+          <div class="stat-card" aria-hidden="true">
+            <div class="stat-num">25+</div>
+            <div class="stat-label">Rubros</div>
+          </div>
+          <div class="stat-card" aria-hidden="true">
+            <div class="stat-num">2.000+</div>
+            <div class="stat-label">Emprendedores</div>
+          </div>
+          <div class="stat-card" aria-hidden="true">
+            <div class="stat-num">4.9★</div>
+            <div class="stat-label">Calificación</div>
+          </div>
+
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== PRECIOS ===================== -->
+  <!-- ===================== PRECIOS (lista de catálogo) ===================== -->
   <section class="section-pad" id="precios">
     <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Precios</span>
-        <h2>Elegí el pack ideal para vos</h2>
-        <p>Pago único, sin suscripciones. Cuanto más grande el pack, mayor el ahorro.</p>
-      </div>
 
-      <div class="grid pricing-grid stagger reveal">
-        <div class="price-card" style="--i:0">
-          <h3>Pack 100</h3>
-          <p class="price-desc">Para testear un rubro puntual antes de ir por más.</p>
-          <div class="price-row">
-            <span class="price-old">$10.000</span>
-            <span class="price-off">-50%</span>
-          </div>
-          <div class="price-new">$4.999</div>
-          <span class="price-save">Ahorrás $5.001</span>
-          <ul class="price-features">
-            <li>100 contactos de proveedores verificados</li>
-            <li>Rubros puntuales para probar una idea</li>
-            <li>Recibís todo al instante por WhatsApp</li>
-            <li>Ideal si querés probar antes de escalar</li>
-          </ul>
-          <button type="button" class="btn btn-outline btn-block js-buy" data-id="100" data-name="Pack 100" data-price="4999" data-price-label="$4.999">
-            Comprar ahora
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
+      <header class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <div>
+          <h2>Lista de precios</h2>
+          <p>Pago único, sin suscripciones. Cuanto más grande el pack, mayor el ahorro.</p>
         </div>
+      </header>
 
-        <div class="price-card popular" style="--i:1">
-          <span class="price-badge">⭐ Ideal para arrancar</span>
-          <h3>Pack 500</h3>
-          <p class="price-desc">El más recomendado: el mejor equilibrio entre variedad y precio para arrancar tu negocio.</p>
-          <div class="price-row">
-            <span class="price-old">$30.000</span>
-            <span class="price-off">-50%</span>
-          </div>
-          <div class="price-new">$14.999</div>
-          <span class="price-save">Ahorrás $15.001</span>
-          <ul class="price-features">
-            <li>500 contactos de proveedores verificados</li>
-            <li>+15 rubros distintos</li>
-            <li>Recibís todo al instante por WhatsApp</li>
-            <li>Actualizaciones gratis de por vida</li>
-            <li class="popular-feature">El más elegido por quienes están empezando</li>
-          </ul>
-          <button type="button" class="btn btn-primary btn-block js-buy" data-id="500" data-name="Pack 500" data-price="14999" data-price-label="$14.999">
-            Comprar ahora
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </div>
+      <div class="lista-precios reveal">
 
-        <div class="price-card" style="--i:2">
-          <h3>Pack 1000</h3>
-          <p class="price-desc">La base más completa para escalar tu negocio.</p>
-          <div class="price-row">
-            <span class="price-old">$40.000</span>
-            <span class="price-off">-50%</span>
-          </div>
-          <div class="price-new">$19.999</div>
-          <span class="price-save">Ahorrás $20.001</span>
-          <ul class="price-features">
-            <li>+1000 contactos de proveedores verificados</li>
-            <li>+25 rubros: la variedad más completa</li>
-            <li>Recibís todo al instante por WhatsApp</li>
-            <li>Actualizaciones gratis de por vida</li>
-            <li>Ideal para negocios y tiendas online</li>
-            <li class="popular-feature">Guía para arrancar a revender, incluida</li>
-          </ul>
-          <button type="button" class="btn btn-outline btn-block js-buy" data-id="1000" data-name="Pack 1000" data-price="19999" data-price-label="$19.999">
-            Comprar ahora
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="negocio-row">
-        <div class="price-card popular negocio-card" style="--i:3">
-          <span class="price-badge">Nuevo</span>
-          <button type="button" class="negocio-info-btn" id="negocioInfoBtn" aria-haspopup="dialog" aria-label="Más información sobre Negocio Mayorista">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.5h.01"/></svg>
-          </button>
-          <div class="negocio-main">
-            <h3>Negocio Mayorista</h3>
-            <p class="price-desc">Armamos tu propio MayoristasYa: tu sitio, tu marca y los 3 packs de proveedores (100, 500 y +1000) para que vendas desde el día uno.</p>
-            <ul class="price-features">
-              <li>Dominio propio registrado a tu nombre</li>
-              <li>Hosting funcionando incluido</li>
-              <li>Sitio con tu marca, listo para vender</li>
-              <li>Incluye los 3 packs completos: 100, 500 y +1000 proveedores</li>
-              <li>Vendés vos y te quedás con el 100% de las ganancias</li>
-              <li class="popular-feature">Acompañamiento en la puesta en marcha</li>
+        <article class="fila-pack">
+          <div class="fp-cod" aria-hidden="true">100</div>
+          <div class="fp-info">
+            <h3>Pack 100</h3>
+            <p>Para testear un rubro puntual antes de ir por más.</p>
+            <ul class="fp-detalle">
+              <li>100 contactos verificados</li>
+              <li>Rubros puntuales</li>
+              <li>Entrega inmediata</li>
             </ul>
           </div>
-          <div class="negocio-aside">
-            <div class="price-row">
-              <span class="price-old">$159.999</span>
-              <span class="price-off">-50%</span>
-            </div>
-            <div class="price-new">$79.999</div>
-            <span class="price-save">Ahorrás $80.000</span>
-            <p class="negocio-monthly">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-              <span><strong>+ $30.000 por mes</strong> de mantenimiento: dominio, hosting, soporte y actualizaciones de tu página.</span>
-            </p>
-            <button type="button" class="btn btn-outline btn-block js-buy" data-id="negocio-mayorista" data-name="Negocio Mayorista" data-price="79999" data-price-label="$79.999">
-              Comprar ahora
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </button>
+          <div class="fp-precio">
+            <span class="fp-antes">$10.000</span>
+            <strong>$4.999</strong>
+            <span class="fp-off">50% OFF</span>
           </div>
-        </div>
+          <div class="fp-accion">
+            <a class="btn btn-outline js-buy" href="checkout.html?pack=100">
+              Comprar
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="fila-pack es-destacado">
+          <span class="fp-sello">Más elegido</span>
+          <div class="fp-cod" aria-hidden="true">500</div>
+          <div class="fp-info">
+            <h3>Pack 500</h3>
+            <p>El mejor equilibrio entre variedad y precio para arrancar tu negocio.</p>
+            <ul class="fp-detalle">
+              <li>500 contactos verificados</li>
+              <li>+15 rubros distintos</li>
+              <li>Actualizaciones de por vida</li>
+            </ul>
+          </div>
+          <div class="fp-precio">
+            <span class="fp-antes">$30.000</span>
+            <strong>$14.999</strong>
+            <span class="fp-off">50% OFF</span>
+          </div>
+          <div class="fp-accion">
+            <a class="btn btn-primary js-buy" href="checkout.html?pack=500">
+              Comprar
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="fila-pack">
+          <div class="fp-cod" aria-hidden="true">1000</div>
+          <div class="fp-info">
+            <h3>Pack 1000</h3>
+            <p>La base más completa para escalar tu negocio.</p>
+            <ul class="fp-detalle">
+              <li>+1000 contactos verificados</li>
+              <li>+25 rubros: variedad total</li>
+              <li>Guía de reventa incluida</li>
+            </ul>
+          </div>
+          <div class="fp-precio">
+            <span class="fp-antes">$40.000</span>
+            <strong>$19.999</strong>
+            <span class="fp-off">50% OFF</span>
+          </div>
+          <div class="fp-accion">
+            <a class="btn btn-outline js-buy" href="checkout.html?pack=1000">
+              Comprar
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
+
       </div>
+
+      <!-- Negocio Mayorista: ficha aparte, no es un pack -->
+      <article class="ficha-negocio reveal">
+        <div class="fn-tapa">
+          <span class="fn-etiqueta">Nuevo</span>
+          <h3>Negocio Mayorista</h3>
+          <p>Armamos tu propio MayoristasYa: tu sitio, tu marca y los 3 packs adentro, para que vendas desde el día uno.</p>
+          <button type="button" class="fn-info" id="negocioInfoBtn" aria-haspopup="dialog" aria-label="Más información sobre Negocio Mayorista">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.5h.01"/></svg>
+          </button>
+        </div>
+
+        <ul class="fn-lista">
+          <li>Dominio propio a tu nombre</li>
+          <li>Hosting funcionando incluido</li>
+          <li>Sitio con tu marca, listo para vender</li>
+          <li>Los 3 packs completos adentro</li>
+          <li>Te quedás con el 100% de las ganancias</li>
+          <li>Acompañamiento en la puesta en marcha</li>
+        </ul>
+
+        <div class="fn-pie">
+          <div class="fn-precio">
+            <span class="fp-antes">$159.999</span>
+            <strong>$79.999</strong>
+            <span class="fn-mensual">+ $30.000 por mes de mantenimiento</span>
+          </div>
+          <a class="btn btn-primary js-buy" href="checkout.html?pack=negocio-mayorista">
+            Comprar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
 
       <p class="pricing-note">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
-        Packs de proveedores: pago único, sin suscripciones · Negocio Mayorista: pago inicial + $30.000/mes de mantenimiento · Acceso enviado por WhatsApp
+        Packs de proveedores: pago único, sin suscripciones · Negocio Mayorista: pago inicial + $30.000/mes · Acceso enviado por WhatsApp
       </p>
     </div>
   </section>
 
-  <!-- ===================== RUBROS ===================== -->
+  <!-- ===================== RUBROS (índice impreso) ===================== -->
   <section class="section-pad bg-cream-2" id="rubros">
     <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Qué incluye</span>
-        <h2>Proveedores organizados en +25 rubros</h2>
-        <p>Encontrá proveedores mayoristas para prácticamente cualquier tipo de negocio, todo clasificado por categoría.</p>
-      </div>
 
-      <div class="grid category-grid stagger reveal">
-        <div class="category-card" style="--i:0"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Ropa</span><small>130 proveedores</small></div>
-        <div class="category-card" style="--i:1"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Zapatillas</span><small>95 proveedores</small></div>
-        <div class="category-card" style="--i:2"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Electrónica</span><small>140 proveedores</small></div>
-        <div class="category-card" style="--i:3"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Perfumería</span><small>85 proveedores</small></div>
-        <div class="category-card" style="--i:4"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Cosmética</span><small>78 proveedores</small></div>
-        <div class="category-card" style="--i:5"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Hogar</span><small>110 proveedores</small></div>
-        <div class="category-card" style="--i:6"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Ferretería</span><small>60 proveedores</small></div>
-        <div class="category-card" style="--i:7"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Juguetes</span><small>72 proveedores</small></div>
-        <div class="category-card" style="--i:8"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Tecnología</span><small>90 proveedores</small></div>
-        <div class="category-card" style="--i:9"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Accesorios</span><small>88 proveedores</small></div>
-        <div class="category-card" style="--i:10"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Celulares</span><small>65 proveedores</small></div>
-        <div class="category-card" style="--i:11"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Muebles</span><small>54 proveedores</small></div>
-        <div class="category-card" style="--i:12"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Iluminación</span><small>40 proveedores</small></div>
-        <div class="category-card" style="--i:13"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Mascotas</span><small>58 proveedores</small></div>
-        <div class="category-card" style="--i:14"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Alimentos</span><small>76 proveedores</small></div>
-        <div class="category-card" style="--i:15"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Librería</span><small>45 proveedores</small></div>
-        <div class="category-card" style="--i:16"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Bebidas</span><small>50 proveedores</small></div>
-        <div class="category-card" style="--i:17"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Deportes</span><small>82 proveedores</small></div>
-        <div class="category-card" style="--i:18"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Automotor</span><small>48 proveedores</small></div>
-        <div class="category-card" style="--i:19"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Herramientas</span><small>55 proveedores</small></div>
-        <div class="category-card" style="--i:20"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Bazar</span><small>110 proveedores</small></div>
-        <div class="category-card" style="--i:21"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Regalería</span><small>42 proveedores</small></div>
-        <div class="category-card" style="--i:22"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Camping</span><small>38 proveedores</small></div>
-        <div class="category-card" style="--i:23"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Bicicletas</span><small>36 proveedores</small></div>
-        <div class="category-card" style="--i:24"><span class="cat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span><span>Oficina</span><small>40 proveedores</small></div>
-      </div>
+      <header class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <div>
+          <h2>Índice de rubros</h2>
+          <p>Los proveedores vienen clasificados por rubro. Estos son todos, con cuántos hay en cada uno.</p>
+        </div>
+      </header>
+
+      <ul class="indice-rubros stagger reveal">
+        <li style="--i:0"><span class="idx-nom">Ropa</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">130</span></li>
+        <li style="--i:1"><span class="idx-nom">Zapatillas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">95</span></li>
+        <li style="--i:2"><span class="idx-nom">Electrónica</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">140</span></li>
+        <li style="--i:3"><span class="idx-nom">Perfumería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">85</span></li>
+        <li style="--i:4"><span class="idx-nom">Cosmética</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">78</span></li>
+        <li style="--i:5"><span class="idx-nom">Hogar</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">110</span></li>
+        <li style="--i:6"><span class="idx-nom">Ferretería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">60</span></li>
+        <li style="--i:7"><span class="idx-nom">Juguetes</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">72</span></li>
+        <li style="--i:8"><span class="idx-nom">Tecnología</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">90</span></li>
+        <li style="--i:9"><span class="idx-nom">Accesorios</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">88</span></li>
+        <li style="--i:10"><span class="idx-nom">Celulares</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">65</span></li>
+        <li style="--i:11"><span class="idx-nom">Muebles</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">54</span></li>
+        <li style="--i:12"><span class="idx-nom">Iluminación</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">40</span></li>
+        <li style="--i:13"><span class="idx-nom">Mascotas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">58</span></li>
+        <li style="--i:14"><span class="idx-nom">Alimentos</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">76</span></li>
+        <li style="--i:15"><span class="idx-nom">Librería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">45</span></li>
+        <li style="--i:16"><span class="idx-nom">Bebidas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">50</span></li>
+        <li style="--i:17"><span class="idx-nom">Deportes</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">82</span></li>
+        <li style="--i:18"><span class="idx-nom">Automotor</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">48</span></li>
+        <li style="--i:19"><span class="idx-nom">Herramientas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">55</span></li>
+        <li style="--i:20"><span class="idx-nom">Bazar</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">110</span></li>
+        <li style="--i:21"><span class="idx-nom">Regalería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">42</span></li>
+        <li style="--i:22"><span class="idx-nom">Camping</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">38</span></li>
+        <li style="--i:23"><span class="idx-nom">Bicicletas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">36</span></li>
+        <li style="--i:24"><span class="idx-nom">Oficina</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">40</span></li>
+      </ul>
+
+      <p class="indice-pie">
+        <span>25 rubros</span>
+        <span class="idx-puntos" aria-hidden="true"></span>
+        <span>+1000 proveedores en total</span>
+      </p>
     </div>
   </section>
 
   <!-- ===================== BENEFICIOS ===================== -->
   <section class="section-pad" id="beneficios">
     <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Beneficios</span>
-        <h2>Por qué conviene comprar tu pack acá</h2>
-      </div>
+      <header class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <div>
+          <h2>Por qué conviene comprar tu pack acá</h2>
+        </div>
+      </header>
 
       <div class="grid benefits-grid stagger reveal">
         <div class="benefit-card" style="--i:0">
@@ -533,11 +597,13 @@
   <!-- ===================== CÓMO FUNCIONA ===================== -->
   <section class="section-pad bg-cream-2" id="como-funciona">
     <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Cómo funciona</span>
-        <h2>Empezá a comprar mayorista en 4 pasos</h2>
-        <p>Un proceso rápido, claro y 100% acompañado por WhatsApp.</p>
-      </div>
+      <header class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <div>
+          <h2>Empezá a comprar mayorista en 4 pasos</h2>
+          <p>Un proceso rápido, claro y 100% acompañado por WhatsApp.</p>
+        </div>
+      </header>
 
       <div class="grid steps-grid stagger reveal">
         <div class="step-card" style="--i:0">
@@ -567,72 +633,118 @@
   <!-- ===================== TESTIMONIOS ===================== -->
   <section class="section-pad" id="testimonios">
     <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Testimonios</span>
-        <h2>Lo que dicen quienes usan el pack</h2>
-        <p>Testimonios de ejemplo, con fines ilustrativos.</p>
+      <header class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">06</span>
+        <div>
+          <h2>Capturas reales de nuestros clientes</h2>
+          <p>Conversaciones de gente que compró su pack. Tapamos los datos personales por privacidad.</p>
+        </div>
+      </header>
+
+      <div class="marquesina reveal">
+        <div class="marquesina-pista marquesina-testimonios">
+
+            <figure class="testimonio">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-1.jpg" alt="Conversacion de WhatsApp: el cliente manda el comprobante y recibe el PDF con mas de 1000 proveedores y la guia de reventa" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack +1000</span>
+                <p>Mandó el comprobante y recibió el PDF con los +1000 proveedores, más la guía de reventa de regalo.</p>
+              </figcaption>
+            </figure>
+            <figure class="testimonio">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-2.jpg" alt="Conversacion de WhatsApp: el cliente transfiere y recibe el PDF con 500 proveedores" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack 500</span>
+                <p>Transfirió, mandó el comprobante y en el mismo chat le llegó el PDF con los 500 proveedores.</p>
+              </figcaption>
+            </figure>
+            <figure class="testimonio">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-3.jpg" alt="Conversacion de WhatsApp: comprobante de transferencia y entrega del PDF con 500 proveedores" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack 500</span>
+                <p>Pagó por transferencia y a los minutos ya tenía los 500 contactos en el celular.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="testimonio" aria-hidden="true">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-1.jpg" alt="" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack +1000</span>
+                <p>Mandó el comprobante y recibió el PDF con los +1000 proveedores, más la guía de reventa de regalo.</p>
+              </figcaption>
+            </figure>
+            <figure class="testimonio" aria-hidden="true">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-2.jpg" alt="" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack 500</span>
+                <p>Transfirió, mandó el comprobante y en el mismo chat le llegó el PDF con los 500 proveedores.</p>
+              </figcaption>
+            </figure>
+            <figure class="testimonio" aria-hidden="true">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-3.jpg" alt="" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack 500</span>
+                <p>Pagó por transferencia y a los minutos ya tenía los 500 contactos en el celular.</p>
+              </figcaption>
+            </figure>
+
+            <figure class="testimonio" aria-hidden="true">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-1.jpg" alt="" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack +1000</span>
+                <p>Mandó el comprobante y recibió el PDF con los +1000 proveedores, más la guía de reventa de regalo.</p>
+              </figcaption>
+            </figure>
+            <figure class="testimonio" aria-hidden="true">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-2.jpg" alt="" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack 500</span>
+                <p>Transfirió, mandó el comprobante y en el mismo chat le llegó el PDF con los 500 proveedores.</p>
+              </figcaption>
+            </figure>
+            <figure class="testimonio" aria-hidden="true">
+              <div class="testimonio-img">
+                <img src="images/testimonios/testimonio-3.jpg" alt="" width="800" height="688" loading="lazy" decoding="async">
+              </div>
+              <figcaption>
+                <span class="testimonio-pack">Compró el Pack 500</span>
+                <p>Pagó por transferencia y a los minutos ya tenía los 500 contactos en el celular.</p>
+              </figcaption>
+            </figure>
+
+        </div>
       </div>
 
-      <div class="grid testimonial-grid stagger reveal">
-        <div class="testimonial-card" style="--i:0">
-          <span class="testimonial-tag">Ejemplo ilustrativo</span>
-          <div class="stars" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-          </div>
-          <p>"Arranqué sin saber por dónde buscar proveedores. Con el pack encontré varios rubros para probar y armar mi primer catálogo."</p>
-          <div class="testimonial-author">
-            <span class="avatar" aria-hidden="true">M</span>
-            <div><strong>Marina R.</strong><span>Emprendedora, ejemplo</span></div>
-          </div>
-        </div>
-
-        <div class="testimonial-card" style="--i:1">
-          <span class="testimonial-tag">Ejemplo ilustrativo</span>
-          <div class="stars" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-          </div>
-          <p>"Ya revendía ropa, pero sumé proveedores de accesorios y perfumería para ofrecer más variedad a mis clientes."</p>
-          <div class="testimonial-author">
-            <span class="avatar" aria-hidden="true">F</span>
-            <div><strong>Facundo G.</strong><span>Revendedor, ejemplo</span></div>
-          </div>
-        </div>
-
-        <div class="testimonial-card" style="--i:2">
-          <span class="testimonial-tag">Ejemplo ilustrativo</span>
-          <div class="stars" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></svg>
-          </div>
-          <p>"Lo mejor fue la organización por rubro. Me ahorró muchísimo tiempo comparado con buscar todo por mi cuenta."</p>
-          <div class="testimonial-author">
-            <span class="avatar" aria-hidden="true">L</span>
-            <div><strong>Lucía P.</strong><span>Dueña de tienda online, ejemplo</span></div>
-          </div>
-        </div>
-      </div>
+      <p class="testimonios-nota">Publicadas con permiso de cada cliente. Los números de teléfono y los datos bancarios están tapados.</p>
     </div>
   </section>
 
   <!-- ===================== FAQ ===================== -->
   <section class="section-pad bg-cream-2" id="faq">
     <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow">Preguntas frecuentes</span>
-        <h2>Todo lo que necesitás saber</h2>
-        <p>Si tenés otra duda, escribinos directamente por WhatsApp.</p>
-      </div>
+      <header class="sec-head reveal">
+        <span class="sec-num" aria-hidden="true">07</span>
+        <div>
+          <h2>Todo lo que necesitás saber</h2>
+          <p>Si tenés otra duda, escribinos directamente por WhatsApp.</p>
+        </div>
+      </header>
 
       <div class="faq-list reveal">
         <div class="faq-item">
@@ -697,6 +809,55 @@
         </a>
         <span class="cta-final-note">Pago único · Sin suscripciones · Acceso enviado por WhatsApp</span>
       </div>
+    </div>
+  </section>
+
+  <!-- ===================== MEDIOS DE PAGO ===================== -->
+  <section class="medios-pago" aria-labelledby="mediosTitulo">
+    <div class="container">
+      <h2 id="mediosTitulo" class="medios-titulo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+        Todas las formas de pago
+      </h2>
+
+      <!-- En celular arranca plegado para no comerse la pantalla.
+           main.js lo abre solo en pantallas grandes. -->
+      <details class="medios-desplegable" id="mediosDetalle" open>
+        <summary class="medios-resumen">
+          <span class="medios-abrir">Ver el detalle de cada una</span>
+          <span class="medios-cerrar">Ocultar el detalle</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+
+      <div class="medios-grid">
+        <div class="medio">
+          <span class="medio-tipo">Tarjetas</span>
+          <p>Visa, Mastercard, American Express, Naranja, Cabal. Crédito y débito, en un pago o en cuotas.</p>
+        </div>
+        <div class="medio">
+          <span class="medio-tipo">Billeteras</span>
+          <p>Ualá, Brubank, Naranja X, Personal Pay, Prex, Lemon y cualquier otra tarjeta prepaga.</p>
+        </div>
+        <div class="medio">
+          <span class="medio-tipo">Transferencia</span>
+          <p>Desde el homebanking de cualquier banco o billetera. Se acredita al instante.</p>
+        </div>
+        <div class="medio">
+          <span class="medio-tipo">Dinero en cuenta</span>
+          <p>Si ya tenés saldo en Mercado Pago, pagás directo con eso.</p>
+        </div>
+        <div class="medio">
+          <span class="medio-tipo">Efectivo</span>
+          <p>Rapipago y Pago Fácil. Tarda hasta 2 días hábiles en acreditarse.</p>
+        </div>
+        <div class="medio">
+          <span class="medio-tipo">Transferencia directa</span>
+          <p>¿Preferís mandarnos la plata por CBU o alias? Coordinamos por WhatsApp.</p>
+        </div>
+      </div>
+      </details>
+
+      <p class="medios-nota">No hace falta que tengas cuenta de Mercado Pago: podés pagar con tu tarjeta sin registrarte. El pago lo procesa Mercado Pago, nosotros nunca vemos los datos de tu tarjeta.</p>
     </div>
   </section>
 
@@ -795,52 +956,8 @@
   </a>
 </div>
 
-<!-- ===================== CHECKOUT ===================== -->
-<div class="modal-backdrop" id="checkoutBackdrop"></div>
-<div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-hidden="true">
-  <button class="modal-close" id="checkoutClose" aria-label="Cerrar">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-  </button>
-
-  <div id="checkoutStepView">
-    <h3 id="checkoutTitle">Finalizar compra</h3>
-    <div class="checkout-summary" id="checkoutSummary"></div>
-
-    <form id="checkoutForm" novalidate>
-      <label for="ckName">Nombre completo</label>
-      <input type="text" id="ckName" name="name" autocomplete="name" placeholder="Tu nombre y apellido">
-      <span class="field-error" id="ckNameError"></span>
-
-      <label for="ckEmail">Email</label>
-      <input type="email" id="ckEmail" name="email" autocomplete="email" placeholder="tu@email.com">
-      <span class="field-error" id="ckEmailError"></span>
-
-      <button type="button" class="btn btn-mp btn-block btn-lg" id="btnPagarMP" hidden>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h3"/></svg>
-        Pagar con Mercado Pago
-      </button>
-
-      <p class="checkout-sep" id="checkoutSep" hidden><span>o</span></p>
-
-      <button type="submit" class="btn btn-whatsapp btn-block btn-lg">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
-        Coordinar por WhatsApp
-      </button>
-      <p class="checkout-note" id="checkoutNote">Vas a ser redirigido a WhatsApp para coordinar el pago y la entrega.</p>
-    </form>
-  </div>
-
-  <div id="checkoutSuccessView" class="checkout-success" hidden>
-    <span class="ok-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
-    </span>
-    <h3>¡Todo listo!</h3>
-    <p>Se abrió WhatsApp con tu pedido. Si no se abrió automáticamente, tocá el botón de abajo.</p>
-    <a href="#" class="btn btn-whatsapp btn-block" id="checkoutWspLink" target="_blank" rel="noopener">Abrir WhatsApp</a>
-  </div>
-</div>
 
 <!-- defer: tiene que correr DESPUÉS de pagos.js, que también lo usa -->
-<script src="js/main.js?v=20260830" defer></script>
+<script src="js/main.js?v=20260902b" defer></script>
 </body>
 </html>

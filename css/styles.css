@@ -1,47 +1,80 @@
 /* =========================================================
-   MayoristasYa.com — Claymorphism / Soft UI
+   MayoristasYa.com — Catálogo comercial retro
+   ---------------------------------------------------------
+   La idea: una guía de proveedores impresa de los años 70.
+   Papel tibio en vez de blanco, tinta marrón en vez de negro,
+   rojo teja y verde botella como acentos, esquinas casi rectas
+   y sombras duras sin desenfoque, como una impresión offset.
    ========================================================= */
 
 :root {
-  --cream: #f3f5f1;
-  --cream-2: #eeeaf6;
-  --cream-3: #e4dcf0;
+  /* ---- Papel ---- */
+  --cream: #f7f5fc;
+  --cream-2: #f0ecfa;
+  --cream-3: #e3dbf6;
   --card: #ffffff;
-  --card-2: #fbfcfe;
+  --card-2: #fbfaff;
 
-  --ink: #16233c;
-  --body: #45536c;
-  --muted: #7e889c;
+  /* ---- Tinta ---- */
+  --ink: #241d3a;
+  --body: #55506b;
+  --muted: #736d8f;
 
-  --line: #e4e8f1;
-  --line-2: #d3dae8;
+  --line: #ece7f7;
+  --line-2: #ddd5f0;
 
-  --clay: #6c3ce0;
-  --clay-hover: #7d51e8;
-  --clay-dark: #4a1fb0;
-  --clay-tint: #ede4fb;
+  /* ---- Rojo teja: el naranja de los catálogos viejos ---- */
+  --clay: #6d4bd8;
+  --clay-hover: #5c3ac9;
+  --clay-dark: #4a2bab;
+  --clay-tint: #efe9fd;
 
-  --sage: #25be63;
-  --whatsapp: #25d366;
-  --whatsapp-dark: #128c4a;
-  --gold: #f0b52e;
-  --doc-accent: #e2572b;
+  /* ---- Verde botella: lo que confirma ---- */
+  --sage: #257a51;
+  --sage-tint: #e3f5ec;
 
-  --font-heading: "Poppins", "Inter", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  /* ---- Mostaza: lo que destaca ---- */
+  --gold: #c08a2e;
+  --gold-tint: #fdf2dd;
 
-  --radius-card: 24px;
+  /* ---- Teal apagado: segundo acento ---- */
+  --teal: #2f6b63;
+  --teal-tint: #dfeae7;
+
+  --whatsapp: #2e7d50;
+  --whatsapp-hover: #3a9462;
+  --whatsapp-dark: #1f5a39;
+
+  --danger: #a8402f;
+
+  /* ---- Azul apagado para Mercado Pago ---- */
+  --mp: #2f6b8f;
+  --mp-hover: #3a7ea6;
+  --mp-dark: #204b66;
+
+  --doc-accent: #a8562e;
+
+  --font-heading: "Outfit", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, -apple-system, sans-serif;
+
+  /* ---- Esquinas casi rectas: papel cortado, no plástico ---- */
+  --radius-card: 26px;
   --radius-card-sm: 20px;
+  --radius-btn: 999px;
+  --radius-input: 16px;
   --radius-pill: 999px;
-  --radius-input: 14px;
 
-  --sh-sm: 0 1px 2px rgba(23, 40, 80, 0.05), 0 6px 16px -8px rgba(23, 40, 80, 0.12);
-  --sh-md: 0 3px 8px -3px rgba(23, 40, 80, 0.1), 0 18px 36px -18px rgba(23, 40, 80, 0.16);
-  --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  /* ---- Sombras duras, sin desenfoque ---- */
+  --sh-sm: 0 2px 8px rgba(80, 55, 160, 0.05), 0 10px 28px -14px rgba(80, 55, 160, 0.14);
+  --sh-md: 0 6px 18px rgba(80, 55, 160, 0.08), 0 28px 56px -24px rgba(80, 55, 160, 0.2);
+  /* Transparente en vez de "none": si fuera none rompería los
+     box-shadow compuestos que la usan como segunda capa. */
+  --sh-inset: 0 0 0 0 transparent;
 
   --container-w: 1200px;
-  --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Menos rebote, más precisión mecánica */
+  --bounce: cubic-bezier(0.34, 1.35, 0.64, 1);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 /* ---------- Reset ---------- */
@@ -83,10 +116,22 @@ body {
   font-family: var(--font-body);
   color: var(--body);
   background: var(--cream);
-  line-height: 1.6;
+  line-height: 1.65;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  position: relative;
+}
+
+
+/* Los números en columna se alinean, como en una lista de precios */
+.price-new,
+.price-old,
+.stat-num,
+.ck-precio,
+.ck-total strong,
+.medio p {
+  font-variant-numeric: tabular-nums;
 }
 
 @media (min-width: 900px) {
@@ -123,10 +168,10 @@ h2,
 h3,
 h4 {
   font-family: var(--font-heading);
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .skip-link {
@@ -134,7 +179,7 @@ h4 {
   top: -100px;
   left: 1rem;
   background: var(--ink);
-  color: #fff;
+  color: var(--card);
   padding: 0.75rem 1.25rem;
   border-radius: var(--radius-input);
   z-index: 2000;
@@ -221,13 +266,14 @@ section {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  padding: 0.95rem 1.85rem;
-  border-radius: var(--radius-pill);
+  padding: 0.9rem 1.75rem;
+  border-radius: var(--radius-btn);
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1rem;
+  letter-spacing: 0.01em;
   white-space: nowrap;
-  transition: transform 0.15s var(--bounce), box-shadow 0.15s var(--ease), background 0.15s var(--ease);
+  transition: transform 0.12s var(--ease), box-shadow 0.12s var(--ease), background 0.12s var(--ease), border-color 0.12s var(--ease);
 }
 
 .btn svg {
@@ -236,67 +282,847 @@ section {
   flex-shrink: 0;
 }
 
+/* La flecha se corre al pasar el mouse: invita a seguir */
+.js-buy svg,
+.header-cta svg {
+  transition: transform 0.2s var(--bounce);
+}
+
+.js-buy:hover svg,
+.js-buy:focus-visible svg,
+.header-cta:hover svg,
+.header-cta:focus-visible svg {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-buy:hover svg,
+  .header-cta:hover svg {
+    transform: none;
+  }
+}
+
 .btn-primary {
   background: var(--clay);
-  color: #fff;
-  box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-sm);
+  color: var(--card);
+  box-shadow: 0 4px 14px -4px rgba(109, 75, 216, 0.45);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
   background: var(--clay-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 7px 0 0 var(--clay-dark), var(--sh-md);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -8px rgba(109, 75, 216, 0.55);
 }
 
 .btn-primary:active {
-  transform: translateY(5px);
-  box-shadow: 0 0 0 0 var(--clay-dark);
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px -3px rgba(109, 75, 216, 0.4);
 }
 
 .btn-outline {
-  background: #fff;
+  background: var(--card);
   color: var(--ink);
   border: 2px solid var(--line-2);
-  box-shadow: 0 4px 0 0 var(--line-2), var(--sh-sm);
+  box-shadow: var(--sh-sm);
 }
 
 .btn-outline:hover,
 .btn-outline:focus-visible {
   border-color: var(--clay);
   color: var(--clay-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 0 0 var(--line-2), var(--sh-md);
+  transform: translateY(-3px);
+  box-shadow: var(--sh-md);
 }
 
 .btn-outline:active {
-  transform: translateY(4px);
-  box-shadow: 0 0 0 0 var(--line-2);
+  transform: translateY(1px);
+  box-shadow: none;
 }
 
 /* Celeste de Mercado Pago, para que el botón se reconozca al instante */
 .btn-mp {
-  background: #00a9e0;
-  color: #fff;
-  box-shadow: 0 5px 0 0 #0077a3, var(--sh-sm);
+  background: var(--mp);
+  color: var(--card);
+  box-shadow: 0 4px 14px -4px rgba(47, 107, 143, 0.45);
 }
 
 .btn-mp:hover,
 .btn-mp:focus-visible {
-  background: #12b8ec;
-  transform: translateY(-2px);
-  box-shadow: 0 7px 0 0 #0077a3, var(--sh-md);
+  background: var(--mp-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -8px rgba(47, 107, 143, 0.55);
 }
 
 .btn-mp:active {
-  transform: translateY(5px);
-  box-shadow: 0 0 0 0 #0077a3;
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px -3px rgba(47, 107, 143, 0.4);
 }
 
 .btn-mp:disabled {
   opacity: 0.7;
   cursor: default;
   transform: none;
+}
+
+/* Aclaración de medios debajo del botón de pago */
+.checkout-medios {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.45;
+  margin-top: 0.6rem;
+}
+
+/* =========================================================
+   PÁGINA DE CHECKOUT (checkout.html)
+   ========================================================= */
+.checkout-page {
+  background: var(--cream-2);
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+/* ---------- Encabezado ---------- */
+.ck-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  padding-block: 0.85rem;
+  padding-top: calc(0.85rem + env(safe-area-inset-top, 0px));
+}
+
+.ck-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ck-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--muted);
+  /* 44px de alto real: el mínimo cómodo para tocar con el pulgar */
+  min-height: 44px;
+  padding-right: 0.5rem;
+  transition: color 0.15s var(--ease);
+}
+
+.ck-volver:hover {
+  color: var(--clay);
+}
+
+.ck-volver svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ck-logo {
+  height: 30px;
+  width: auto;
+}
+
+.ck-seguro {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--whatsapp-dark);
+  white-space: nowrap;
+}
+
+.ck-seguro svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* En celular el logo del medio sobra: dejamos volver + candado */
+@media (max-width: 560px) {
+  .ck-logo {
+    display: none;
+  }
+  .ck-volver span {
+    font-size: 0.88rem;
+  }
+}
+
+/* ---------- Cuerpo ---------- */
+.ck-main {
+  flex: 1;
+  padding-block: clamp(1.5rem, 4vw, 3rem);
+}
+
+.ck-grid {
+  display: grid;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* En celular el resumen va ARRIBA: primero ves qué comprás y cuánto,
+   después llenás los datos. Al revés se siente que firmás a ciegas. */
+@media (max-width: 859px) {
+  .ck-col-resumen {
+    order: -1;
+  }
+}
+
+/* Tablet y PC: formulario a la izquierda, resumen pegajoso a la derecha */
+@media (min-width: 860px) {
+  .ck-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin-inline: auto;
+  }
+
+  .ck-col-resumen {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+.ck-col-form {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: clamp(1.4rem, 4vw, 2.25rem);
+  box-shadow: var(--sh-sm), var(--sh-inset);
+}
+
+.ck-col-form h1 {
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  margin-bottom: 0.4rem;
+}
+
+.ck-sub {
+  color: var(--muted);
+  font-size: 0.94rem;
+  margin-bottom: 1.75rem;
+}
+
+/* ---------- Campos ---------- */
+.ck-campo {
+  margin-bottom: 1.25rem;
+}
+
+.ck-campo label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.ck-campo input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius-input);
+  font-family: var(--font-body);
+  /* 16px es obligatorio: con menos, Safari en iPhone hace zoom al tocar
+     el campo y descuadra toda la pantalla. */
+  font-size: 16px;
+  min-height: 48px;
+  transition: border-color 0.15s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ck-campo input:focus {
+  outline: none;
+  border-color: var(--clay);
+}
+
+.ck-campo input.has-error {
+  border-color: var(--danger);
+}
+
+.ck-ayuda {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+.ck-campo .field-error {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--danger);
+  margin-top: 0.35rem;
+}
+
+.ck-campo .field-error:empty {
+  display: none;
+}
+
+/* ---------- Botonera ---------- */
+.ck-pagos {
+  margin-top: 1.75rem;
+}
+
+.ck-pagos .btn {
+  min-height: 52px;
+}
+
+/* ---------- Resumen ---------- */
+.ck-resumen {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  box-shadow: var(--sh-sm), var(--sh-inset);
+}
+
+.ck-resumen h2 {
+  font-size: 1.05rem;
+  margin-bottom: 1.1rem;
+}
+
+.ck-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.ck-item strong {
+  display: block;
+  color: var(--ink);
+  font-size: 0.98rem;
+}
+
+.ck-item span {
+  font-size: 0.83rem;
+  color: var(--muted);
+}
+
+.ck-precio {
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.ck-linea {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.87rem;
+  color: var(--muted);
+  padding-top: 0.7rem;
+}
+
+.ck-tachado {
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.ck-ahorro {
+  color: var(--whatsapp-dark);
+  font-weight: 700;
+}
+
+.ck-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 2px dashed var(--line-2);
+}
+
+.ck-total span {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ck-total strong {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.ck-mensual {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--body);
+  background: var(--clay-tint);
+  border-radius: var(--radius-input);
+  padding: 0.7rem 0.85rem;
+  margin-top: 1rem;
+}
+
+.ck-mensual svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--clay);
+}
+
+.ck-mensual strong {
+  color: var(--clay-dark);
+}
+
+.ck-garantias {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.ck-garantias li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  color: var(--body);
+}
+
+.ck-garantias svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--sage);
+}
+
+.ck-legal {
+  font-size: 0.76rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 1.25rem;
+}
+
+.ck-legal a {
+  color: var(--clay);
+  text-decoration: underline;
+}
+
+/* ---------- Sin pack ---------- */
+.ck-error {
+  max-width: 460px;
+  margin-inline: auto;
+  text-align: center;
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: clamp(2rem, 5vw, 3rem);
+  box-shadow: var(--sh-sm);
+}
+
+.ck-error h1 {
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.ck-error p {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Pie ---------- */
+.ck-footer {
+  padding-block: 1.5rem;
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.ck-footer a {
+  color: var(--clay);
+  font-weight: 700;
+}
+
+.ck-copy {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+}
+
+/* =========================================================
+   ANIMACIONES DEL CHECKOUT
+   ========================================================= */
+
+/* Entrada escalonada: primero el resumen, después el formulario.
+   El orden sigue al de la lectura, no al del HTML. */
+.ck-col-resumen,
+.ck-col-form {
+  animation: ck-entrada 0.5s var(--ease) both;
+}
+
+.ck-col-resumen {
+  animation-delay: 0.05s;
+}
+
+.ck-col-form {
+  animation-delay: 0.15s;
+}
+
+@keyframes ck-entrada {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* El campo activo se levanta apenas y gana un halo violeta */
+.ck-campo input {
+  transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease),
+    transform 0.18s var(--ease);
+}
+
+.ck-campo input:focus {
+  box-shadow: 0 0 0 4px var(--clay-tint);
+  transform: translateY(-1px);
+}
+
+/* Un error no se anuncia solo con color: el campo también se sacude */
+.ck-campo input.has-error {
+  animation: ck-sacudir 0.4s var(--ease);
+}
+
+@keyframes ck-sacudir {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+.ck-campo .field-error {
+  animation: ck-error-aparece 0.25s var(--ease) both;
+}
+
+@keyframes ck-error-aparece {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Las garantías aparecen una tras otra */
+.ck-garantias li {
+  animation: ck-entrada 0.4s var(--ease) both;
+}
+
+.ck-garantias li:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.ck-garantias li:nth-child(2) {
+  animation-delay: 0.38s;
+}
+.ck-garantias li:nth-child(3) {
+  animation-delay: 0.46s;
+}
+
+/* Mientras se pide el link de pago, el botón late */
+.btn-mp:disabled {
+  animation: ck-esperando 1.2s ease-in-out infinite;
+}
+
+@keyframes ck-esperando {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+/* El check de la página de gracias se dibuja solo */
+.gracias-box .ok-icon {
+  animation: ck-pop 0.5s var(--bounce) both;
+}
+
+.gracias-box .ok-icon svg path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: ck-dibujar-check 0.5s var(--ease) 0.35s forwards;
+}
+
+@keyframes ck-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ck-dibujar-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.gracias-box > *:not(.ok-icon) {
+  animation: ck-entrada 0.45s var(--ease) both;
+}
+
+.gracias-box > h1 {
+  animation-delay: 0.25s;
+}
+.gracias-box > .gracias-lead {
+  animation-delay: 0.32s;
+}
+.gracias-box > .gracias-ref {
+  animation-delay: 0.38s;
+}
+.gracias-box > .gracias-pasos {
+  animation-delay: 0.44s;
+}
+.gracias-box > .gracias-ayuda,
+.gracias-box > .gracias-acciones {
+  animation-delay: 0.5s;
+}
+
+/* Nada de esto si el visitante pidió menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .ck-col-resumen,
+  .ck-col-form,
+  .ck-garantias li,
+  .gracias-box .ok-icon,
+  .gracias-box > *,
+  .ck-campo input.has-error,
+  .ck-campo .field-error,
+  .btn-mp:disabled {
+    animation: none !important;
+  }
+
+  .gracias-box .ok-icon svg path {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- Ajustes de celular ---------- */
+@media (max-width: 640px) {
+  .ck-main {
+    padding-block: 1rem;
+  }
+
+  /* Las tarjetas van de borde a borde: en pantalla chica, el margen
+     lateral se come el espacio útil. */
+  .ck-main .container {
+    padding-inline: 0.9rem;
+  }
+
+  .ck-col-form,
+  .ck-resumen {
+    padding: 1.25rem 1.1rem;
+  }
+
+  /* El resumen de arriba, más compacto */
+  .ck-resumen h2 {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 0.85rem;
+  }
+
+  .ck-total strong {
+    font-size: 1.75rem;
+  }
+
+  /* Las garantías en fila, ocupan mucho menos alto */
+  .ck-garantias {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .ck-garantias li {
+    font-size: 0.76rem;
+  }
+
+  .ck-legal {
+    display: none;
+  }
+
+  /* Lo legal se muestra una sola vez, abajo del botón */
+  .ck-pagos .ck-legal {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .ck-col-form h1 {
+    font-size: 1.35rem;
+  }
+
+  .ck-sub {
+    font-size: 0.88rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* ---------- Testimonios con capturas reales ---------- */
+.testimonio {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--sh-sm), var(--sh-inset);
+  transition: transform 0.2s var(--bounce), box-shadow 0.2s var(--ease);
+}
+
+.testimonio:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sh-md), var(--sh-inset);
+}
+
+/* Las capturas son de WhatsApp Web: apaisadas, 800x688. La proporción 7/6
+   es casi exacta, así que entran enteras y no se recorta nada. */
+.testimonio-img {
+  aspect-ratio: 7 / 6;
+  background: var(--cream-2);
+  overflow: hidden;
+}
+
+.testimonio-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.testimonio figcaption {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.testimonio-pack {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--clay-dark);
+  background: var(--clay-tint);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.6rem;
+}
+
+.testimonio figcaption p {
+  font-size: 0.9rem;
+  color: var(--body);
+  line-height: 1.55;
+}
+
+.testimonios-nota {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.83rem;
+  color: var(--muted);
+}
+
+/* ---------- Franja de medios de pago ---------- */
+.medios-pago {
+  background: var(--cream-2);
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.medios-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.medios-titulo svg {
+  width: 20px;
+  height: 20px;
+  color: var(--sage);
+  flex-shrink: 0;
+}
+
+.medios-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+@media (min-width: 620px) {
+  .medios-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 940px) {
+  .medios-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.medio {
+  background: var(--card);
+  border-radius: var(--radius-card-sm);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--sh-sm);
+}
+
+.medio-tipo {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--clay);
+  margin-bottom: 0.3rem;
+}
+
+.medio p {
+  font-size: 0.87rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+
+.medios-nota {
+  max-width: 620px;
+  margin: 1.75rem auto 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
 /* Separador "o" entre los dos medios de pago */
@@ -320,15 +1146,15 @@ section {
 
 .btn-whatsapp {
   background: var(--whatsapp);
-  color: #fff;
-  box-shadow: 0 5px 0 0 var(--whatsapp-dark), var(--sh-sm);
+  color: var(--card);
+  box-shadow: 0 4px 14px -4px rgba(46, 125, 80, 0.45);
 }
 
 .btn-whatsapp:hover,
 .btn-whatsapp:focus-visible {
-  background: #2fe077;
-  transform: translateY(-2px);
-  box-shadow: 0 7px 0 0 var(--whatsapp-dark), var(--sh-md);
+  background: var(--whatsapp-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -8px rgba(46, 125, 80, 0.55);
 }
 
 .btn-whatsapp:active {
@@ -353,7 +1179,7 @@ section {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--whatsapp-dark);
-  background: #dcf7e6;
+  background: var(--sage-tint);
   padding: 0.3rem 0.8rem;
   border-radius: var(--radius-pill);
 }
@@ -373,12 +1199,7 @@ section {
 /* ---------- Banner de oferta ---------- */
 .offer-banner {
   background: var(--clay);
-  color: #fff;
-  /* Se pliega al bajar y vuelve al llegar arriba de todo.
-     El max-height sobra para una línea de texto, incluso en celular. */
-  max-height: 4rem;
-  overflow: hidden;
-  transition: max-height 0.28s var(--ease), opacity 0.22s var(--ease);
+  color: var(--card);
 }
 
 .offer-banner .container {
@@ -387,7 +1208,6 @@ section {
   justify-content: center;
   gap: 0.75rem;
   padding-block: 0.65rem;
-  position: relative;
   font-size: 0.85rem;
   font-weight: 700;
   text-align: center;
@@ -397,6 +1217,19 @@ section {
   width: 15px;
   height: 15px;
   flex-shrink: 0;
+  animation: llama-late 1.8s ease-in-out infinite;
+}
+
+@keyframes llama-late {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.15) rotate(-4deg);
+    opacity: 1;
+  }
 }
 
 .offer-banner .short {
@@ -413,31 +1246,26 @@ section {
 }
 
 /* ---------- Header / Nav ---------- */
-.top-fixed {
+
+/* Solo el header queda fijo. El banner se va con el scroll y vuelve cuando
+   subís al tope, sin animación de altura: así nunca se ve cortado a la mitad. */
+.site-header {
   position: sticky;
   top: 0;
   z-index: 900;
-}
-
-.site-header {
-  background: rgba(243, 245, 241, 0.85);
+  background: rgba(242, 239, 247, 0.9);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding-block: 1rem;
   transition: box-shadow 0.2s var(--ease), padding 0.2s var(--ease), background 0.2s var(--ease);
 }
 
-.top-fixed.is-scrolled .site-header {
+.site-header.is-scrolled {
   box-shadow: var(--sh-sm);
   padding-block: 0.65rem;
 }
 
-/* Apenas te movés del tope, el banner se pliega. Al volver arriba de todo
-   (is-scrolled se saca a los 12px) vuelve a aparecer. */
-.top-fixed.is-scrolled .offer-banner {
-  max-height: 0;
-  opacity: 0;
-}
+
 
 .site-header .container {
   display: flex;
@@ -517,7 +1345,7 @@ section {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--card);
   border: 2px solid var(--line);
   display: flex;
   align-items: center;
@@ -589,7 +1417,7 @@ section {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.02rem;
-  background: #fff;
+  background: var(--card);
   border-radius: var(--radius-card-sm);
   box-shadow: var(--sh-sm);
   transition: transform 0.15s var(--bounce), box-shadow 0.15s var(--ease);
@@ -629,7 +1457,7 @@ section {
   height: 56px;
   padding: 0;
   border-radius: 50%;
-  background: #fff;
+  background: var(--card);
   box-shadow: var(--sh-sm);
   display: flex;
   align-items: center;
@@ -641,7 +1469,7 @@ section {
 .mobile-nav-social a:hover,
 .mobile-nav-social a:active {
   background: var(--clay);
-  color: #fff;
+  color: var(--card);
   transform: translateY(-2px);
 }
 
@@ -653,8 +1481,8 @@ section {
 .mobile-nav .btn {
   margin-top: 1.5rem;
   background: var(--clay);
-  color: #fff;
-  box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-sm);
+  color: var(--card);
+  box-shadow: 0 4px 14px -4px rgba(109, 75, 216, 0.45);
 }
 
 body.nav-open,
@@ -721,7 +1549,7 @@ body.checkout-open {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #fff;
+  background: var(--card);
   border: 2px solid var(--line);
   padding: 0.5rem 1.1rem;
   border-radius: var(--radius-pill);
@@ -784,7 +1612,7 @@ body.checkout-open {
   height: 22px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #dcf7e6;
+  background: var(--sage-tint);
   color: var(--sage);
   padding: 4px;
 }
@@ -863,7 +1691,7 @@ body.checkout-open {
   justify-content: space-between;
   gap: 0.75rem;
   background: linear-gradient(135deg, var(--clay), var(--clay-dark));
-  color: #fff;
+  color: var(--card);
   padding: 0.85rem 1.5rem;
   font-size: 0.82rem;
   font-weight: 700;
@@ -986,7 +1814,7 @@ body.checkout-open {
 }
 
 .doc-more-btn:hover {
-  background: #d9e4fb;
+  background: var(--line);
   transform: translateY(-1px);
 }
 
@@ -995,7 +1823,7 @@ body.checkout-open {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  background: #fff;
+  background: var(--card);
   border-radius: var(--radius-card-sm);
   box-shadow: var(--sh-md), var(--sh-inset);
   padding: 0.75rem 1rem;
@@ -1039,7 +1867,7 @@ body.checkout-open {
   bottom: -7%;
   right: -12%;
   background: var(--ink);
-  color: #fff;
+  color: var(--card);
   animation-delay: 0.6s;
 }
 
@@ -1047,9 +1875,26 @@ body.checkout-open {
   color: rgba(255, 255, 255, 0.65);
 }
 
-@media (max-width: 640px) {
+/* Las pastillas necesitan lugar de sobra para flotar al costado de la
+   tarjeta sin taparle el texto. Debajo de 1100px no lo hay: se apoyaban
+   encima de "Pack Digital" y del pie de la lista. */
+@media (max-width: 1100px) {
   .float-pill {
     display: none;
+  }
+}
+
+/* Arriba de 1100px las corremos bien afuera: solo la esquina de cada
+   pastilla monta sobre el borde de la tarjeta, nunca sobre el contenido. */
+@media (min-width: 1101px) {
+  .float-pill.pill-a {
+    top: -13%;
+    left: -21%;
+  }
+
+  .float-pill.pill-b {
+    bottom: -11%;
+    right: -18%;
   }
 }
 
@@ -1074,49 +1919,88 @@ body.checkout-open {
   padding-block: clamp(2rem, 4vw, 3rem);
 }
 
-.stats-marquee {
+/* =========================================================
+   MARQUESINA: carrusel que corre solo, en loop infinito
+   ---------------------------------------------------------
+   El contenido va tres veces en el HTML. La pista se corre un tercio de su
+   ancho y vuelve a cero: como el tercio que queda a la izquierda es idéntico
+   al que entra por la derecha, el salto no se ve y el loop es continuo.
+
+   Tres copias y no dos porque, al correrse una, tienen que sobrar DOS anchos
+   de grupo para llenar la pantalla; con dos copias quedaba un hueco en
+   monitores anchos.
+   ========================================================= */
+.marquesina {
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  /* Deja respirar las sombras de las tarjetas, que si no se ven cortadas */
+  padding-block: 0.5rem;
 }
 
-.stats-track {
+.marquesina-pista {
   display: flex;
-  gap: 1rem;
   width: max-content;
-  animation: stats-scroll 22s linear infinite;
+  animation: marquesina-correr linear infinite;
 }
 
-@keyframes stats-scroll {
+/* La separación va como margen de cada tarjeta y NO como "gap".
+   Con gap, el espacio no se repite después de la última tarjeta: un tercio de
+   la pista quedaba unos píxeles más corto que el período real y el loop daba
+   un tironcito en cada vuelta. Con margen, cada tarjeta mide siempre lo mismo
+   (ancho + separación) y el tercio cae exacto. */
+.marquesina-pista > * {
+  margin-inline-end: clamp(0.75rem, 1.6vw, 1.25rem);
+}
+
+@keyframes marquesina-correr {
   from {
-    transform: translateX(-50%);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(0);
+    transform: translate3d(-33.3333%, 0, 0);
   }
 }
 
+.marquesina-stats {
+  animation-duration: 38s;
+}
+
+.marquesina-testimonios {
+  animation-duration: 60s;
+}
+
+/* Se frena al pasar el mouse por encima, para poder leer */
+.marquesina:hover .marquesina-pista {
+  animation-play-state: paused;
+}
+
+/* Si alguien pidió menos movimiento, no corre nada: se deja deslizar a mano */
 @media (prefers-reduced-motion: reduce) {
-  .stats-track {
+  .marquesina {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .marquesina::-webkit-scrollbar {
+    display: none;
+  }
+
+  .marquesina-pista {
     animation: none;
   }
 }
 
-.stats-marquee:hover .stats-track {
-  animation-play-state: paused;
-}
-
+/* ---------- Tarjetas de números ---------- */
 .stat-card {
-  background: #fff;
+  background: var(--card);
   border-radius: var(--radius-card-sm);
-  padding: 1.5rem 1rem;
+  padding: clamp(1.35rem, 2.4vw, 1.75rem) 1rem;
   box-shadow: var(--sh-sm);
   text-align: center;
 }
 
-.stats-track .stat-card {
-  flex-shrink: 0;
-  width: 200px;
+/* Ancho fijo: el loop necesita saber cuánto mide cada grupo */
+.marquesina-stats .stat-card {
+  flex: 0 0 clamp(11.5rem, 46vw, 15rem);
 }
 
 .stat-num {
@@ -1244,7 +2128,7 @@ body.checkout-open {
     position: absolute;
     inset: 0;
     border-radius: calc(var(--radius-card) - 2px);
-    background: radial-gradient(120% 130% at 0% 0%, rgba(108, 60, 224, 0.07), transparent 55%);
+    background: radial-gradient(120% 130% at 0% 0%, rgba(92, 61, 150, 0.06), transparent 55%);
     pointer-events: none;
   }
 
@@ -1289,7 +2173,7 @@ body.checkout-open {
   }
 
   .negocio-aside {
-    background: linear-gradient(180deg, #fff, var(--cream-2));
+    background: linear-gradient(180deg, var(--card), var(--cream-2));
     border: 1px solid var(--line);
     border-radius: var(--radius-card-sm);
     padding: 1.85rem 1.65rem;
@@ -1313,29 +2197,29 @@ body.checkout-open {
 
   .negocio-aside .negocio-monthly {
     text-align: left;
-    background: #fff;
+    background: var(--card);
     border: 1px dashed var(--clay);
     margin-bottom: 1.4rem;
   }
 
   .negocio-aside .btn-outline {
     background: var(--clay);
-    color: #fff;
+    color: var(--card);
     border-color: var(--clay-dark);
-    box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-sm);
+    box-shadow: 0 4px 14px -4px rgba(109, 75, 216, 0.45);
   }
 
   .negocio-aside .btn-outline:hover,
   .negocio-aside .btn-outline:focus-visible {
     background: var(--clay-hover);
-    color: #fff;
+    color: var(--card);
     border-color: var(--clay-dark);
-    box-shadow: 0 7px 0 0 var(--clay-dark), var(--sh-md);
+    box-shadow: 0 10px 24px -8px rgba(109, 75, 216, 0.55);
   }
 
   .negocio-aside .btn-outline:active {
     transform: translateY(5px);
-    box-shadow: 0 0 0 0 var(--clay-dark);
+    box-shadow: 0 2px 8px -3px rgba(109, 75, 216, 0.4);
   }
 }
 
@@ -1356,7 +2240,7 @@ body.checkout-open {
 
 .negocio-info-btn:hover {
   background: var(--clay);
-  color: #fff;
+  color: var(--card);
   transform: scale(1.08);
 }
 
@@ -1404,7 +2288,7 @@ body.checkout-open {
   left: 50%;
   transform: translateX(-50%);
   background: var(--clay);
-  color: #fff;
+  color: var(--card);
   font-size: 0.75rem;
   font-weight: 800;
   padding: 0.45rem 1.1rem;
@@ -1428,8 +2312,8 @@ body.checkout-open {
 }
 
 .price-off {
-  background: #fdeee0;
-  color: #b0620f;
+  background: var(--gold-tint);
+  color: var(--clay-dark);
   font-size: 0.72rem;
   font-weight: 800;
   padding: 0.15rem 0.5rem;
@@ -1450,7 +2334,7 @@ body.checkout-open {
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--whatsapp-dark);
-  background: #dcf7e6;
+  background: var(--sage-tint);
   padding: 0.25rem 0.65rem;
   border-radius: var(--radius-pill);
   margin: 0.6rem 0 1.4rem;
@@ -1479,7 +2363,7 @@ body.checkout-open {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #dcf7e6;
+  background: var(--sage-tint);
   color: var(--sage);
   font-size: 0.72rem;
   font-weight: 800;
@@ -1661,7 +2545,7 @@ body.checkout-open {
   height: 44px;
   border-radius: 50%;
   background: var(--clay);
-  color: #fff;
+  color: var(--card);
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: 1.1rem;
@@ -1669,7 +2553,7 @@ body.checkout-open {
   align-items: center;
   justify-content: center;
   margin: 0 auto 1rem;
-  box-shadow: 0 4px 0 0 var(--clay-dark);
+  box-shadow: 0 4px 14px -4px rgba(109, 75, 216, 0.45);
 }
 
 .step-card h3 {
@@ -1811,7 +2695,7 @@ body.checkout-open {
 .faq-item.is-open .faq-question .chevron {
   transform: rotate(180deg);
   background: var(--clay);
-  color: #fff;
+  color: var(--card);
 }
 
 .faq-answer {
@@ -1829,13 +2713,13 @@ body.checkout-open {
 /* ---------- CTA final ---------- */
 .cta-final {
   background: var(--clay);
-  color: #fff;
+  color: var(--card);
   text-align: center;
   padding-block: clamp(3.5rem, 8vw, 5.5rem);
 }
 
 .cta-final h2 {
-  color: #fff;
+  color: var(--card);
   font-size: clamp(1.9rem, 4.5vw, 2.7rem);
   margin-bottom: 0.85rem;
   text-wrap: balance;
@@ -1857,26 +2741,26 @@ body.checkout-open {
 }
 
 .cta-final-actions .btn-primary {
-  background: #fff;
+  background: var(--card);
   color: var(--clay-dark);
-  box-shadow: 0 5px 0 0 var(--clay-dark), var(--sh-sm);
+  box-shadow: 0 4px 14px -4px rgba(109, 75, 216, 0.45);
 }
 
 .cta-final-actions .btn-primary:hover {
-  background: #f3f6ff;
-  box-shadow: 0 7px 0 0 var(--clay-dark), var(--sh-md);
+  background: var(--card-2);
+  box-shadow: 0 10px 24px -8px rgba(109, 75, 216, 0.55);
 }
 
 .cta-final-actions .btn-outline {
   background: transparent;
   border-color: rgba(255, 255, 255, 0.5);
-  color: #fff;
+  color: var(--card);
   box-shadow: none;
 }
 
 .cta-final-actions .btn-outline:hover {
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--card);
+  color: var(--card);
   box-shadow: none;
 }
 
@@ -1941,7 +2825,7 @@ body.checkout-open {
 .footer-social svg {
   width: 18px;
   height: 18px;
-  color: #fff;
+  color: var(--card);
 }
 
 .footer-cols {
@@ -1957,7 +2841,7 @@ body.checkout-open {
 }
 
 .footer-col h4 {
-  color: #fff;
+  color: var(--card);
   font-size: 0.92rem;
   margin-bottom: 1rem;
 }
@@ -1974,7 +2858,7 @@ body.checkout-open {
 }
 
 .footer-col a:hover {
-  color: #fff;
+  color: var(--card);
 }
 
 .footer-bottom {
@@ -2014,7 +2898,7 @@ body.checkout-open {
 .whatsapp-float svg {
   width: 30px;
   height: 30px;
-  color: #fff;
+  color: var(--card);
 }
 
 @keyframes wsp-bob {
@@ -2041,7 +2925,7 @@ body.checkout-open {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--card);
   border: 2px solid var(--line);
   display: flex;
   align-items: center;
@@ -2104,7 +2988,7 @@ body.checkout-open {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: #dcf7e6;
+  background: var(--sage-tint);
   color: var(--sage);
   display: flex;
   align-items: center;
@@ -2122,51 +3006,89 @@ body.checkout-open {
   margin-bottom: 2rem;
 }
 
+/* Número de pedido */
+.gracias-ref {
+  display: inline-block;
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: var(--cream-2);
+  border-radius: var(--radius-pill);
+  padding: 0.4rem 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.gracias-ref strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Los tres pasos. Es una secuencia real, por eso van numerados. */
 .gracias-pasos {
+  list-style: none;
+  counter-reset: paso;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1.1rem;
   text-align: left;
   background: var(--cream-2);
   border-radius: var(--radius-card-sm);
-  padding: 1.25rem 1.4rem;
+  padding: 1.5rem 1.6rem;
   margin-bottom: 1.75rem;
 }
 
 .gracias-pasos li {
+  counter-increment: paso;
   font-size: 0.92rem;
   color: var(--body);
   line-height: 1.55;
-  padding-left: 1.5rem;
+  padding-left: 2.25rem;
   position: relative;
 }
 
 .gracias-pasos li::before {
-  content: "✓";
+  content: counter(paso);
   position: absolute;
   left: 0;
-  top: 0.15rem;
-  width: 18px;
-  height: 18px;
+  top: 0;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: #dcf7e6;
-  color: var(--sage);
-  font-size: 0.65rem;
+  background: var(--clay);
+  color: var(--card);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.gracias-pasos li strong {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 0.1rem;
+}
+
 .gracias-ayuda {
   font-size: 0.9rem;
   color: var(--muted);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Apilados y centrados: antes el link quedaba pegado al costado del botón */
+.gracias-acciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.gracias-acciones .btn {
+  width: 100%;
+  max-width: 340px;
 }
 
 .gracias-volver {
-  display: inline-block;
-  margin-top: 1.5rem;
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--muted);
@@ -2180,7 +3102,7 @@ body.checkout-open {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(22, 35, 60, 0.45);
+  background: rgba(36, 28, 51, 0.5);
   z-index: 960;
   opacity: 0;
   pointer-events: none;
@@ -2223,7 +3145,7 @@ body.checkout-open {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--card);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2277,7 +3199,7 @@ body.checkout-open {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--card);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2328,7 +3250,7 @@ body.checkout-open {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #dcf7e6;
+  background: var(--sage-tint);
   color: var(--sage);
   font-size: 0.65rem;
   font-weight: 800;
@@ -2352,7 +3274,7 @@ body.checkout-open {
 }
 
 .checkout-summary {
-  background: #fff;
+  background: var(--card);
   border-radius: var(--radius-input);
   padding: 1rem 1.1rem;
   margin-bottom: 1.5rem;
@@ -2396,7 +3318,7 @@ body.checkout-open {
   width: 100%;
   padding: 0.85rem 1rem;
   border: 2px solid var(--line);
-  background: #fff;
+  background: var(--card);
   border-radius: var(--radius-input);
   font-size: 1rem;
   font-family: var(--font-body);
@@ -2409,12 +3331,12 @@ body.checkout-open {
 }
 
 .checkout-modal input.has-error {
-  border-color: #d13a3a;
+  border-color: var(--danger);
 }
 
 .field-error {
   display: block;
-  color: #d13a3a;
+  color: var(--danger);
   font-size: 0.78rem;
   min-height: 1.2em;
   margin-bottom: 0.6rem;
@@ -2441,7 +3363,7 @@ body.checkout-open {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #dcf7e6;
+  background: var(--sage-tint);
   color: var(--sage);
   display: flex;
   align-items: center;
@@ -2464,17 +3386,6 @@ body.checkout-open {
   font-size: 0.94rem;
 }
 
-/* ---------- Scroll reveal ---------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 .stagger > * {
   opacity: 0;
@@ -2540,4 +3451,1418 @@ body.checkout-open {
 .legal-back svg {
   width: 18px;
   height: 18px;
+}
+
+/* =========================================================
+   ESTRUCTURA NUEVA — maqueta de catálogo impreso
+   ========================================================= */
+
+/* ---------- Encabezado de sección: numerado y al ras izquierdo ---------- */
+.sec-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  max-width: none;
+  text-align: left;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  padding-bottom: 1.1rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.sec-num {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--clay);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.1em;
+}
+
+.sec-head h2 {
+  font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+  margin-bottom: 0.35rem;
+  text-wrap: balance;
+}
+
+.sec-head p {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 60ch;
+}
+
+/* Anulamos el subrayado centrado del rediseño anterior */
+.sec-head h2::after {
+  display: none;
+}
+
+/* ---------- Lista de precios ---------- */
+.lista-precios {
+  border-top: 1px solid var(--line-2);
+}
+
+.fila-pack {
+  position: relative;
+  display: grid;
+  gap: 0.6rem 1.5rem;
+  grid-template-columns: 1fr;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--line-2);
+  transition: background 0.18s var(--ease);
+}
+
+/* En pantalla ancha se lee como una fila de planilla:
+   código · descripción · precio · acción */
+@media (min-width: 860px) {
+  .fila-pack {
+    grid-template-columns: 5.5rem minmax(0, 1fr) 11rem 10rem;
+    align-items: center;
+    padding: 1.5rem 1rem;
+  }
+}
+
+.fila-pack:hover {
+  background: var(--card);
+}
+
+.fila-pack.es-destacado {
+  background: var(--clay-tint);
+  border-bottom-color: var(--clay);
+}
+
+.fp-sello {
+  position: absolute;
+  top: -0.7rem;
+  left: 1rem;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--card);
+  background: var(--clay);
+  padding: 0.25rem 0.7rem;
+  border-radius: 3px;
+}
+
+/* El número de pack como código de catálogo */
+.fp-cod {
+  font-family: var(--font-heading);
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--line-2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.fila-pack.es-destacado .fp-cod {
+  color: var(--clay);
+}
+
+.fp-info h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.2rem;
+}
+
+.fp-info > p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.fp-detalle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+}
+
+.fp-detalle li {
+  position: relative;
+  font-size: 0.84rem;
+  color: var(--body);
+  padding-left: 0.85rem;
+}
+
+.fp-detalle li::before {
+  content: "·";
+  position: absolute;
+  left: 0.15rem;
+  color: var(--clay);
+  font-weight: 700;
+}
+
+.fp-precio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+@media (min-width: 860px) {
+  .fp-precio {
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+.fp-antes {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.fp-precio strong {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.fp-off {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+.fp-accion .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ---------- Ficha del Negocio Mayorista ---------- */
+.ficha-negocio {
+  position: relative;
+  margin-top: 2.5rem;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-card-sm);
+  box-shadow: 6px 6px 0 var(--clay);
+  overflow: hidden;
+}
+
+.fn-tapa {
+  position: relative;
+  padding: 1.6rem 1.5rem 1.25rem;
+  background: var(--ink);
+  color: var(--card);
+}
+
+.fn-tapa h3 {
+  color: var(--card);
+  font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+  margin-bottom: 0.4rem;
+}
+
+.fn-tapa p {
+  font-size: 0.93rem;
+  color: rgba(253, 251, 255, 0.78);
+  max-width: 60ch;
+}
+
+.fn-etiqueta {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 0.22rem 0.6rem;
+  border-radius: 3px;
+  margin-bottom: 0.75rem;
+}
+
+.fn-info {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(253, 251, 255, 0.35);
+  color: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s var(--ease);
+}
+
+.fn-info:hover {
+  background: rgba(253, 251, 255, 0.14);
+}
+
+.fn-info svg {
+  width: 17px;
+  height: 17px;
+}
+
+.fn-lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem 1.5rem;
+  padding: 1.4rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .fn-lista {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.fn-lista li {
+  position: relative;
+  font-size: 0.9rem;
+  color: var(--body);
+  padding-left: 1.2rem;
+}
+
+.fn-lista li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--sage);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.fn-pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--line);
+  background: var(--cream);
+}
+
+.fn-precio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.fn-precio strong {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.fn-mensual {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--clay);
+}
+
+/* ---------- Índice de rubros con puntos guía ---------- */
+.indice-rubros {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 2.5rem;
+  border-top: 1px solid var(--line-2);
+}
+
+@media (min-width: 620px) {
+  .indice-rubros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 980px) {
+  .indice-rubros {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.indice-rubros li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+  transition: color 0.15s var(--ease);
+}
+
+.indice-rubros li:hover {
+  color: var(--clay);
+}
+
+.idx-nom {
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Los puntos guía de una guía impresa, hechos con un degradado repetido */
+.idx-puntos {
+  flex: 1;
+  height: 1px;
+  min-width: 1.5rem;
+  align-self: center;
+  background-image: radial-gradient(circle, var(--line-2) 1px, transparent 1px);
+  background-size: 5px 2px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.idx-num {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.indice-pie {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 0.9rem;
+  border-top: 2px solid var(--ink);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   PORTADA — tapa de catálogo
+   Tipografía enorme al ras izquierdo, filetes gruesos y una
+   ficha técnica al costado. Nada centrado.
+   ========================================================= */
+.portada {
+  position: relative;
+  padding-block: clamp(2.5rem, 7vw, 5rem) clamp(2.5rem, 6vw, 4.5rem);
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+}
+
+/* Sello girado en la esquina, como el cuño de una edición */
+.pt-sello {
+  position: absolute;
+  top: clamp(2rem, 6vw, 3.5rem);
+  right: -2.5rem;
+  transform: rotate(90deg);
+  transform-origin: center;
+  display: flex;
+  gap: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--line-2);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .pt-sello {
+    display: none;
+  }
+}
+
+.pt-kicker {
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clay);
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line-2);
+}
+
+/* El título en tres renglones de distinto peso y tamaño */
+.pt-titulo {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.pt-l1 {
+  font-size: clamp(4rem, 17vw, 11rem);
+  font-weight: 700;
+  color: var(--clay);
+  font-variant-numeric: tabular-nums;
+}
+
+.pt-l2 {
+  font-size: clamp(2.2rem, 9vw, 6rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: -0.06em;
+}
+
+.pt-l3 {
+  font-size: clamp(1.5rem, 5vw, 3.2rem);
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 0.15em;
+  letter-spacing: -0.02em;
+}
+
+.pt-l3 em {
+  font-style: normal;
+  color: var(--ink);
+  border-bottom: 4px solid var(--gold);
+  padding-bottom: 0.04em;
+}
+
+/* Bajada y ficha técnica, en dos columnas de ancho distinto */
+.pt-cuerpo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-2);
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 860px) {
+  .pt-cuerpo {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+.pt-bajada {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--body);
+  max-width: 52ch;
+}
+
+.pt-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-bottom: 2.25rem;
+}
+
+/* =========================================================
+   CAPA LIMPIA — todo redondeado, aire y transiciones suaves
+   Nada de filetes duros ni sellos torcidos: la separación la
+   hace el espacio y un cambio muy leve de fondo.
+   ========================================================= */
+
+/* ---------- Encabezado de sección ---------- */
+.sec-head {
+  border-bottom: 0;
+  padding-bottom: 0;
+  gap: 1.1rem;
+  align-items: center;
+}
+
+/* El número pasa a ser una pastilla suave */
+.sec-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  background: var(--clay-tint);
+  color: var(--clay);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding-top: 0;
+  flex-shrink: 0;
+}
+
+/* ---------- Lista de precios: tarjetas flotando, sin filetes ---------- */
+.lista-precios {
+  border-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fila-pack {
+  border-bottom: 0;
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: 1.5rem 1.4rem;
+  box-shadow: var(--sh-sm);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+@media (min-width: 860px) {
+  .fila-pack {
+    padding: 1.6rem 2rem;
+  }
+}
+
+.fila-pack:hover {
+  background: var(--card);
+  transform: translateY(-4px);
+  box-shadow: var(--sh-md);
+}
+
+.fila-pack.es-destacado {
+  background: linear-gradient(160deg, var(--clay-tint), var(--card) 70%);
+  border-bottom-color: transparent;
+  box-shadow: 0 8px 30px -12px rgba(109, 75, 216, 0.35);
+}
+
+/* El sello deja de estar torcido y se vuelve una pastilla */
+.fp-sello {
+  top: -0.6rem;
+  left: 1.4rem;
+  transform: none;
+  border-radius: var(--radius-pill);
+  padding: 0.3rem 0.9rem;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 12px -4px rgba(109, 75, 216, 0.5);
+}
+
+.fp-cod {
+  color: var(--cream-3);
+  letter-spacing: -0.04em;
+}
+
+.fp-detalle li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--clay);
+  top: 0.55em;
+  left: 0;
+}
+
+/* ---------- Ficha del Negocio Mayorista ---------- */
+.ficha-negocio {
+  border: 0;
+  border-radius: var(--radius-card);
+  box-shadow: var(--sh-md);
+  margin-top: 2rem;
+}
+
+.fn-tapa {
+  background: linear-gradient(140deg, var(--clay), var(--clay-dark));
+  padding: 1.8rem 1.75rem 1.4rem;
+}
+
+.fn-etiqueta {
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--clay-dark);
+  padding: 0.28rem 0.85rem;
+}
+
+.fn-info {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.fn-lista {
+  padding: 1.5rem 1.75rem;
+}
+
+.fn-pie {
+  padding: 1.4rem 1.75rem 1.6rem;
+  border-top: 1px solid var(--line);
+  background: var(--card-2);
+}
+
+/* ---------- Índice de rubros: pastillas, no renglones ---------- */
+.indice-rubros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  border-top: 0;
+}
+
+.indice-rubros li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-bottom: 0;
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  box-shadow: var(--sh-sm);
+  font-size: 0.9rem;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease),
+    background 0.3s var(--ease);
+}
+
+.indice-rubros li:hover {
+  transform: translateY(-3px);
+  background: var(--clay-tint);
+  box-shadow: var(--sh-md);
+  color: inherit;
+}
+
+/* Los puntos guía no van en una maqueta limpia */
+.idx-puntos {
+  display: none;
+}
+
+.idx-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--clay);
+}
+
+.indice-pie {
+  border-top: 0;
+  justify-content: center;
+  background: var(--clay-tint);
+  color: var(--clay-dark);
+  border-radius: var(--radius-pill);
+  padding: 0.8rem 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.indice-pie .idx-puntos {
+  display: none;
+}
+
+/* ---------- Portada ---------- */
+.portada {
+  border-bottom: 0;
+}
+
+.pt-kicker {
+  border-bottom: 0;
+  display: inline-block;
+  background: var(--clay-tint);
+  color: var(--clay-dark);
+  border-radius: var(--radius-pill);
+  padding: 0.45rem 1.1rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.12em;
+}
+
+.pt-titulo {
+  letter-spacing: -0.035em;
+}
+
+.pt-l3 em {
+  border-bottom: 0;
+  color: var(--clay);
+}
+
+.pt-cuerpo {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* ---------- Detalles que quedaban del retro ---------- */
+.eyebrow,
+.price-badge {
+  transform: none;
+}
+
+.price-badge {
+  transform: translateX(-50%);
+}
+
+.hl {
+  background: var(--clay-tint);
+  border-radius: 6px;
+  padding: 0.02em 0.2em;
+}
+
+/* ---------- Movimiento suave y parejo ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.benefit-card,
+.step-card,
+.testimonio,
+.medio,
+.stat-card {
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+.benefit-card:hover,
+.step-card:hover,
+.testimonio:hover,
+.medio:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sh-md);
+  border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .fila-pack:hover,
+  .indice-rubros li:hover,
+  .benefit-card:hover,
+  .step-card:hover,
+  .testimonio:hover,
+  .medio:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   PORTADA EN DOS COLUMNAS + VISTA PREVIA ANIMADA
+   ========================================================= */
+.pt-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (min-width: 980px) {
+  .pt-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 3.5rem;
+  }
+}
+
+.pt-izq .pt-bajada {
+  margin-bottom: 2rem;
+}
+
+.pt-der {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---------- El escenario de la tarjeta ---------- */
+/* El padding deja lugar a los chips que cuelgan y al recorrido del flote */
+.pt-visual {
+  position: relative;
+  padding: 3.1rem 1.35rem 2.35rem;
+  isolation: isolate;
+}
+
+/* Dos manchas violetas que respiran detrás de la tarjeta */
+.pt-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(38px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.pt-blob-a {
+  width: 62%;
+  aspect-ratio: 1;
+  top: -8%;
+  left: -6%;
+  background: rgba(109, 75, 216, 0.28);
+  animation: pt-respirar 9s ease-in-out infinite;
+}
+
+.pt-blob-b {
+  width: 52%;
+  aspect-ratio: 1;
+  bottom: -6%;
+  right: -4%;
+  background: rgba(47, 145, 200, 0.22);
+  animation: pt-respirar 11s ease-in-out infinite reverse;
+}
+
+@keyframes pt-respirar {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(6%, -5%) scale(1.14);
+  }
+}
+
+/* ---------- La tarjeta ----------
+   El flote vive en el marco, no en la tarjeta: así los chips (que son hijos
+   del marco) se mueven pegados a ella en vez de quedar sueltos en el aire. */
+.pt-marco {
+  position: relative;
+  animation: pt-flotar 7s ease-in-out infinite;
+}
+
+.pt-tarjeta {
+  position: relative;
+  background: var(--card);
+  border-radius: var(--radius-card);
+  box-shadow: 0 12px 30px -12px rgba(80, 55, 160, 0.22),
+    0 40px 70px -40px rgba(80, 55, 160, 0.4);
+  overflow: hidden;
+}
+
+@keyframes pt-flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.ptt-top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--cream-2);
+}
+
+.ptt-punto {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line-2);
+  flex-shrink: 0;
+}
+
+.ptt-punto:first-child {
+  background: var(--clay);
+  opacity: 0.5;
+}
+
+.ptt-arch {
+  margin-left: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ptt-cuerpo {
+  padding: 1.35rem 1.4rem 1.5rem;
+}
+
+.ptt-titulo {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.ptt-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 1.1rem;
+}
+
+/* ---------- Las filas se van encendiendo de a una ---------- */
+.ptt-filas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ptt-filas li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: var(--body);
+  /* El ciclo dura 8s y hay 5 filas: cada una brilla 1,6s por turno */
+  animation: pt-encender 8s var(--ease) infinite;
+  animation-delay: var(--d, 0s);
+}
+
+.ptt-filas b {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--clay);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes pt-encender {
+  0%,
+  20%,
+  100% {
+    background: transparent;
+    transform: translateX(0);
+  }
+  4%,
+  16% {
+    background: var(--clay-tint);
+    transform: translateX(4px);
+  }
+}
+
+.ptt-pie {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.ptt-barra {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--cream-2);
+  overflow: hidden;
+}
+
+.ptt-barra-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--clay), #4fa8d8);
+  animation: pt-cargar 8s var(--ease) infinite;
+}
+
+@keyframes pt-cargar {
+  0% {
+    width: 12%;
+  }
+  85%,
+  100% {
+    width: 100%;
+  }
+}
+
+.ptt-mas {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Los chips flotantes se fueron: quedaban despegados de la tarjeta y el dato
+   ("te llega al instante") ya está en la tira de abajo. */
+
+@media (max-width: 560px) {
+  .pt-visual {
+    padding: 1.25rem 0.35rem 1.5rem;
+  }
+  .ptt-hoja {
+    padding: 1.2rem 0.95rem 1.15rem;
+    background-position: 0.35rem 1.2rem;
+    background-size: 3px calc(100% - 2.35rem);
+  }
+  .ptt-sello {
+    top: 1rem;
+    right: 0.75rem;
+  }
+  .ptt-filas li {
+    gap: 0.6rem;
+    padding: 0.6rem 0.4rem;
+  }
+  .ptf-ini {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    font-size: 0.66rem;
+  }
+  .ptf-tel {
+    font-size: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-blob,
+  .pt-marco,
+  .ptt-filas li,
+  .ptt-barra-fill {
+    animation: none;
+  }
+  .ptt-barra-fill {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   AJUSTES: PDF con contactos, botón subir a la izquierda,
+   y el +1000 con fondo remarcado
+   ========================================================= */
+
+/* ---------- Barra superior tipo visor de PDF ---------- */
+.ptt-top {
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: var(--ink);
+}
+
+.ptt-pdf {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--card);
+  background: #d3402f;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.ptt-top .ptt-arch {
+  margin-left: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.73rem;
+}
+
+.ptt-pag {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- La hoja del PDF ---------- */
+.ptt-hoja {
+  position: relative;
+  padding: 1.7rem 1.5rem 1.6rem;
+  background: var(--card);
+  /* Renglones tenues, como una hoja impresa de verdad */
+  background-image: linear-gradient(
+    90deg,
+    var(--clay-tint) 0 3px,
+    transparent 3px
+  );
+  background-repeat: no-repeat;
+  background-position: 0.55rem 1.7rem;
+  background-size: 3px calc(100% - 3.3rem);
+}
+
+/* Sello de agua en la esquina, girado como un timbre */
+.ptt-sello {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.28rem 0.55rem;
+  border: 1.5px solid rgba(37, 122, 81, 0.35);
+  border-radius: 7px;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(37, 122, 81, 0.62);
+  transform: rotate(-7deg);
+  pointer-events: none;
+}
+
+.ptt-sello b {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+/* Etiqueta de la sección, arriba del título */
+.ptt-tag {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: var(--clay-tint);
+  color: var(--clay-dark);
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.ptt-encabezado {
+  padding-bottom: 1rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 2px solid var(--clay-tint);
+}
+
+.ptt-encabezado .ptt-sub {
+  margin-bottom: 0;
+}
+
+/* ---------- Cada contacto ---------- */
+.ptt-filas {
+  gap: 0.3rem;
+}
+
+.ptt-filas li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.65rem;
+}
+
+/* Línea finita entre contactos, menos en el último */
+.ptt-filas li + li {
+  box-shadow: 0 -1px 0 var(--line) inset;
+}
+
+.ptf-ini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--clay-tint);
+  color: var(--clay-dark);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.ptf-datos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ptf-datos b {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ptf-datos small {
+  font-size: 0.7rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ptf-tel {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--clay);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ---------- Pie de la hoja ---------- */
+.ptt-pie {
+  margin-top: 1.25rem;
+  padding-top: 1.05rem;
+}
+
+.ptt-mas {
+  font-size: 0.72rem;
+}
+
+
+/* El +1000 va limpio, sin fondo detrás */
+.pt-l1 {
+  display: inline-block;
+  align-self: flex-start;
+}
+
+/* ---------- Botón volver arriba: siempre a la izquierda ---------- */
+.back-to-top {
+  left: 1.5rem;
+  right: auto;
+}
+
+@media (max-width: 640px) {
+  .back-to-top {
+    left: 1.25rem;
+    right: auto;
+  }
+}
+
+/* =========================================================
+   AJUSTES DE CELULAR: portada centrada, testimonios en
+   carrusel y formas de pago plegables
+   ========================================================= */
+
+/* ---------- Portada centrada en celular ---------- */
+@media (max-width: 760px) {
+  .pt-izq {
+    text-align: center;
+  }
+
+  .pt-titulo {
+    align-items: center;
+  }
+
+  .pt-l1 {
+    align-self: center;
+  }
+
+  .pt-bajada {
+    margin-inline: auto;
+  }
+
+  /* Los dos botones al mismo ancho: quedaban desparejos y se notaba */
+  .pt-acciones {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .pt-acciones .btn {
+    width: 100%;
+    max-width: 21rem;
+    justify-content: center;
+  }
+}
+
+/* ---------- Testimonios: más chicos, dentro de la marquesina ---------- */
+.testimonio figcaption {
+  padding: 0.95rem 1.05rem 1.15rem;
+}
+
+.testimonio figcaption p {
+  font-size: 0.85rem;
+}
+
+.testimonio-pack {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.65rem;
+}
+
+/* Ancho fijo, igual que los números: el loop lo necesita */
+.marquesina-testimonios .testimonio {
+  flex: 0 0 clamp(15rem, 74vw, 19rem);
+}
+
+@media (max-width: 760px) {
+  .testimonios-nota {
+    margin-top: 1.25rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* En pantallas táctiles el hover se queda "pegado" después de tocar */
+@media (hover: none) {
+  .testimonio:hover {
+    transform: none;
+    box-shadow: var(--sh-sm);
+  }
+}
+
+/* ---------- Formas de pago: plegables en celular ----------
+   Van abiertas en el HTML para que sin JavaScript se vea todo;
+   main.js las cierra solo en pantallas chicas. */
+.medios-desplegable {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+.medios-resumen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  list-style: none;
+  cursor: pointer;
+  padding: 0.8rem 1.25rem;
+  background: var(--card);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--sh-sm);
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.medios-resumen::-webkit-details-marker {
+  display: none;
+}
+
+/* La etiqueta cambia según esté abierto o cerrado */
+.medios-cerrar,
+.medios-desplegable[open] .medios-abrir {
+  display: none;
+}
+
+.medios-desplegable[open] .medios-cerrar {
+  display: inline;
+}
+
+.medios-resumen::marker {
+  content: "";
+}
+
+.medios-resumen svg {
+  width: 18px;
+  height: 18px;
+  color: var(--clay);
+  transition: transform 0.3s var(--ease);
+}
+
+.medios-desplegable[open] .medios-resumen svg {
+  transform: rotate(180deg);
+}
+
+.medios-desplegable[open] .medios-resumen {
+  margin-bottom: 1rem;
+}
+
+/* En pantallas grandes entra completo y el botón sobra */
+@media (min-width: 760px) {
+  .medios-resumen {
+    display: none;
+  }
+}
+
+/* Y aun abierto, en celular ocupa bastante menos */
+@media (max-width: 620px) {
+  .medios-titulo {
+    margin-bottom: 1.1rem;
+  }
+
+  .medios-grid {
+    gap: 0.55rem;
+  }
+
+  .medio {
+    padding: 0.75rem 1rem;
+  }
+
+  .medio-tipo {
+    font-size: 0.78rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .medio p {
+    font-size: 0.81rem;
+    line-height: 1.45;
+  }
+
+  .medios-nota {
+    margin-top: 1.1rem;
+    font-size: 0.78rem;
+  }
 }

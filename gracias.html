@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Google Analytics (GA4) - configurar ID en js/analytics.js -->
-<script src="js/analytics.js?v=20260830"></script>
+<script src="js/analytics.js?v=20260902b"></script>
 <title>¡Gracias por tu compra! | MayoristasYa.com</title>
 <meta name="description" content="Recibimos tu pago. En unos minutos te llega el pack de proveedores a tu correo.">
 <meta name="robots" content="noindex, follow">
@@ -12,21 +12,19 @@
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20260830">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=20260902b">
 </head>
 <body>
 <a class="skip-link" href="#main">Saltar al contenido principal</a>
 
-<div class="top-fixed is-scrolled">
-  <header class="site-header">
+<header class="site-header is-scrolled">
     <div class="container">
       <a href="index.html" class="logo" aria-label="MayoristasYa.com - Inicio">
         <img src="images/logo-full.png" alt="MayoristasYa - Tus proveedores al instante" class="logo-img">
       </a>
     </div>
-  </header>
-</div>
+</header>
 
 <main id="main" class="legal-page">
   <div class="container">
@@ -35,23 +33,35 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
       </span>
 
-      <h1 id="graciasTitulo">¡Gracias por tu compra!</h1>
-      <p class="gracias-lead" id="graciasTexto">Recibimos tu pago. En unos minutos te llega el pack completo de proveedores al correo que cargaste.</p>
+      <h1 id="graciasTitulo">¡Listo, ya es tuyo!</h1>
+      <p class="gracias-lead" id="graciasTexto">Tu pago se acreditó y el pack ya salió para tu correo. Suele llegar en menos de un minuto.</p>
 
-      <ul class="gracias-pasos">
-        <li><strong>Revisá tu correo.</strong> Si no lo ves, fijate en la carpeta de spam o promociones.</li>
-        <li><strong>Guardá el archivo.</strong> Está organizado por rubro, con el contacto directo de cada proveedor.</li>
-        <li><strong>Escribiles vos.</strong> No hay intermediarios ni comisiones: tratás directo con cada mayorista.</li>
-      </ul>
+      <p class="gracias-ref" id="graciasRef" hidden></p>
 
-      <p class="gracias-ayuda">¿No te llegó o tenés alguna duda? Escribinos y lo resolvemos.</p>
+      <ol class="gracias-pasos">
+        <li>
+          <strong>Revisá tu correo.</strong>
+          Buscá un mail de MayoristasYa. Si no aparece, mirá en spam o en la pestaña de promociones.
+        </li>
+        <li>
+          <strong>Descargá el archivo adjunto.</strong>
+          Guardalo en tu compu o tu celular. Es tuyo para siempre, podés volver a abrirlo cuando quieras.
+        </li>
+        <li>
+          <strong>Escribile al primer proveedor hoy.</strong>
+          Elegí tu rubro, mandá tres o cuatro mensajes preguntando precios y mínimos de compra. Así arranca esto.
+        </li>
+      </ol>
 
-      <a href="#" class="btn btn-whatsapp btn-block js-wsp" target="_blank" rel="noopener" style="max-width:340px;margin-inline:auto">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
-        Escribinos por WhatsApp
-      </a>
+      <p class="gracias-ayuda">¿Pasaron 10 minutos y no te llegó? Escribinos y te lo mandamos a mano en el momento.</p>
 
-      <a href="index.html" class="gracias-volver">Volver al inicio</a>
+      <div class="gracias-acciones">
+        <a href="#" class="btn btn-whatsapp js-wsp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+          Escribinos por WhatsApp
+        </a>
+        <a href="index.html" class="gracias-volver">Volver al inicio</a>
+      </div>
     </div>
   </div>
 </main>
@@ -65,20 +75,32 @@
 </footer>
 
 <!-- main.js se encarga de poner el link de WhatsApp, así el número vive en un solo lugar -->
-<script src="js/main.js?v=20260830"></script>
+<script src="js/main.js?v=20260902b"></script>
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* Mercado Pago devuelve el estado del pago en la URL. Un pago "pendiente"
-     (por ejemplo, pago en efectivo por Rapipago) todavía no entrega nada,
-     así que conviene decirlo en vez de prometer un mail que no va a llegar. */
+  /* Mercado Pago vuelve con datos del pago en la dirección. Los usamos para
+     dos cosas: mostrar el número de pedido y avisar si el pago quedó
+     pendiente, en cuyo caso todavía no se envía nada. */
   (function () {
-    var estado = new URLSearchParams(window.location.search).get("status");
+    var params = new URLSearchParams(window.location.search);
+
+    /* Número de pedido: le sirve al comprador si tiene que reclamar,
+       y a vos para encontrarlo en la planilla. */
+    var ref = params.get("external_reference");
+    if (ref) {
+      var refEl = document.getElementById("graciasRef");
+      refEl.innerHTML = "Tu número de pedido: <strong>" + ref.replace(/[<>]/g, "") + "</strong>";
+      refEl.hidden = false;
+    }
+
+    var estado = params.get("status") || params.get("collection_status");
     if (estado !== "pending" && estado !== "in_process") return;
 
-    document.getElementById("graciasTitulo").textContent = "Tu pago está en proceso";
+    document.getElementById("graciasTitulo").textContent = "Tu pago está en camino";
     document.getElementById("graciasTexto").textContent =
-      "Mercado Pago todavía está confirmando el pago. Apenas se acredite te enviamos el pack al correo que cargaste, sin que tengas que hacer nada.";
+      "Mercado Pago todavía lo está confirmando. Puede tardar unos minutos, o hasta 2 días si pagaste en efectivo. " +
+      "Apenas se acredite te mandamos el pack al correo, sin que tengas que hacer nada.";
   })();
 </script>
 </body>

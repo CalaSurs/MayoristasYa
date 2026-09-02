@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6d4bd8">
+<!-- Google Analytics (GA4) - configurar ID en js/analytics.js -->
+<script src="js/analytics.js?v=20260902b" defer></script>
+<!-- Pago con Mercado Pago - configurar URL en js/pagos.js -->
+<script src="js/pagos.js?v=20260902b" defer></script>
+<title>Finalizar compra | MayoristasYa.com</title>
+<meta name="description" content="Completá tus datos y elegí cómo pagar tu pack de proveedores mayoristas.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=20260902b">
+</head>
+<body class="checkout-page">
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+<header class="ck-header">
+  <div class="container">
+    <a href="index.html" class="ck-volver">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/></svg>
+      <span>Volver</span>
+    </a>
+    <img src="images/logo-full.png" alt="MayoristasYa" class="ck-logo" width="523" height="110">
+    <span class="ck-seguro">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+      Compra segura
+    </span>
+  </div>
+</header>
+
+<main id="main" class="ck-main">
+  <div class="container">
+
+    <!-- Si el link no trae un pack válido -->
+    <div class="ck-error" id="ckSinPack" hidden>
+      <h1>No encontramos el pack</h1>
+      <p>El link con el que llegaste no indica qué pack querés comprar. Volvé y elegí uno.</p>
+      <a href="index.html#precios" class="btn btn-primary">Ver los packs</a>
+    </div>
+
+    <div class="ck-grid" id="ckContenido" hidden>
+
+      <!-- ---------- Columna: formulario ---------- -->
+      <section class="ck-col-form" aria-labelledby="ckTitulo">
+        <h1 id="ckTitulo">Finalizar compra</h1>
+        <p class="ck-sub">Completá tus datos y elegí cómo querés pagar. Te enviamos el pack al correo que cargues.</p>
+
+        <form id="ckForm" novalidate>
+          <div class="ck-campo">
+            <label for="ckName">Nombre y apellido</label>
+            <input type="text" id="ckName" name="name" autocomplete="name"
+                   autocapitalize="words" enterkeyhint="next" placeholder="Ana Pérez" required>
+            <span class="field-error" id="ckNameError" role="alert"></span>
+          </div>
+
+          <div class="ck-campo">
+            <label for="ckEmail">Correo electrónico</label>
+            <input type="email" id="ckEmail" name="email" autocomplete="email"
+                   inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false"
+                   enterkeyhint="done" placeholder="ana@gmail.com" required>
+            <span class="field-error" id="ckEmailError" role="alert"></span>
+            <span class="ck-ayuda">Acá te mandamos el pack. Revisalo bien antes de pagar.</span>
+          </div>
+
+          <div class="ck-pagos">
+            <button type="button" class="btn btn-mp btn-block btn-lg" id="btnPagarMP" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/><path d="M6.5 14.5h3"/></svg>
+              Pagar online
+            </button>
+            <p class="checkout-medios" id="checkoutMedios" hidden>Tarjeta de crédito o débito, prepagas como Ualá, transferencia o efectivo</p>
+
+            <p class="checkout-sep" id="checkoutSep" hidden><span>o</span></p>
+
+            <button type="submit" class="btn btn-whatsapp btn-block btn-lg">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+              Coordinar por WhatsApp
+            </button>
+            <p class="checkout-note" id="checkoutNote">Vas a ser redirigido a WhatsApp para coordinar el pago y la entrega.</p>
+
+            <p class="ck-legal">
+              Al continuar aceptás los <a href="terminos.html">términos y condiciones</a>
+              y la <a href="privacidad.html">política de privacidad</a>.
+            </p>
+          </div>
+        </form>
+      </section>
+
+      <!-- ---------- Columna: resumen ---------- -->
+      <aside class="ck-col-resumen" aria-label="Resumen de tu compra">
+        <div class="ck-resumen">
+          <h2>Tu compra</h2>
+
+          <div class="ck-item">
+            <div>
+              <strong id="ckPackNombre">—</strong>
+              <span id="ckPackDesc"></span>
+            </div>
+            <span class="ck-precio" id="ckPackPrecio">—</span>
+          </div>
+
+          <div class="ck-linea" id="ckLineaDesc" hidden>
+            <span>Antes</span>
+            <span class="ck-tachado" id="ckPackAntes"></span>
+          </div>
+
+          <div class="ck-linea ck-ahorro" id="ckLineaAhorro" hidden>
+            <span>Tu descuento</span>
+            <span id="ckPackAhorro"></span>
+          </div>
+
+          <div class="ck-total">
+            <span>Total</span>
+            <strong id="ckTotal">—</strong>
+          </div>
+
+          <p class="ck-mensual" id="ckMensual" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            <span>Además, <strong>$30.000 por mes</strong> de mantenimiento de tu página.</span>
+          </p>
+
+          <ul class="ck-garantias">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+              Entrega inmediata por correo
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+              Pago único, sin suscripciones
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+              El pago lo procesa Mercado Pago
+            </li>
+          </ul>
+
+          <p class="ck-legal">
+            Al continuar aceptás los <a href="terminos.html">términos y condiciones</a>
+            y la <a href="privacidad.html">política de privacidad</a>.
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<footer class="ck-footer">
+  <div class="container">
+    <p>¿Alguna duda antes de pagar? <a href="#" class="js-wsp" target="_blank" rel="noopener">Escribinos por WhatsApp</a></p>
+    <p class="ck-copy">© <span id="year"></span> MayoristasYa.com</p>
+  </div>
+</footer>
+
+<script src="js/checkout.js?v=20260902b" defer></script>
+</body>
+</html>

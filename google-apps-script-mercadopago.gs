@@ -43,6 +43,30 @@
 var SHEET_NAME = "Pedidos";
 var EMAIL_SUBJECT = "Tu pack de proveedores - MayoristasYa";
 
+/**
+ * Nombre que ve el comprador como remitente del mail.
+ *
+ * Sin esto, Gmail usa el nombre de tu cuenta de Google (aparecía
+ * "lautileonardolopez"), que queda poco profesional en la bandeja de entrada.
+ * La dirección de correo sigue siendo la misma, solo cambia el nombre visible.
+ */
+var EMAIL_REMITENTE = "MayoristasYa";
+
+/**
+ * Dirección desde la que sale el mail.
+ *
+ * ANTES DE QUE ESTO FUNCIONE hay que darla de alta en Gmail:
+ *   Configuración -> Cuentas e importación -> "Enviar como" -> Añadir otra
+ *   dirección, y confirmar el código que llega a esa casilla.
+ *
+ * Si todavía no lo hiciste, no pasa nada: el script se da cuenta y manda el
+ * mail desde tu dirección de siempre. Dejalo vacío para no usar alias nunca.
+ */
+var EMAIL_ALIAS = "calamayoristasya@gmail.com";
+
+// A dónde van las respuestas cuando el comprador le da "Responder" al mail.
+var EMAIL_RESPUESTAS = "calamayoristasya@gmail.com";
+
 // Tu sitio, sin barra final. Se usa para volver después de pagar.
 var SITE_URL = "https://mayoristasya.com";
 
@@ -190,10 +214,12 @@ function crearPreferencia(e) {
     payer: { name: nombre, email: email },
     external_reference: ref,
     notification_url: getScriptUrl(),
+    /* Sin "#" en ninguna: Mercado Pago le pega sus parámetros al final y, si
+       hay un ancla, queda una dirección rota tipo "/#precios?collection_id=..." */
     back_urls: {
       success: SITE_URL + "/gracias.html",
       pending: SITE_URL + "/gracias.html",
-      failure: SITE_URL + "/#precios",
+      failure: SITE_URL + "/",
     },
     auto_return: "approved",
     statement_descriptor: "MAYORISTASYA",
@@ -278,6 +304,41 @@ function buscarPackPorNombre(nombre) {
   return null;
 }
 
+/**
+ * Manda un mail poniendo como remitente el alias del negocio.
+ *
+ * Si el alias no está verificado en Gmail, Google rechaza el envío. En ese caso
+ * lo reintentamos sin alias: entre "sale desde otra dirección" y "el comprador
+ * pagó y no recibió nada", lo segundo es mucho peor. El nombre visible
+ * ("MayoristasYa") se mantiene en los dos casos.
+ *
+ * No usamos GmailApp.getAliases() para chequearlo de antemano a propósito: eso
+ * obligaría a re-autorizar el script con permisos de Gmail.
+ */
+function enviarMail(opciones) {
+  if (EMAIL_ALIAS) {
+    try {
+      var conAlias = {};
+      for (var clave in opciones) {
+        if (Object.prototype.hasOwnProperty.call(opciones, clave)) {
+          conAlias[clave] = opciones[clave];
+        }
+      }
+      conAlias.from = EMAIL_ALIAS;
+      MailApp.sendEmail(conAlias);
+      return;
+    } catch (e) {
+      console.warn(
+        "No pude enviar desde " + EMAIL_ALIAS + ". ¿Lo diste de alta en " +
+        "Gmail -> Cuentas e importación -> Enviar como? Mando desde la " +
+        "dirección por defecto. Detalle: " + e
+      );
+    }
+  }
+
+  MailApp.sendEmail(opciones);
+}
+
 /** Manda el mail con el pack que corresponda y marca la fila como enviada. */
 function entregarPack(sheet, row) {
   var nombre = sheet.getRange(row, COL_NOMBRE).getValue();
@@ -290,7 +351,13 @@ function entregarPack(sheet, row) {
     return;
   }
 
-  var opciones = { to: email, subject: EMAIL_SUBJECT };
+  var opciones = {
+    to: email,
+    subject: EMAIL_SUBJECT,
+    name: EMAIL_REMITENTE
+  };
+
+  if (EMAIL_RESPUESTAS) opciones.replyTo = EMAIL_RESPUESTAS;
 
   if (pack.archivoId) {
     var file = DriveApp.getFileById(pack.archivoId);
@@ -315,16 +382,19 @@ function entregarPack(sheet, row) {
       "Saludos,\nEquipo MayoristasYa";
   }
 
-  MailApp.sendEmail(opciones);
+  enviarMail(opciones);
 
   sheet.getRange(row, COL_ENVIADO).setValue(true);
 
   if (EMAIL_ADMIN) {
-    MailApp.sendEmail(
-      EMAIL_ADMIN,
-      "Venta confirmada: " + pedido,
-      "Comprador: " + nombre + "\nEmail: " + email + "\nPedido: " + pedido + "\n\nYa se le envió el pack."
-    );
+    enviarMail({
+      to: EMAIL_ADMIN,
+      subject: "Venta confirmada: " + pedido,
+      name: EMAIL_REMITENTE,
+      body:
+        "Comprador: " + nombre + "\nEmail: " + email + "\nPedido: " + pedido +
+        "\n\nYa se le envió el pack."
+    });
   }
 }
 
@@ -418,6 +488,21 @@ var CSS_INTERMEDIA =
  * Usamos location.replace en vez de href para que el botón "atrás" del
  * navegador no traiga al comprador de vuelta a esta pantalla intermedia.
  */
+/**
+ * Devuelve el link de pago de Mercado Pago.
+ *
+ * Esta respuesta se carga de dos formas distintas, y contempla las dos:
+ *
+ *   1. NORMAL: el sitio la pide desde un iframe escondido. Le avisamos el
+ *      link con postMessage y el sitio viaja solo. El comprador nunca ve
+ *      esta pantalla ni el cartel de Google.
+ *
+ *   2. PLAN B: si lo anterior falla, el sitio navega directamente acá. En ese
+ *      caso sí se ve esta pantalla un segundo, y redirigimos por JavaScript.
+ *
+ * El postMessage va a window.top porque Apps Script anida su contenido en un
+ * iframe propio: window.parent es la página de Google, window.top es el sitio.
+ */
 function htmlRedirect(url) {
   var safe = String(url).replace(/"/g, "&quot;");
   var html =
@@ -428,7 +513,13 @@ function htmlRedirect(url) {
     "</div>" +
     "<script>" +
     'var u = "' + safe + '";' +
-    "try { window.top.location.replace(u); } catch (e) { window.location.replace(u); }" +
+    'try { if (window.top && window.top !== window) { window.top.postMessage({ mwInitPoint: u }, "*"); } } catch (e) {}' +
+    /* Le damos medio segundo al sitio para que reaccione al mensaje. Si
+       seguimos acá, es que estamos en el plan B: redirigimos nosotros. */
+    "setTimeout(function () {" +
+    "  try { window.top.location.href = u; }" +
+    "  catch (e1) { try { parent.location.href = u; } catch (e2) { window.location.href = u; } }" +
+    "}, 500);" +
     "<\/script>";
 
   return HtmlService.createHtmlOutput(html)

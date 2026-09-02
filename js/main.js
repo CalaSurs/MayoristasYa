@@ -34,10 +34,10 @@
 
   /* ---------- Barra de progreso de scroll + header ---------- */
   var scrollProgress = document.getElementById("scrollProgress");
-  var topFixed = document.getElementById("topFixed");
+  var siteHeader = document.getElementById("siteHeader");
 
   function onScroll() {
-    if (topFixed) topFixed.classList.toggle("is-scrolled", window.scrollY > 12);
+    if (siteHeader) siteHeader.classList.toggle("is-scrolled", window.scrollY > 12);
     if (scrollProgress) {
       var docHeight = document.documentElement.scrollHeight - window.innerHeight;
       var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
@@ -57,61 +57,6 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* ---------- Compra directa (sin carrito) ---------- */
-  var selectedItem = null;
-
-  function formatPrice(n) {
-    return "$" + n.toLocaleString("es-AR");
-  }
-
-  function itemsForTracking() {
-    if (!selectedItem) return [];
-    return [{ item_id: selectedItem.id, item_name: selectedItem.name, price: selectedItem.price, quantity: 1 }];
-  }
-
-  var checkoutModal = document.getElementById("checkoutModal");
-  var checkoutBackdrop = document.getElementById("checkoutBackdrop");
-  var checkoutClose = document.getElementById("checkoutClose");
-  var checkoutStepView = document.getElementById("checkoutStepView");
-  var checkoutSuccessView = document.getElementById("checkoutSuccessView");
-
-  function openCheckout(item) {
-    if (!checkoutModal) return;
-    selectedItem = item;
-    renderCheckoutSummary();
-
-    if (checkoutStepView) checkoutStepView.hidden = false;
-    if (checkoutSuccessView) checkoutSuccessView.hidden = true;
-
-    checkoutModal.classList.add("is-open");
-    if (checkoutBackdrop) checkoutBackdrop.classList.add("is-open");
-    checkoutModal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("checkout-open");
-
-    window.setTimeout(function () {
-      var ckNameEl = document.getElementById("ckName");
-      if (ckNameEl) ckNameEl.focus();
-    }, 300);
-
-    if (window.mwTrack) {
-      window.mwTrack("begin_checkout", {
-        currency: "ARS",
-        value: item.price,
-        items: itemsForTracking(),
-      });
-    }
-  }
-
-  function closeCheckout() {
-    if (!checkoutModal) return;
-    checkoutModal.classList.remove("is-open");
-    if (checkoutBackdrop) checkoutBackdrop.classList.remove("is-open");
-    checkoutModal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("checkout-open");
-  }
-
-  if (checkoutClose) checkoutClose.addEventListener("click", closeCheckout);
-  if (checkoutBackdrop) checkoutBackdrop.addEventListener("click", closeCheckout);
 
   /* ---------- Modal info Negocio Mayorista ---------- */
   var negocioInfoBtn = document.getElementById("negocioInfoBtn");
@@ -136,171 +81,6 @@
   if (negocioInfoBtn) negocioInfoBtn.addEventListener("click", openNegocioInfo);
   if (negocioInfoClose) negocioInfoClose.addEventListener("click", closeNegocioInfo);
   if (negocioInfoBackdrop) negocioInfoBackdrop.addEventListener("click", closeNegocioInfo);
-
-  /* ---------- Botones de compra: van directo al checkout ---------- */
-  document.querySelectorAll(".js-buy").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      openCheckout({
-        id: btn.getAttribute("data-id"),
-        name: btn.getAttribute("data-name"),
-        price: parseInt(btn.getAttribute("data-price"), 10),
-        priceLabel: btn.getAttribute("data-price-label"),
-      });
-    });
-  });
-
-  /* ---------- Checkout ---------- */
-  var checkoutSummary = document.getElementById("checkoutSummary");
-  var checkoutWspLink = document.getElementById("checkoutWspLink");
-  var checkoutForm = document.getElementById("checkoutForm");
-  var ckName = document.getElementById("ckName");
-  var ckEmail = document.getElementById("ckEmail");
-  var ckNameError = document.getElementById("ckNameError");
-  var ckEmailError = document.getElementById("ckEmailError");
-
-  function renderCheckoutSummary() {
-    if (!checkoutSummary || !selectedItem) return;
-    var html =
-      '<div class="cs-row"><span>' + selectedItem.name + "</span><span>" + formatPrice(selectedItem.price) + "</span></div>";
-    if (selectedItem.id === "negocio-mayorista") {
-      html += '<div class="cs-note">+ $30.000 por mes de mantenimiento de la página</div>';
-    }
-    html += '<div class="cs-total"><span>Total</span><span>' + formatPrice(selectedItem.price) + "</span></div>";
-    checkoutSummary.innerHTML = html;
-  }
-
-  function buildOrderMessage(name, email) {
-    var lines = [];
-    lines.push("Hola, quiero confirmar mi compra en " + CONFIG.businessName + ".");
-    lines.push("");
-    lines.push("Pedido: " + selectedItem.name);
-    lines.push("Total: " + formatPrice(selectedItem.price));
-    if (selectedItem.id === "negocio-mayorista") {
-      lines.push("(Incluye además $30.000 por mes de mantenimiento de la página.)");
-    }
-    lines.push("");
-    lines.push("Datos de contacto:");
-    lines.push("Nombre: " + name);
-    lines.push("Email: " + email);
-    lines.push("");
-    lines.push("Voy a realizar la transferencia a la siguiente cuenta:");
-    lines.push("Alias: " + CONFIG.transfer.alias);
-    lines.push("CBU: " + CONFIG.transfer.cbu);
-    lines.push("Titular: " + CONFIG.transfer.titular);
-    lines.push("");
-    lines.push(
-      "Entiendo que dentro de las próximas 48 horas voy a recibir por este mismo chat la lista completa de los proveedores correspondientes a mi pack. Muchas gracias."
-    );
-    return lines.join("\n");
-  }
-
-  /* Valida los dos campos y devuelve {name, email} o null si algo está mal.
-     La usan tanto el botón de Mercado Pago como el de WhatsApp. */
-  function validarDatos() {
-    var name = ckName.value.trim();
-    var email = ckEmail.value.trim();
-    var valid = true;
-
-    if (name.length < 3) {
-      if (ckNameError) ckNameError.textContent = "Ingresá tu nombre completo.";
-      ckName.classList.add("has-error");
-      valid = false;
-    } else {
-      if (ckNameError) ckNameError.textContent = "";
-      ckName.classList.remove("has-error");
-    }
-
-    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRe.test(email)) {
-      if (ckEmailError) ckEmailError.textContent = "Ingresá un email válido.";
-      ckEmail.classList.add("has-error");
-      valid = false;
-    } else {
-      if (ckEmailError) ckEmailError.textContent = "";
-      ckEmail.classList.remove("has-error");
-    }
-
-    return valid ? { name: name, email: email } : null;
-  }
-
-  /* ---------- Botón: pagar con Mercado Pago ---------- */
-  var btnPagarMP = document.getElementById("btnPagarMP");
-  var checkoutSep = document.getElementById("checkoutSep");
-  var checkoutNote = document.getElementById("checkoutNote");
-
-  /* El botón solo aparece si ya pegaste la URL del script en js/pagos.js. */
-  if (btnPagarMP && window.mwPagoConfigurado) {
-    btnPagarMP.hidden = false;
-    if (checkoutSep) checkoutSep.hidden = false;
-    if (checkoutNote) {
-      checkoutNote.textContent =
-        "Pagás con tarjeta, dinero en cuenta o transferencia. El pack te llega por mail apenas se acredita.";
-    }
-
-    btnPagarMP.addEventListener("click", function () {
-      var datos = validarDatos();
-      if (!datos || !selectedItem) return;
-
-      if (window.mwTrack) {
-        window.mwTrack("add_payment_info", {
-          currency: "ARS",
-          value: selectedItem.price,
-          payment_type: "mercadopago",
-          items: itemsForTracking(),
-        });
-      }
-
-      btnPagarMP.disabled = true;
-      btnPagarMP.textContent = "Llevándote a Mercado Pago...";
-
-      /* Esto navega la página entera al Apps Script, que redirige a
-         Mercado Pago. No hace falta mostrar la pantalla de éxito. */
-      window.mwPagarConMercadoPago({
-        packId: selectedItem.id,
-        nombre: datos.name,
-        email: datos.email,
-      });
-    });
-  }
-
-  if (checkoutForm) {
-    checkoutForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      var datos = validarDatos();
-      if (!datos) return;
-
-      var name = datos.name;
-      var email = datos.email;
-
-      var message = buildOrderMessage(name, email);
-      var url = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(message);
-
-      if (checkoutWspLink) checkoutWspLink.setAttribute("href", url);
-      if (checkoutStepView) checkoutStepView.hidden = true;
-      if (checkoutSuccessView) checkoutSuccessView.hidden = false;
-
-      window.open(url, "_blank", "noopener");
-
-      if (window.mwTrack) {
-        window.mwTrack("generate_lead", {
-          currency: "ARS",
-          value: selectedItem.price,
-          items: itemsForTracking(),
-        });
-      }
-
-      if (window.mwSendOrder) {
-        window.mwSendOrder({
-          name: name,
-          email: email,
-          items: selectedItem.name,
-          total: selectedItem.price,
-        });
-      }
-
-    });
-  }
 
   /* ---------- Menú mobile ---------- */
   var navToggle = document.getElementById("navToggle");
@@ -329,7 +109,6 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
       closeNav();
-      closeCheckout();
       closeNegocioInfo();
     }
   });
@@ -436,6 +215,38 @@
       counters.forEach(function (el) {
         counterObserver.observe(el);
       });
+    }
+  }
+
+  /* ---------- Formas de pago: plegado solo en celular ----------
+     En el HTML va abierto a propósito: si el JavaScript no corre, el visitante
+     igual ve todas las formas de pago. Acá lo cerramos únicamente en pantallas
+     chicas, donde se comía una pantalla entera. Si el visitante lo toca, esa
+     decisión manda y no se la volvemos a cambiar. */
+  var mediosDetalle = document.getElementById("mediosDetalle");
+  if (mediosDetalle && window.matchMedia) {
+    var anchoGrande = window.matchMedia("(min-width: 760px)");
+    var loTocoElUsuario = false;
+
+    /* Escuchamos el click del summary y no el evento "toggle": toggle también
+       se dispara cuando lo abrimos nosotros, y encima llega asincrónico. */
+    var resumenMedios = mediosDetalle.querySelector("summary");
+    if (resumenMedios) {
+      resumenMedios.addEventListener("click", function () {
+        loTocoElUsuario = true;
+      });
+    }
+
+    var ajustarMedios = function (mq) {
+      if (loTocoElUsuario) return;
+      mediosDetalle.open = mq.matches;
+    };
+
+    ajustarMedios(anchoGrande);
+    if (anchoGrande.addEventListener) {
+      anchoGrande.addEventListener("change", ajustarMedios);
+    } else if (anchoGrande.addListener) {
+      anchoGrande.addListener(ajustarMedios);
     }
   }
 
