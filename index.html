@@ -384,79 +384,89 @@
         </div>
       </header>
 
-      <div class="lista-precios reveal">
+      <div class="packs-grid reveal">
 
-        <article class="fila-pack">
-          <div class="fp-cod" aria-hidden="true">100</div>
-          <div class="fp-info">
-            <h3>Pack 100</h3>
-            <p>Para testear un rubro puntual antes de ir por más.</p>
-            <ul class="fp-detalle">
-              <li>100 contactos verificados</li>
-              <li>Rubros puntuales</li>
-              <li>Entrega inmediata</li>
-            </ul>
+        <article class="pack-card" style="--i:0">
+          <div class="pk-top">
+            <span class="pk-num" aria-hidden="true">100</span>
+            <span class="pk-off">50% OFF</span>
           </div>
-          <div class="fp-precio">
-            <span class="fp-antes">$10.000</span>
+
+          <h3 class="pk-nombre">Pack 100</h3>
+          <p class="pk-bajada">Para testear un rubro puntual antes de ir por más.</p>
+
+          <div class="pk-precio">
+            <span class="pk-antes">$10.000</span>
             <strong>$4.999</strong>
-            <span class="fp-off">50% OFF</span>
+            <span class="pk-unico">Pago único, sin suscripción</span>
           </div>
-          <div class="fp-accion">
-            <a class="btn btn-outline js-buy" href="checkout.html?pack=100">
-              Comprar
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
+
+          <ul class="pk-lista">
+            <li style="--j:0">100 contactos verificados</li>
+            <li style="--j:1">Rubros puntuales</li>
+            <li style="--j:2">Entrega inmediata</li>
+          </ul>
+
+          <a class="btn btn-outline btn-block js-buy" href="checkout.html?pack=100">
+            Comprar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </article>
 
-        <article class="fila-pack es-destacado">
-          <span class="fp-sello">Más elegido</span>
-          <div class="fp-cod" aria-hidden="true">500</div>
-          <div class="fp-info">
-            <h3>Pack 500</h3>
-            <p>El mejor equilibrio entre variedad y precio para arrancar tu negocio.</p>
-            <ul class="fp-detalle">
-              <li>500 contactos verificados</li>
-              <li>+15 rubros distintos</li>
-              <li>Actualizaciones de por vida</li>
-            </ul>
+        <article class="pack-card es-destacado" style="--i:1">
+          <span class="pk-sello">Más elegido</span>
+          <span class="pk-brillo" aria-hidden="true"></span>
+          <div class="pk-top">
+            <span class="pk-num" aria-hidden="true">500</span>
+            <span class="pk-off">50% OFF</span>
           </div>
-          <div class="fp-precio">
-            <span class="fp-antes">$30.000</span>
+
+          <h3 class="pk-nombre">Pack 500</h3>
+          <p class="pk-bajada">El mejor equilibrio entre variedad y precio para arrancar tu negocio.</p>
+
+          <div class="pk-precio">
+            <span class="pk-antes">$30.000</span>
             <strong>$14.999</strong>
-            <span class="fp-off">50% OFF</span>
+            <span class="pk-unico">Pago único, sin suscripción</span>
           </div>
-          <div class="fp-accion">
-            <a class="btn btn-primary js-buy" href="checkout.html?pack=500">
-              Comprar
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
+
+          <ul class="pk-lista">
+            <li style="--j:0">500 contactos verificados</li>
+            <li style="--j:1">+15 rubros distintos</li>
+            <li style="--j:2">Actualizaciones de por vida</li>
+          </ul>
+
+          <a class="btn btn-primary btn-block js-buy" href="checkout.html?pack=500">
+            Comprar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </article>
 
-        <article class="fila-pack">
-          <div class="fp-cod" aria-hidden="true">1000</div>
-          <div class="fp-info">
-            <h3>Pack 1000</h3>
-            <p>La base más completa para escalar tu negocio.</p>
-            <ul class="fp-detalle">
-              <li>+1000 contactos verificados</li>
-              <li>+25 rubros: variedad total</li>
-              <li>Guía de reventa incluida</li>
-            </ul>
+        <article class="pack-card" style="--i:2">
+          <div class="pk-top">
+            <span class="pk-num" aria-hidden="true">1000</span>
+            <span class="pk-off">50% OFF</span>
           </div>
-          <div class="fp-precio">
-            <span class="fp-antes">$40.000</span>
+
+          <h3 class="pk-nombre">Pack 1000</h3>
+          <p class="pk-bajada">La base más completa para escalar tu negocio.</p>
+
+          <div class="pk-precio">
+            <span class="pk-antes">$40.000</span>
             <strong>$19.999</strong>
-            <span class="fp-off">50% OFF</span>
+            <span class="pk-unico">Pago único, sin suscripción</span>
           </div>
-          <div class="fp-accion">
-            <a class="btn btn-outline js-buy" href="checkout.html?pack=1000">
-              Comprar
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
+
+          <ul class="pk-lista">
+            <li style="--j:0">+1000 contactos verificados</li>
+            <li style="--j:1">+25 rubros: variedad total</li>
+            <li style="--j:2">Guía de reventa incluida</li>
+          </ul>
+
+          <a class="btn btn-outline btn-block js-buy" href="checkout.html?pack=1000">
+            Comprar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </article>
 
       </div>
@@ -483,7 +493,7 @@
 
         <div class="fn-pie">
           <div class="fn-precio">
-            <span class="fp-antes">$159.999</span>
+            <span class="pk-antes">$159.999</span>
             <strong>$79.999</strong>
             <span class="fn-mensual">+ $30.000 por mes de mantenimiento</span>
           </div>

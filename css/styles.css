@@ -3498,144 +3498,6 @@ body.checkout-open {
 }
 
 /* ---------- Lista de precios ---------- */
-.lista-precios {
-  border-top: 1px solid var(--line-2);
-}
-
-.fila-pack {
-  position: relative;
-  display: grid;
-  gap: 0.6rem 1.5rem;
-  grid-template-columns: 1fr;
-  padding: 1.6rem 0;
-  border-bottom: 1px solid var(--line-2);
-  transition: background 0.18s var(--ease);
-}
-
-/* En pantalla ancha se lee como una fila de planilla:
-   código · descripción · precio · acción */
-@media (min-width: 860px) {
-  .fila-pack {
-    grid-template-columns: 5.5rem minmax(0, 1fr) 11rem 10rem;
-    align-items: center;
-    padding: 1.5rem 1rem;
-  }
-}
-
-.fila-pack:hover {
-  background: var(--card);
-}
-
-.fila-pack.es-destacado {
-  background: var(--clay-tint);
-  border-bottom-color: var(--clay);
-}
-
-.fp-sello {
-  position: absolute;
-  top: -0.7rem;
-  left: 1rem;
-  font-family: var(--font-heading);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--card);
-  background: var(--clay);
-  padding: 0.25rem 0.7rem;
-  border-radius: 3px;
-}
-
-/* El número de pack como código de catálogo */
-.fp-cod {
-  font-family: var(--font-heading);
-  font-size: clamp(1.9rem, 5vw, 2.6rem);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--line-2);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
-}
-
-.fila-pack.es-destacado .fp-cod {
-  color: var(--clay);
-}
-
-.fp-info h3 {
-  font-size: 1.15rem;
-  margin-bottom: 0.2rem;
-}
-
-.fp-info > p {
-  font-size: 0.92rem;
-  color: var(--muted);
-  margin-bottom: 0.5rem;
-}
-
-.fp-detalle {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 1rem;
-}
-
-.fp-detalle li {
-  position: relative;
-  font-size: 0.84rem;
-  color: var(--body);
-  padding-left: 0.85rem;
-}
-
-.fp-detalle li::before {
-  content: "·";
-  position: absolute;
-  left: 0.15rem;
-  color: var(--clay);
-  font-weight: 700;
-}
-
-.fp-precio {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1rem;
-}
-
-@media (min-width: 860px) {
-  .fp-precio {
-    align-items: flex-end;
-    text-align: right;
-  }
-}
-
-.fp-antes {
-  font-size: 0.85rem;
-  color: var(--muted);
-  text-decoration: line-through;
-  font-variant-numeric: tabular-nums;
-}
-
-.fp-precio strong {
-  font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 4vw, 1.9rem);
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.05;
-  font-variant-numeric: tabular-nums;
-}
-
-.fp-off {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--sage);
-}
-
-.fp-accion .btn {
-  width: 100%;
-  justify-content: center;
-}
-
 /* ---------- Ficha del Negocio Mayorista ---------- */
 .ficha-negocio {
   position: relative;
@@ -3985,66 +3847,6 @@ body.checkout-open {
 }
 
 /* ---------- Lista de precios: tarjetas flotando, sin filetes ---------- */
-.lista-precios {
-  border-top: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.fila-pack {
-  border-bottom: 0;
-  background: var(--card);
-  border-radius: var(--radius-card);
-  padding: 1.5rem 1.4rem;
-  box-shadow: var(--sh-sm);
-  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
-}
-
-@media (min-width: 860px) {
-  .fila-pack {
-    padding: 1.6rem 2rem;
-  }
-}
-
-.fila-pack:hover {
-  background: var(--card);
-  transform: translateY(-4px);
-  box-shadow: var(--sh-md);
-}
-
-.fila-pack.es-destacado {
-  background: linear-gradient(160deg, var(--clay-tint), var(--card) 70%);
-  border-bottom-color: transparent;
-  box-shadow: 0 8px 30px -12px rgba(109, 75, 216, 0.35);
-}
-
-/* El sello deja de estar torcido y se vuelve una pastilla */
-.fp-sello {
-  top: -0.6rem;
-  left: 1.4rem;
-  transform: none;
-  border-radius: var(--radius-pill);
-  padding: 0.3rem 0.9rem;
-  letter-spacing: 0.06em;
-  box-shadow: 0 4px 12px -4px rgba(109, 75, 216, 0.5);
-}
-
-.fp-cod {
-  color: var(--cream-3);
-  letter-spacing: -0.04em;
-}
-
-.fp-detalle li::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--clay);
-  top: 0.55em;
-  left: 0;
-}
-
 /* ---------- Ficha del Negocio Mayorista ---------- */
 .ficha-negocio {
   border: 0;
@@ -4213,7 +4015,7 @@ body.checkout-open {
     opacity: 1;
     transform: none;
   }
-  .fila-pack:hover,
+  .pack-card:hover,
   .indice-rubros li:hover,
   .benefit-card:hover,
   .step-card:hover,
@@ -4864,5 +4666,379 @@ body.checkout-open {
   .medios-nota {
     margin-top: 1.1rem;
     font-size: 0.78rem;
+  }
+}
+
+/* =========================================================
+   PACKS EN TARJETAS
+   ---------------------------------------------------------
+   Antes eran filas tipo planilla. En tarjetas verticales los tres se
+   comparan de un vistazo, que es lo que la gente hace antes de elegir.
+   ========================================================= */
+.packs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .packs-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    /* Aire para que el destacado pueda sobresalir sin pisar nada */
+    padding-block: 1.25rem;
+  }
+}
+
+.pack-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 1.6rem 1.5rem 1.5rem;
+  box-shadow: var(--sh-sm);
+  overflow: hidden;
+  transition: transform 0.4s var(--bounce), box-shadow 0.4s var(--ease),
+    border-color 0.4s var(--ease);
+}
+
+.pack-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--clay-tint);
+  box-shadow: var(--sh-md);
+}
+
+/* ---------- El del medio: mas grande y con fondo vivo ---------- */
+.pack-card.es-destacado {
+  border-color: transparent;
+  background: linear-gradient(165deg, var(--clay-tint) 0%, var(--card) 55%);
+  box-shadow: 0 10px 34px -14px rgba(109, 75, 216, 0.42),
+    0 40px 70px -44px rgba(109, 75, 216, 0.5);
+}
+
+@media (min-width: 900px) {
+  .pack-card.es-destacado {
+    transform: scale(1.045);
+    z-index: 2;
+  }
+
+  .pack-card.es-destacado:hover {
+    transform: scale(1.045) translateY(-8px);
+  }
+}
+
+/* Mancha violeta que respira detras del destacado.
+   Va con degradado radial y NO con filter: blur(): un pseudo-elemento
+   borroso dentro de un contenedor con overflow hidden y transform hace
+   que algunos navegadores dibujen mal la tarjeta entera. */
+.pack-card.es-destacado::before {
+  content: "";
+  position: absolute;
+  top: -35%;
+  right: -30%;
+  width: 85%;
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(109, 75, 216, 0.22),
+    rgba(109, 75, 216, 0.1) 55%,
+    transparent 75%
+  );
+  pointer-events: none;
+  animation: pk-respirar 8s ease-in-out infinite;
+}
+
+@keyframes pk-respirar {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-8%, 10%) scale(1.2);
+  }
+}
+
+/* Destello que cruza la tarjeta cada tanto, como un reflejo */
+.pk-brillo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 58%
+  );
+  transform: translateX(-120%);
+  animation: pk-destello 7s ease-in-out infinite;
+}
+
+@keyframes pk-destello {
+  0%,
+  72% {
+    transform: translateX(-120%);
+  }
+  88%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+.pk-sello {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  z-index: 3;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--card);
+  background: var(--clay);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 12px -4px rgba(109, 75, 216, 0.6);
+}
+
+/* ---------- Encabezado: numero grande + descuento ---------- */
+.pk-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.pk-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 14px;
+  background: var(--cream-2);
+  color: var(--clay);
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  transition: background 0.35s var(--ease), transform 0.35s var(--bounce);
+}
+
+.pack-card.es-destacado .pk-num {
+  background: var(--clay);
+  color: var(--card);
+}
+
+.pack-card:hover .pk-num {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+/* El descuento late despacio para que el ojo lo agarre */
+.pk-off {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--sage);
+  background: var(--sage-tint);
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--radius-pill);
+  animation: pk-latido 3.2s ease-in-out infinite;
+}
+
+@keyframes pk-latido {
+  0%,
+  88%,
+  100% {
+    transform: scale(1);
+  }
+  94% {
+    transform: scale(1.08);
+  }
+}
+
+.pk-nombre {
+  position: relative;
+  z-index: 1;
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.pk-bajada {
+  position: relative;
+  z-index: 1;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- Precio ---------- */
+.pk-precio {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.pk-antes {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.pk-precio strong {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pack-card.es-destacado .pk-precio strong {
+  color: var(--clay-dark);
+}
+
+.pk-unico {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ---------- Lista con tildes que se dibujan ---------- */
+.pk-lista {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  /* Empuja el boton al fondo para que los tres queden alineados */
+  flex: 1;
+}
+
+.pk-lista li {
+  position: relative;
+  padding-left: 1.85rem;
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.4;
+}
+
+.pk-lista li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: var(--sage-tint);
+}
+
+.pk-lista li::after {
+  content: "";
+  position: absolute;
+  left: 0.42rem;
+  top: 0.3em;
+  width: 0.3rem;
+  height: 0.55rem;
+  border-right: 2px solid var(--sage);
+  border-bottom: 2px solid var(--sage);
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+.pack-card .btn {
+  position: relative;
+  z-index: 1;
+}
+
+.pack-card .btn svg {
+  transition: transform 0.3s var(--bounce);
+}
+
+.pack-card:hover .btn svg {
+  transform: translateX(4px);
+}
+
+/* ---------- Entrada escalonada al aparecer la seccion ---------- */
+.packs-grid.is-visible .pack-card {
+  animation: pk-entrar 0.65s var(--bounce) backwards;
+  animation-delay: calc(var(--i, 0) * 120ms);
+}
+
+@keyframes pk-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.96);
+  }
+}
+
+/* En pantalla ancha el destacado nace ya agrandado, si no pega un salto
+   al terminar la animacion */
+@media (min-width: 900px) {
+  .packs-grid.is-visible .pack-card.es-destacado {
+    animation-name: pk-entrar-destacado;
+  }
+}
+
+@keyframes pk-entrar-destacado {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.045);
+  }
+}
+
+/* Las tildes se dibujan una atras de otra */
+.packs-grid.is-visible .pk-lista li::after {
+  animation: pk-tilde 0.35s var(--ease) backwards;
+  animation-delay: calc(var(--i, 0) * 120ms + var(--j, 0) * 90ms + 350ms);
+}
+
+@keyframes pk-tilde {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pack-card.es-destacado::before,
+  .pk-off,
+  .packs-grid.is-visible .pack-card,
+  .packs-grid.is-visible .pk-lista li::after {
+    animation: none;
+  }
+
+  .pack-card:hover,
+  .pack-card:hover .pk-num,
+  .pack-card:hover .btn svg {
+    transform: none;
+  }
+
+  .pk-brillo {
+    display: none;
   }
 }
