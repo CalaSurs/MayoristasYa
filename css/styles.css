@@ -5794,3 +5794,112 @@ body.checkout-open {
     animation: none;
   }
 }
+
+/* =========================================================
+   CELULAR: tarjetas de pack mas compactas
+   ---------------------------------------------------------
+   Con los tamanos de escritorio cada tarjeta ocupaba el 80% de la pantalla:
+   no se veia que hubiera otras abajo. Achicamos todo un escalon para que
+   entre una entera y asome la siguiente.
+   ========================================================= */
+@media (max-width: 620px) {
+  .packs-grid {
+    gap: 0.9rem;
+  }
+
+  .pack-card {
+    padding: 1.15rem 1.05rem 1.1rem;
+  }
+
+  .pk-top {
+    margin-bottom: 0.6rem;
+  }
+
+  .pk-num {
+    min-width: 2.9rem;
+    padding: 0.28rem 0.6rem;
+    font-size: 1.15rem;
+    border-radius: 11px;
+  }
+
+  .pk-off {
+    font-size: 0.62rem;
+    padding: 0.24rem 0.5rem;
+  }
+
+  .pk-sello {
+    top: 0.9rem;
+    right: 0.9rem;
+    font-size: 0.6rem;
+    padding: 0.26rem 0.6rem;
+  }
+
+  .pk-nombre {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .pk-bajada {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-bottom: 0.75rem;
+  }
+
+  .pk-precio {
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .pk-antes {
+    font-size: 0.78rem;
+  }
+
+  .pk-precio strong {
+    font-size: 1.7rem;
+  }
+
+  .pk-unico {
+    margin-top: 0.35rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.66rem;
+  }
+
+  .pk-hereda {
+    font-size: 0.74rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .pk-lista {
+    gap: 0.4rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .pk-lista li {
+    font-size: 0.82rem;
+    line-height: 1.35;
+    padding-left: 1.6rem;
+  }
+
+  .pk-lista li::before {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .pk-lista li::after {
+    left: 0.36rem;
+    top: 0.26em;
+    width: 0.26rem;
+    height: 0.48rem;
+  }
+
+  .pack-card .btn {
+    padding: 0.72rem 1rem;
+    font-size: 0.88rem;
+  }
+
+  .pk-garantia {
+    margin-top: 0.5rem;
+    font-size: 0.68rem;
+  }
+}

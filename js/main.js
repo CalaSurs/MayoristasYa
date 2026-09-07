@@ -323,6 +323,34 @@
       );
     }
 
+    /* En celular la notificación baja desde arriba, justo donde vive el header
+       sticky. Con un valor fijo se superponían, así que medimos el header en
+       vivo: cambia de alto según haya banner de oferta o no, y según si el
+       visitante ya scrolleó. */
+    function acomodarBajoElHeader() {
+      if (window.innerWidth > 760) {
+        anuncio.style.top = "";
+        return;
+      }
+      var header = document.getElementById("siteHeader");
+      var abajoDelHeader = header ? header.getBoundingClientRect().bottom : 0;
+      anuncio.style.top = Math.max(abajoDelHeader, 0) + 10 + "px";
+    }
+
+    /* Mientras está a la vista lo seguimos: al scrollear, el banner de oferta
+       se va y el header sube, así que la posición correcta cambia. */
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (anuncio.classList.contains("esta-visible")) acomodarBajoElHeader();
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("resize", function () {
+      if (anuncio.classList.contains("esta-visible")) acomodarBajoElHeader();
+    });
+
     function frenarCiclo() {
       if (temporizador) window.clearTimeout(temporizador);
       if (cicloAnuncio) window.clearInterval(cicloAnuncio);
@@ -352,6 +380,7 @@
       apariciones++;
 
       anuncio.hidden = false;
+      acomodarBajoElHeader();
       /* Dos cuadros para que el navegador registre el estado inicial y la
          transición se vea; si no, aparece de golpe sin animar. */
       window.requestAnimationFrame(function () {
