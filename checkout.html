@@ -84,6 +84,26 @@
             </button>
             <p class="checkout-note" id="checkoutNote">Vas a ser redirigido a WhatsApp para coordinar el pago y la entrega.</p>
 
+            <!-- Salta sola si el pago no llega a abrirse -->
+            <div class="ck-alerta" id="ckAlertaPago" role="alert" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8.5v4.5"/><path d="M12 16.5h.01"/><circle cx="12" cy="12" r="9"/></svg>
+              <div>
+                <strong>No pudimos abrir el pago</strong>
+                <p>Puede ser la conexión o algo momentáneo de nuestro lado. Probá de nuevo, o escribinos y lo resolvemos con vos en el momento.</p>
+                <a class="btn btn-whatsapp" id="ckAlertaWsp" href="#" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+                  Escribinos por WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <!-- Siempre visible: la salida a mano para cualquier problema -->
+            <p class="ck-ayuda-pago">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
+              <span>¿Se te complicó el pago o no te llegó el pack?
+                <a href="#" id="ckProblemaWsp" target="_blank" rel="noopener">Escribinos por WhatsApp</a> y lo resolvemos al toque.</span>
+            </p>
+
             <p class="ck-legal">
               Al continuar aceptás los <a href="terminos.html">términos y condiciones</a>
               y la <a href="privacidad.html">política de privacidad</a>.

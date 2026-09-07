@@ -5042,3 +5042,101 @@ body.checkout-open {
     display: none;
   }
 }
+
+/* =========================================================
+   CHECKOUT: salida por WhatsApp cuando el pago se complica
+   ========================================================= */
+
+/* Linea siempre visible, discreta: esta ahi si la necesitan */
+.ck-ayuda-pago {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-card-sm);
+  background: var(--cream-2);
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.ck-ayuda-pago svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--whatsapp);
+}
+
+.ck-ayuda-pago a {
+  font-weight: 700;
+  color: var(--whatsapp-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ck-ayuda-pago a:hover,
+.ck-ayuda-pago a:focus-visible {
+  color: var(--ink);
+}
+
+/* Aviso que salta solo si el pago no llego a abrirse */
+.ck-alerta {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+  padding: 1.1rem 1.15rem;
+  border-radius: var(--radius-card-sm);
+  background: #fdf3f1;
+  border: 1px solid rgba(168, 64, 47, 0.22);
+  animation: ck-alerta-entrar 0.45s var(--bounce) both;
+}
+
+@keyframes ck-alerta-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.ck-alerta > svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--danger);
+}
+
+.ck-alerta strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  color: var(--danger);
+  margin-bottom: 0.25rem;
+}
+
+.ck-alerta p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--body);
+  margin-bottom: 0.85rem;
+}
+
+.ck-alerta .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 480px) {
+  .ck-alerta .btn {
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ck-alerta {
+    animation: none;
+  }
+}

@@ -165,11 +165,61 @@
   /* ---------- Botón: pagar online ---------- */
   var btnPagarMP = $("btnPagarMP");
 
+  /* ---------- Ayuda por WhatsApp cuando el pago se complica ----------
+     El link se arma con el pack y, si ya los cargó, con el nombre y el correo:
+     así el mensaje llega con todo lo necesario para encontrar el pedido y no
+     hay que pedirle los datos de nuevo a alguien que ya tuvo un problema. */
+  function linkProblema() {
+    var l = [];
+    l.push("Hola! Tuve un problema para pagar el " + pack.nombre + " en la web.");
+    l.push("");
+
+    var nombre = ckName.value.trim();
+    var email = ckEmail.value.trim();
+    if (nombre) l.push("Nombre: " + nombre);
+    if (email) l.push("Correo: " + email);
+
+    l.push("¿Me ayudan a completar la compra?");
+    return WSP_BASE + encodeURIComponent(l.join("\n"));
+  }
+
+  var ckProblemaWsp = $("ckProblemaWsp");
+  var ckAlertaPago = $("ckAlertaPago");
+  var ckAlertaWsp = $("ckAlertaWsp");
+
+  /* Se recalcula al momento de tocarlo, para tomar lo último que escribió */
+  [ckProblemaWsp, ckAlertaWsp].forEach(function (el) {
+    if (!el) return;
+    el.setAttribute("href", linkProblema());
+    el.addEventListener("click", function () {
+      el.setAttribute("href", linkProblema());
+    });
+  });
+
   if (btnPagarMP && window.mwPagoConfigurado) {
     btnPagarMP.hidden = false;
     $("checkoutMedios").hidden = false;
     $("checkoutSep").hidden = false;
     $("checkoutNote").textContent = "El pack te llega por correo apenas se acredita el pago.";
+
+    var textoOriginal = btnPagarMP.innerHTML;
+    var vigilante = null;
+
+    /* Deja el botón como estaba. Se usa en dos casos: cuando el pago no
+       arranca, y cuando el comprador vuelve con el botón "atrás" del
+       navegador (si no, se encontraba el botón muerto en "Abriendo..."). */
+    function restaurarBoton() {
+      if (vigilante) {
+        window.clearTimeout(vigilante);
+        vigilante = null;
+      }
+      btnPagarMP.disabled = false;
+      btnPagarMP.innerHTML = textoOriginal;
+    }
+
+    window.addEventListener("pageshow", function (e) {
+      if (e.persisted || btnPagarMP.disabled) restaurarBoton();
+    });
 
     btnPagarMP.addEventListener("click", function () {
       var datos = validar(true);
@@ -184,8 +234,20 @@
         });
       }
 
+      if (ckAlertaPago) ckAlertaPago.hidden = true;
       btnPagarMP.disabled = true;
       btnPagarMP.textContent = "Abriendo el pago seguro...";
+
+      /* pagos.js intenta por 9 segundos y después navega igual. Si a los 15
+         seguimos acá, no salió ni el plan B: le devolvemos el botón y le
+         ofrecemos WhatsApp en vez de dejarlo mirando una pantalla trabada. */
+      vigilante = window.setTimeout(function () {
+        restaurarBoton();
+        if (!ckAlertaPago) return;
+        if (ckAlertaWsp) ckAlertaWsp.setAttribute("href", linkProblema());
+        ckAlertaPago.hidden = false;
+        ckAlertaPago.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 15000);
 
       window.mwPagarConMercadoPago({
         packId: packId,
