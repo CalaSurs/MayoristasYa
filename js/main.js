@@ -250,6 +250,139 @@
     }
   }
 
+  /* ---------- Anuncio flotante rotativo ----------
+     Acá viven los anunciantes. Para sumar uno que compró el Espacio
+     Publicitario, copiá un bloque y completá los datos: no hay que tocar
+     nada más. Van rotando de a uno por aparición, así todos se muestran.
+
+     Si lo cierran con la X no vuelve en toda la visita, y como mucho aparece
+     TOPE_APARICIONES veces: alguien que lleva diez minutos leyendo está por
+     comprar, y volver a interrumpirlo cuesta más de lo que rinde. */
+  var ANUNCIANTES = [
+    {
+      ini: "CI",
+      nombre: "Cala Imports",
+      rubro: "Tecnología por mayor",
+      etiqueta: "Contacto gratis",
+      texto:
+        "Un proveedor real del pack, para que veas cómo vienen. Importá al precio más bajo del mercado.",
+      web: "https://calaimports.shop",
+      telefono: "11 5513-5537",
+      whatsapp: "5491155135537",
+    },
+  ];
+
+  var anuncio = document.getElementById("anuncioFlotante");
+
+  if (anuncio && ANUNCIANTES.length) {
+    var ESPERA_PRIMERA = 15000; /* cuánto tarda en asomar la primera vez */
+    var DURACION = 20000; /* cuánto se queda en pantalla */
+    var INTERVALO = 180000; /* cada cuánto vuelve (3 minutos) */
+    var TOPE_APARICIONES = 3; /* máximo por visita */
+
+    var CLAVE = "mwAnuncioCerrado";
+    var cerradoAMano = false;
+    var apariciones = 0;
+    var proximo = 0;
+
+    /* sessionStorage puede tirar error en modo privado: no vale romper la
+       página por un anuncio. */
+    try {
+      cerradoAMano = window.sessionStorage.getItem(CLAVE) === "1";
+    } catch (e) {
+      cerradoAMano = false;
+    }
+
+    var temporizador = null;
+    var cicloAnuncio = null;
+
+    var elIni = anuncio.querySelector(".af-ini");
+    var elNombre = anuncio.querySelector(".af-id strong");
+    var elRubro = anuncio.querySelector(".af-id span");
+    var elEtiqueta = anuncio.querySelector(".af-gratis");
+    var elTexto = anuncio.querySelector(".af-texto-cuerpo");
+    var elWeb = anuncio.querySelector(".af-btn-fuerte");
+    var elTel = anuncio.querySelector(".af-btn-tel");
+    var elTelTexto = anuncio.querySelector(".af-tel-texto");
+
+    /* Carga en la tarjeta los datos del anunciante que toca */
+    function pintarAnunciante(a) {
+      elIni.textContent = a.ini;
+      elNombre.textContent = a.nombre;
+      elRubro.textContent = "Publicidad · " + a.rubro;
+      elEtiqueta.textContent = a.etiqueta;
+      elTexto.textContent = a.texto;
+      elWeb.setAttribute("href", a.web);
+      elTelTexto.textContent = a.telefono;
+      elTel.setAttribute(
+        "href",
+        "https://wa.me/" +
+          a.whatsapp +
+          "?text=" +
+          encodeURIComponent("Hola! Los encontré en MayoristasYa y quería consultar precios.")
+      );
+    }
+
+    function frenarCiclo() {
+      if (temporizador) window.clearTimeout(temporizador);
+      if (cicloAnuncio) window.clearInterval(cicloAnuncio);
+      temporizador = null;
+      cicloAnuncio = null;
+    }
+
+    function ocultarAnuncio() {
+      anuncio.classList.remove("esta-visible");
+      /* El hidden se pone recién cuando terminó de desvanecerse, si no
+         desaparece de golpe sin animación. */
+      window.setTimeout(function () {
+        if (!anuncio.classList.contains("esta-visible")) anuncio.hidden = true;
+      }, 450);
+    }
+
+    function mostrarAnuncio() {
+      if (cerradoAMano) return;
+
+      if (apariciones >= TOPE_APARICIONES) {
+        frenarCiclo();
+        return;
+      }
+
+      pintarAnunciante(ANUNCIANTES[proximo % ANUNCIANTES.length]);
+      proximo++;
+      apariciones++;
+
+      anuncio.hidden = false;
+      /* Dos cuadros para que el navegador registre el estado inicial y la
+         transición se vea; si no, aparece de golpe sin animar. */
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          anuncio.classList.add("esta-visible");
+        });
+      });
+
+      temporizador = window.setTimeout(ocultarAnuncio, DURACION);
+    }
+
+    document.getElementById("anuncioCerrar").addEventListener("click", function () {
+      cerradoAMano = true;
+      frenarCiclo();
+      ocultarAnuncio();
+      try {
+        window.sessionStorage.setItem(CLAVE, "1");
+      } catch (e) {
+        /* modo privado: se pierde al recargar y no pasa nada */
+      }
+    });
+
+    if (!cerradoAMano) {
+      window.setTimeout(function () {
+        mostrarAnuncio();
+        cicloAnuncio = window.setInterval(mostrarAnuncio, INTERVALO);
+      }, ESPERA_PRIMERA);
+    }
+  }
+
+
   /* ---------- Footer year ---------- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();

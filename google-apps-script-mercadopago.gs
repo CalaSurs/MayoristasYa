@@ -82,6 +82,11 @@ var SITE_URL = "https://mayoristasya.com";
  */
 var SCRIPT_URL = "";
 
+// Tu WhatsApp personal. Va en los mails del Negocio Mayorista y del Espacio
+// Publicitario, que son los dos que necesitan que hables vos con el comprador.
+var TEL_PERSONAL = "11 5513-5537";
+var TEL_PERSONAL_WSP = "5491155135537";
+
 // Te llega un mail a vos cada vez que se aprueba una venta. Dejalo vacío para no recibirlo.
 var EMAIL_ADMIN = "calamayoristasya@gmail.com";
 
@@ -118,9 +123,14 @@ var PACKS = {
     precio: 19999,
     archivoId: "1yuPWVJWEXmzeSzRHkWvGYJTPddYWfSh2",
   },
+  "publicidad": {
+    nombre: "Espacio Publicitario",
+    precio: 24999,
+    archivoId: null,
+  },
   "negocio-mayorista": {
     nombre: "Negocio Mayorista",
-    precio: 79999,
+    precio: 130000,
     archivoId: null,
   },
 };
@@ -339,6 +349,105 @@ function enviarMail(opciones) {
   MailApp.sendEmail(opciones);
 }
 
+/* ====================== MAILS EN HTML ======================
+ *
+ * Los clientes de correo (Gmail, Outlook, Apple Mail) no soportan CSS
+ * moderno: nada de flexbox, grid, variables ni hojas de estilo externas.
+ * Por eso todo va con TABLAS y estilos en linea, que es lo unico que
+ * renderiza parejo en todos lados. Ancho fijo de 600px, que es el estandar.
+ *
+ * Siempre se manda tambien la version en texto plano (opciones.body): si el
+ * cliente no muestra HTML, el comprador igual lee todo.
+ */
+
+/** Un boton que se ve igual en todos los clientes (no se usa <button>). */
+function botonMail(texto, url, color) {
+  return (
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">' +
+    '<tr><td align="center" bgcolor="' + color + '" style="border-radius:999px;">' +
+    '<a href="' + url + '" target="_blank" style="display:inline-block;padding:14px 30px;' +
+    'font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:bold;' +
+    'color:#ffffff;text-decoration:none;border-radius:999px;">' + texto + "</a>" +
+    "</td></tr></table>"
+  );
+}
+
+/** Recuadro destacado, para lo que no se tiene que pasar por alto. */
+function cajaMail(titulo, contenidoHtml, colorFondo, colorBorde) {
+  return (
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" ' +
+    'style="margin:20px 0;"><tr><td bgcolor="' + colorFondo + '" ' +
+    'style="padding:18px 20px;border-radius:10px;border-left:4px solid ' + colorBorde + ';">' +
+    (titulo
+      ? '<p style="margin:0 0 8px;font-family:Helvetica,Arial,sans-serif;font-size:15px;' +
+        'font-weight:bold;color:#241d3a;">' + titulo + "</p>"
+      : "") +
+    contenidoHtml +
+    "</td></tr></table>"
+  );
+}
+
+/** Un parrafo con el estilo del cuerpo. */
+function pMail(texto) {
+  return (
+    '<p style="margin:0 0 14px;font-family:Helvetica,Arial,sans-serif;font-size:15px;' +
+    'line-height:1.6;color:#55506b;">' + texto + "</p>"
+  );
+}
+
+/**
+ * Envuelve el contenido en la plantilla: cabecera violeta, tarjeta blanca
+ * y pie. Devuelve el HTML completo del mail.
+ */
+function plantillaMail(titulo, bajada, cuerpoHtml) {
+  return (
+    '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    "<title>" + titulo + "</title></head>" +
+    '<body style="margin:0;padding:0;background-color:#f4f2fb;">' +
+    /* Preheader: el texto gris que Gmail muestra al lado del asunto */
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' + bajada + "</div>" +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" ' +
+    'bgcolor="#f4f2fb" style="background-color:#f4f2fb;padding:24px 12px;">' +
+    "<tr><td align=\"center\">" +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" ' +
+    'style="width:100%;max-width:600px;background-color:#ffffff;border-radius:14px;overflow:hidden;">' +
+
+    /* Cabecera */
+    '<tr><td bgcolor="#6d4bd8" style="background-color:#6d4bd8;padding:22px 28px;">' +
+    '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:18px;' +
+    'font-weight:bold;color:#ffffff;letter-spacing:0.3px;">MayoristasYa</p>' +
+    '<p style="margin:4px 0 0;font-family:Helvetica,Arial,sans-serif;font-size:12px;' +
+    'color:#d9cffa;">Tus proveedores al instante</p>' +
+    "</td></tr>" +
+
+    /* Cuerpo */
+    '<tr><td style="padding:30px 28px 12px;">' +
+    '<h1 style="margin:0 0 6px;font-family:Helvetica,Arial,sans-serif;font-size:23px;' +
+    'line-height:1.25;color:#241d3a;">' + titulo + "</h1>" +
+    '<p style="margin:0 0 20px;font-family:Helvetica,Arial,sans-serif;font-size:15px;' +
+    'color:#736d8f;">' + bajada + "</p>" +
+    cuerpoHtml +
+    "</td></tr>" +
+
+    /* Pie */
+    '<tr><td bgcolor="#f7f5fc" style="background-color:#f7f5fc;padding:20px 28px;' +
+    'border-top:1px solid #ece7f7;">' +
+    '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:12px;' +
+    'line-height:1.6;color:#736d8f;">' +
+    "Respondé este mail si necesitás algo. " +
+    '<a href="' + SITE_URL + '" style="color:#6d4bd8;">mayoristasya.com</a>' +
+    "</p></td></tr>" +
+
+    "</table></td></tr></table></body></html>"
+  );
+}
+
+/** Link de WhatsApp con el mensaje ya escrito. */
+function wspLink(numero, mensaje) {
+  return "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensaje);
+}
+
 /** Manda el mail con el pack que corresponda y marca la fila como enviada. */
 function entregarPack(sheet, row) {
   var nombre = sheet.getRange(row, COL_NOMBRE).getValue();
@@ -351,6 +460,9 @@ function entregarPack(sheet, row) {
     return;
   }
 
+  /* El primer nombre solo: "Hola Lautaro" suena mejor que el nombre completo */
+  var primerNombre = String(nombre).trim().split(/\s+/)[0] || "";
+
   var opciones = {
     to: email,
     subject: EMAIL_SUBJECT,
@@ -360,26 +472,193 @@ function entregarPack(sheet, row) {
   if (EMAIL_RESPUESTAS) opciones.replyTo = EMAIL_RESPUESTAS;
 
   if (pack.archivoId) {
+    /* ---------- Packs de proveedores: va el PDF adjunto ---------- */
     var file = DriveApp.getFileById(pack.archivoId);
-    opciones.body =
-      "Hola " + nombre + "!\n\n" +
-      "Gracias por tu compra en MayoristasYa (" + pedido + ").\n" +
-      "Te enviamos adjunto tu pack completo de proveedores, organizado por rubro y listo para usar.\n\n" +
-      "Cada proveedor tiene su contacto directo: les escribís vos, sin intermediarios.\n\n" +
-      "Cualquier duda, escribinos por WhatsApp.\n\n" +
-      "Saludos,\nEquipo MayoristasYa";
+
+    opciones.subject = "Tu " + pack.nombre + " ya está acá - MayoristasYa";
     opciones.attachments = [file.getAs(file.getMimeType())];
-  } else {
-    /* Negocio Mayorista: no hay archivo, hay que ponerse en contacto. */
-    opciones.subject = "Recibimos tu compra del Negocio Mayorista - MayoristasYa";
+
+    var cuerpo =
+      pMail("Ya está todo listo. Tu <strong>" + pack.nombre + "</strong> va adjunto a este mail, " +
+        "en PDF, organizado por rubro y listo para usar.") +
+      cajaMail(
+        "Cómo arrancar",
+        '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;' +
+        'line-height:1.7;color:#55506b;">' +
+        "<strong>1.</strong> Descargá el PDF adjunto y guardalo en tu celular.<br>" +
+        "<strong>2.</strong> Elegí tu rubro y buscá 3 o 4 proveedores.<br>" +
+        "<strong>3.</strong> Escribiles hoy mismo preguntando precios y mínimos de compra.<br>" +
+        "<strong>4.</strong> Comprá al precio de origen y revendé con ganancia." +
+        "</p>",
+        "#f7f5fc",
+        "#6d4bd8"
+      ) +
+      pMail("Cada proveedor tiene su contacto directo: le escribís vos, sin intermediarios.") +
+      '<div style="margin:24px 0 8px;">' +
+      botonMail(
+        "Escribinos por WhatsApp",
+        wspLink("5491128520849", "Hola! Compré el " + pack.nombre + " y tengo una consulta."),
+        "#2e7d50"
+      ) +
+      "</div>" +
+      '<p style="margin:14px 0 0;font-family:Helvetica,Arial,sans-serif;font-size:13px;' +
+      'color:#736d8f;text-align:center;">Pedido ' + pedido + "</p>";
+
+    opciones.htmlBody = plantillaMail(
+      "¡Gracias por tu compra, " + primerNombre + "!",
+      "Tu " + pack.nombre + " está adjunto, listo para descargar.",
+      cuerpo
+    );
+
     opciones.body =
-      "Hola " + nombre + "!\n\n" +
-      "Gracias por tu compra del Negocio Mayorista.\n\n" +
-      "En las próximas horas nos vamos a comunicar con vos para arrancar: registrar tu dominio, " +
-      "armar tu sitio con tu marca y dejarte todo funcionando.\n\n" +
-      "Si querés adelantar, respondenos este mail o escribinos por WhatsApp contándonos " +
-      "qué nombre querés para tu negocio.\n\n" +
+      "Hola " + primerNombre + "!\n\n" +
+      "Ya está todo listo. Tu " + pack.nombre + " va adjunto a este mail, en PDF, " +
+      "organizado por rubro y listo para usar.\n\n" +
+      "CÓMO ARRANCAR\n" +
+      "1. Descargá el PDF adjunto y guardalo en tu celular.\n" +
+      "2. Elegí tu rubro y buscá 3 o 4 proveedores.\n" +
+      "3. Escribiles hoy preguntando precios y mínimos de compra.\n" +
+      "4. Comprá al precio de origen y revendé con ganancia.\n\n" +
+      "Cada proveedor tiene su contacto directo: le escribís vos, sin intermediarios.\n\n" +
+      "Cualquier duda, escribinos por WhatsApp al 11 2852-0849.\n\n" +
+      "Pedido " + pedido + "\n\n" +
       "Saludos,\nEquipo MayoristasYa";
+
+  } else if (pack.nombre === "Espacio Publicitario") {
+    /* ---------- Publicidad: hay que pedirle los datos a publicar ---------- */
+    opciones.subject = "Tu Espacio Publicitario está reservado - MayoristasYa";
+
+    var wspPub = wspLink(
+      TEL_PERSONAL_WSP,
+      "Hola Lautaro! Compré el Espacio Publicitario (" + pedido + ") y te paso los datos de mi negocio."
+    );
+
+    var cuerpoPub =
+      pMail("Tu espacio ya está reservado. Ahora falta un solo paso: pasarme los datos " +
+        "que van a salir publicados.") +
+      cajaMail(
+        "Mandame estos 6 datos",
+        '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;' +
+        'line-height:1.8;color:#55506b;">' +
+        "<strong>1.</strong> Nombre de tu negocio<br>" +
+        "<strong>2.</strong> Rubro (tecnología, indumentaria, hogar…)<br>" +
+        "<strong>3.</strong> Tu número de WhatsApp<br>" +
+        "<strong>4.</strong> Tu web, si tenés<br>" +
+        "<strong>5.</strong> Instagram y TikTok<br>" +
+        "<strong>6.</strong> Una frase corta de qué vendés (2 renglones)" +
+        "</p>",
+        "#f7f5fc",
+        "#6d4bd8"
+      ) +
+      cajaMail(
+        "Escribime directo a mi WhatsApp",
+        '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;' +
+        'line-height:1.6;color:#55506b;">Soy Lautaro, me encargo yo de esto. ' +
+        'Mandame los datos a <strong style="color:#241d3a;font-size:16px;">' +
+        TEL_PERSONAL + "</strong> y en el día te lo dejo publicado.</p>",
+        "#e3f5ec",
+        "#2e7d50"
+      ) +
+      '<div style="margin:24px 0 8px;">' +
+      botonMail("Escribirle a Lautaro", wspPub, "#2e7d50") +
+      "</div>" +
+      '<p style="margin:14px 0 0;font-family:Helvetica,Arial,sans-serif;font-size:13px;' +
+      'color:#736d8f;text-align:center;">Pedido ' + pedido + "</p>";
+
+    opciones.htmlBody = plantillaMail(
+      "¡Listo, " + primerNombre + "! Tu espacio está reservado",
+      "Falta un paso: pasarme los datos de tu negocio.",
+      cuerpoPub
+    );
+
+    opciones.body =
+      "Hola " + primerNombre + "!\n\n" +
+      "Tu Espacio Publicitario ya está reservado. Falta un solo paso: pasarme los " +
+      "datos que van a salir publicados.\n\n" +
+      "MANDAME ESTOS 6 DATOS\n" +
+      "1. Nombre de tu negocio\n" +
+      "2. Rubro (tecnología, indumentaria, hogar...)\n" +
+      "3. Tu número de WhatsApp\n" +
+      "4. Tu web, si tenés\n" +
+      "5. Instagram y TikTok\n" +
+      "6. Una frase corta de qué vendés (2 renglones)\n\n" +
+      "ESCRIBIME DIRECTO\n" +
+      "Soy Lautaro, me encargo yo de esto. Mandame los datos por WhatsApp al " +
+      TEL_PERSONAL + " y en el día te lo dejo publicado.\n\n" +
+      "Pedido " + pedido + "\n\n" +
+      "Saludos,\nLautaro - MayoristasYa";
+
+  } else {
+    /* ---------- Negocio Mayorista: arranca un proyecto, no un archivo ---------- */
+    opciones.subject = "Arrancamos tu Negocio Mayorista - MayoristasYa";
+
+    var wspNeg = wspLink(
+      TEL_PERSONAL_WSP,
+      "Hola Lautaro! Compré el Negocio Mayorista (" + pedido + ") y quiero arrancar con mi página."
+    );
+
+    var cuerpoNeg =
+      pMail("Gracias por confiar. A partir de acá armamos tu propia página, con tu marca " +
+        "y los 3 packs de proveedores adentro, lista para que vendas.") +
+      cajaMail(
+        "Los próximos pasos",
+        '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;' +
+        'line-height:1.8;color:#55506b;">' +
+        "<strong>1.</strong> Elegís el nombre y te registramos el dominio<br>" +
+        "<strong>2.</strong> Armamos el sitio con tu marca y tus colores<br>" +
+        "<strong>3.</strong> Cargamos los 3 packs adentro<br>" +
+        "<strong>4.</strong> Lo dejamos online y te enseñamos a usarlo" +
+        "</p>",
+        "#f7f5fc",
+        "#6d4bd8"
+      ) +
+      cajaMail(
+        "Escribime directo a mi WhatsApp",
+        '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;' +
+        'line-height:1.6;color:#55506b;">Soy Lautaro, te acompaño yo en todo el armado. ' +
+        'Escribime a <strong style="color:#241d3a;font-size:16px;">' + TEL_PERSONAL +
+        "</strong> contándome qué nombre querés para tu negocio y arrancamos hoy.</p>",
+        "#e3f5ec",
+        "#2e7d50"
+      ) +
+      cajaMail(
+        "Para que lo tengas claro",
+        '<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:14px;' +
+        'line-height:1.6;color:#55506b;">Tu página <strong>no incluye pasarela de pago ' +
+        "automática</strong>: las ventas se coordinan y se cobran por WhatsApp, igual que " +
+        "hacemos nosotros. El mantenimiento es de <strong>$60.000 por mes</strong>.</p>",
+        "#fdf2dd",
+        "#c08a2e"
+      ) +
+      '<div style="margin:24px 0 8px;">' +
+      botonMail("Escribirle a Lautaro", wspNeg, "#2e7d50") +
+      "</div>" +
+      '<p style="margin:14px 0 0;font-family:Helvetica,Arial,sans-serif;font-size:13px;' +
+      'color:#736d8f;text-align:center;">Pedido ' + pedido + "</p>";
+
+    opciones.htmlBody = plantillaMail(
+      "¡Arrancamos, " + primerNombre + "!",
+      "Tu Negocio Mayorista ya está en marcha.",
+      cuerpoNeg
+    );
+
+    opciones.body =
+      "Hola " + primerNombre + "!\n\n" +
+      "Gracias por confiar. A partir de acá armamos tu propia página, con tu marca y " +
+      "los 3 packs de proveedores adentro, lista para que vendas.\n\n" +
+      "LOS PRÓXIMOS PASOS\n" +
+      "1. Elegís el nombre y te registramos el dominio\n" +
+      "2. Armamos el sitio con tu marca y tus colores\n" +
+      "3. Cargamos los 3 packs adentro\n" +
+      "4. Lo dejamos online y te enseñamos a usarlo\n\n" +
+      "ESCRIBIME DIRECTO\n" +
+      "Soy Lautaro, te acompaño yo en todo el armado. Escribime al " + TEL_PERSONAL +
+      " contándome qué nombre querés para tu negocio y arrancamos hoy.\n\n" +
+      "PARA QUE LO TENGAS CLARO\n" +
+      "Tu página no incluye pasarela de pago automática: las ventas se coordinan y se " +
+      "cobran por WhatsApp. El mantenimiento es de $60.000 por mes.\n\n" +
+      "Pedido " + pedido + "\n\n" +
+      "Saludos,\nLautaro - MayoristasYa";
   }
 
   enviarMail(opciones);
@@ -393,7 +672,7 @@ function entregarPack(sheet, row) {
       name: EMAIL_REMITENTE,
       body:
         "Comprador: " + nombre + "\nEmail: " + email + "\nPedido: " + pedido +
-        "\n\nYa se le envió el pack."
+        "\n\nYa se le envió el mail de entrega."
     });
   }
 }

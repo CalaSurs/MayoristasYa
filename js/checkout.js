@@ -22,11 +22,17 @@
       precio: 19999,
       antes: 40000,
     },
+    publicidad: {
+      nombre: "Espacio Publicitario",
+      desc: "Tu negocio publicado en MayoristasYa",
+      precio: 24999,
+      antes: 50000,
+    },
     "negocio-mayorista": {
       nombre: "Negocio Mayorista",
       desc: "Tu propia página, con los 3 packs incluidos",
-      precio: 79999,
-      antes: 159999,
+      precio: 130000,
+      antes: 260000,
       mensual: true,
     },
   };
@@ -269,7 +275,7 @@
     l.push("");
     l.push("Pedido: " + pack.nombre);
     l.push("Total: " + formatPrice(pack.precio));
-    if (pack.mensual) l.push("(Incluye además $30.000 por mes de mantenimiento de la página.)");
+    if (pack.mensual) l.push("(Incluye además $60.000 por mes de mantenimiento de la página.)");
     l.push("");
     l.push("Datos de contacto:");
     l.push("Nombre: " + datos.name);
