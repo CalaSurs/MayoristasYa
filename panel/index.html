@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Privado: que no aparezca en Google. La seguridad NO depende de esto,
+     depende de la clave (sin clave, esta página no muestra ningún dato). -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#f7f5fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#13101d" media="(prefers-color-scheme: dark)">
+<!-- Para agregarlo a la pantalla de inicio del celular y abrirlo como una app -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ventas">
+<title>Panel de ventas · MayoristasYa</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* =========================================================
+     Panel de ventas — mismo estilo que el sitio (minimalismo suave),
+     pensado primero para el celular.
+     ========================================================= */
+  :root {
+    --fondo: #f7f5fc;
+    --tarjeta: #ffffff;
+    --tinta: #241d3a;
+    --texto: #55506b;
+    --suave: #6b6586;
+    --linea: #ece7f7;
+    --linea-2: #ddd5f0;
+    --acento: #6d4bd8;
+    --acento-hover: #5c3ac9;
+    --acento-suave: #efe9fd;
+    --acento-tinta: #4a2bab;
+    --sobre-acento: #ffffff;
+    --verde: #1f6b46;
+    --verde-suave: #e3f5ec;
+    --ambar: #7f5206;
+    --ambar-suave: #fdf2dd;
+    --rojo: #a33c2c;
+    --rojo-suave: #fbe9e6;
+    --sombra: 0 2px 8px rgba(80, 55, 160, 0.05), 0 10px 28px -14px rgba(80, 55, 160, 0.14);
+    --radio: 22px;
+    --fuente-titulo: "Outfit", system-ui, sans-serif;
+    --fuente: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --rebote: cubic-bezier(0.34, 1.35, 0.64, 1);
+    color-scheme: light;
+  }
+
+  /* De noche el celular no te encandila */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #13101d;
+      --tarjeta: #1d1929;
+      --tinta: #f2effb;
+      --texto: #cdc7e0;
+      --suave: #a39cbd;
+      --linea: #2b2540;
+      --linea-2: #3a3354;
+      --acento: #9d82f2;
+      --acento-hover: #b39cf6;
+      --acento-suave: #2a2147;
+      --acento-tinta: #c9b8fb;
+      --sobre-acento: #13101d;
+      --verde: #6fd9a4;
+      --verde-suave: #16332a;
+      --ambar: #f2c46a;
+      --ambar-suave: #352a12;
+      --rojo: #ff9a88;
+      --rojo-suave: #3a1d19;
+      --sombra: 0 14px 30px -18px rgba(0, 0, 0, 0.6);
+      color-scheme: dark;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: var(--fuente);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
+  h1, h2 { margin: 0; font-family: var(--fuente-titulo); color: var(--tinta); line-height: 1.2; }
+  .num { font-variant-numeric: tabular-nums; }
+  .sr-solo {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  /* ---------- Marca ---------- */
+  .marca { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .marca-ic {
+    width: 38px; height: 38px; flex-shrink: 0; border-radius: 12px;
+    display: grid; place-items: center;
+    background: var(--acento); color: var(--sobre-acento);
+    font-family: var(--fuente-titulo); font-weight: 800; font-size: 14px;
+  }
+  .marca-txt { min-width: 0; }
+  .marca-txt strong {
+    display: block; font-family: var(--fuente-titulo); color: var(--tinta);
+    font-size: 16px; line-height: 1.1;
+  }
+  .marca-txt span { display: block; font-size: 12px; color: var(--suave); }
+
+  /* ---------- Entrada ---------- */
+  .login {
+    min-height: 100vh; min-height: 100dvh;
+    display: grid; place-items: center;
+    padding: calc(env(safe-area-inset-top) + 24px) 20px calc(env(safe-area-inset-bottom) + 24px);
+  }
+  .login-caja {
+    width: 100%; max-width: 390px;
+    background: var(--tarjeta); border: 1px solid var(--linea);
+    border-radius: 26px; padding: 28px 22px 22px; box-shadow: var(--sombra);
+  }
+  .login-caja .marca { margin-bottom: 22px; }
+  .login h1 { font-size: 23px; margin-bottom: 6px; }
+  .login-bajada { margin: 0 0 20px; font-size: 14px; }
+  .campo { margin-bottom: 14px; }
+  .campo label { display: block; font-size: 13px; font-weight: 700; color: var(--tinta); margin-bottom: 6px; }
+  .campo-caja { position: relative; }
+  .campo input {
+    width: 100%; height: 52px; padding: 0 52px 0 14px;
+    border-radius: 14px; border: 1.5px solid var(--linea-2); background: var(--fondo);
+    font-size: 16px; /* 16px o más: iPhone no hace zoom al tocar */
+  }
+  .campo input:focus { outline: none; border-color: var(--acento); box-shadow: 0 0 0 4px var(--acento-suave); }
+  .ver-clave {
+    position: absolute; right: 6px; top: 7px; width: 38px; height: 38px;
+    border: 0; border-radius: 10px; background: transparent; color: var(--suave);
+    display: grid; place-items: center;
+  }
+  .ver-clave svg { width: 20px; height: 20px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; height: 52px; padding: 0 20px; border: 0; border-radius: 999px;
+    font-family: var(--fuente-titulo); font-weight: 700; font-size: 15px;
+    transition: background 0.2s var(--ease), transform 0.2s var(--rebote);
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primario { background: var(--acento); color: var(--sobre-acento); }
+  .btn-primario:hover { background: var(--acento-hover); }
+  .btn-primario[disabled] { opacity: 0.65; cursor: wait; }
+  .btn-texto { height: 46px; margin-top: 6px; background: transparent; color: var(--acento-tinta); font-size: 14px; }
+  .login-error {
+    margin: 0 0 14px; padding: 10px 12px; border-radius: 12px;
+    background: var(--rojo-suave); color: var(--rojo); font-size: 13px; font-weight: 700;
+  }
+  .login-nota { margin: 16px 0 0; font-size: 12px; color: var(--suave); text-align: center; }
+
+  /* ---------- Barra de arriba ---------- */
+  .barra {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: 8px;
+    padding: calc(env(safe-area-inset-top) + 10px) 14px 10px;
+    background: var(--fondo);
+    background: color-mix(in srgb, var(--fondo) 84%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--linea);
+  }
+  .barra .marca { flex: 1; }
+  @media (max-width: 420px) { .barra .marca-txt { display: none; } }
+  .vivo {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; color: var(--suave); white-space: nowrap;
+  }
+  .vivo-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--suave); flex-shrink: 0; }
+  .vivo.en-linea { color: var(--verde); }
+  .vivo.en-linea .vivo-punto { background: var(--verde); animation: latido 2s infinite; }
+  .vivo.con-error { color: var(--rojo); }
+  .vivo.con-error .vivo-punto { background: var(--rojo); }
+  @keyframes latido {
+    0% { box-shadow: 0 0 0 0 rgba(31, 107, 70, 0.45); }
+    70% { box-shadow: 0 0 0 7px rgba(31, 107, 70, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(31, 107, 70, 0); }
+  }
+  .btn-icono {
+    width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px;
+    border: 1px solid var(--linea); background: var(--tarjeta); color: var(--texto);
+    display: grid; place-items: center;
+  }
+  .btn-icono svg { width: 18px; height: 18px; }
+  .btn-icono.girando svg { animation: girar 0.9s linear infinite; }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  .aviso-demo {
+    margin: 12px 14px 0; padding: 10px 14px; border-radius: 14px;
+    background: var(--ambar-suave); color: var(--ambar);
+    font-size: 13px; font-weight: 700; text-align: center;
+  }
+
+  /* ---------- Contenido ---------- */
+  .contenido {
+    max-width: 1120px; margin: 0 auto;
+    padding: 14px 14px calc(env(safe-area-inset-bottom) + 28px);
+  }
+  .rangos {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+    padding: 4px; margin-bottom: 12px; border-radius: 999px;
+    background: var(--tarjeta); border: 1px solid var(--linea);
+  }
+  @media (min-width: 760px) { .rangos { max-width: 420px; } }
+  .rango {
+    height: 38px; border: 0; border-radius: 999px; background: transparent;
+    font-size: 13px; font-weight: 700; color: var(--suave);
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .rango[aria-selected="true"] { background: var(--acento); color: var(--sobre-acento); }
+
+  .kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+  @media (min-width: 760px) { .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; } }
+  .kpi {
+    min-width: 0; padding: 14px 14px 12px;
+    background: var(--tarjeta); border: 1px solid var(--linea);
+    border-radius: var(--radio); box-shadow: var(--sombra);
+  }
+  .kpi-tit { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; color: var(--suave); }
+  .kpi-valor {
+    display: block; font-family: var(--fuente-titulo); font-weight: 800; color: var(--tinta);
+    font-size: clamp(20px, 6vw, 28px); line-height: 1.1; letter-spacing: -0.02em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .kpi-principal .kpi-valor { color: var(--acento-tinta); }
+  .kpi-sub {
+    display: block; margin-top: 6px; min-height: 18px;
+    font-size: 12px; font-weight: 600; color: var(--suave);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .kpi-sub.sube { color: var(--verde); }
+  .kpi-sub.baja { color: var(--rojo); }
+
+  .alerta {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 12px; padding: 14px 16px; border-radius: var(--radio);
+    background: var(--ambar-suave); color: var(--ambar);
+  }
+  .alerta svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+  .alerta strong { display: block; font-family: var(--fuente-titulo); font-size: 15px; }
+  .alerta span { font-size: 13px; font-weight: 600; }
+
+  .columnas { display: grid; gap: 12px; }
+  @media (min-width: 1000px) {
+    .columnas { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+  }
+  .tarjeta {
+    min-width: 0; padding: 16px;
+    background: var(--tarjeta); border: 1px solid var(--linea);
+    border-radius: var(--radio); box-shadow: var(--sombra);
+  }
+  .tarjeta-feed { margin-top: 12px; }
+  @media (min-width: 1000px) { .tarjeta-feed { margin-top: 14px; } }
+  .tarjeta-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+  .tarjeta h2 { font-size: 16px; }
+  .tarjeta-cab small { font-size: 12px; font-weight: 600; color: var(--suave); }
+
+  /* ---------- Gráfico de barras ---------- */
+  .gr-area {
+    position: relative; height: 170px; padding-top: 20px;
+    display: flex; align-items: flex-end; gap: 3px;
+    border-bottom: 1px solid var(--linea-2);
+  }
+  @media (min-width: 760px) { .gr-area { height: 210px; gap: 5px; } }
+  .gr-tope { position: absolute; top: 0; left: 0; font-size: 11px; font-weight: 700; color: var(--suave); }
+  .gr-guia { position: absolute; left: 0; right: 0; top: 20px; border-top: 1px dashed var(--linea-2); }
+  .gr-barra {
+    flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: transparent;
+    display: flex; align-items: flex-end; border-radius: 6px 6px 0 0;
+  }
+  .gr-relleno {
+    display: block; width: 100%; height: var(--h); min-height: 2px;
+    border-radius: 5px 5px 2px 2px; background: var(--linea-2);
+    transition: height 0.5s var(--ease), background 0.2s var(--ease);
+  }
+  .gr-barra.tiene .gr-relleno { background: var(--acento); }
+  .gr-barra.activa .gr-relleno { background: var(--acento-tinta); }
+  .gr-ejes { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--suave); }
+  .gr-detalle { margin: 10px 0 0; min-height: 21px; font-size: 13px; font-weight: 600; }
+  .gr-detalle b { color: var(--tinta); }
+
+  /* ---------- Por pack ---------- */
+  .packs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+  .pk { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: baseline; }
+  .pk-nombre { font-size: 14px; font-weight: 700; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pk-plata { font-family: var(--fuente-titulo); font-size: 15px; font-weight: 800; color: var(--tinta); }
+  .pk-barra { grid-column: 1 / -1; height: 8px; margin-top: 4px; border-radius: 999px; background: var(--acento-suave); overflow: hidden; }
+  .pk-barra span { display: block; height: 100%; width: var(--w); border-radius: 999px; background: var(--acento); transition: width 0.6s var(--ease); }
+  .pk-cant { grid-column: 1 / -1; font-size: 12px; font-weight: 600; color: var(--suave); }
+
+  /* ---------- Últimos movimientos ---------- */
+  .feed-filtro { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--fondo); border: 1px solid var(--linea); flex-shrink: 0; }
+  .feed-filtro button { height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; font-size: 12px; font-weight: 700; color: var(--suave); }
+  .feed-filtro button[aria-pressed="true"] { background: var(--tarjeta); color: var(--tinta); box-shadow: var(--sombra); }
+  .feed { list-style: none; margin: 0; padding: 0; }
+  .mov {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center;
+    padding: 11px 6px; border-top: 1px solid var(--linea); border-radius: 12px;
+  }
+  .mov:first-child { border-top: 0; }
+  .mov-ic {
+    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+    background: var(--acento-suave); color: var(--acento-tinta);
+    font-family: var(--fuente-titulo); font-weight: 800; font-size: 12px;
+  }
+  .mov-cuerpo { min-width: 0; }
+  .mov-tit { display: block; font-size: 14px; font-weight: 700; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mov-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 8px; font-size: 12px; font-weight: 600; color: var(--suave); }
+  .mov-plata { font-family: var(--fuente-titulo); font-size: 15px; font-weight: 800; color: var(--tinta); text-align: right; white-space: nowrap; }
+  .mov-pend .mov-plata { color: var(--suave); font-weight: 700; }
+  .mov-pend .mov-ic { background: var(--fondo); color: var(--suave); }
+  .estado { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .estado-ok { background: var(--verde-suave); color: var(--verde); }
+  .estado-envio { background: var(--ambar-suave); color: var(--ambar); }
+  .estado-pend { background: var(--fondo); color: var(--suave); border: 1px solid var(--linea); }
+  .mov.es-nueva { animation: nueva 4s var(--ease); }
+  @keyframes nueva {
+    0% { background: var(--verde-suave); transform: translateY(-6px); }
+    12% { background: var(--verde-suave); transform: none; }
+    100% { background: transparent; }
+  }
+  .vacio { margin: 0; padding: 22px 6px; text-align: center; font-size: 14px; color: var(--suave); }
+  .pie { margin: 18px 0 0; text-align: center; font-size: 12px; color: var(--suave); }
+
+  /* ---------- Aviso de venta nueva ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 18px); z-index: 50;
+    width: min(92vw, 420px);
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 18px;
+    background: var(--tinta); color: var(--fondo);
+    box-shadow: 0 18px 40px -16px rgba(20, 10, 50, 0.55);
+    opacity: 0; transform: translate(-50%, 24px); pointer-events: none;
+    transition: opacity 0.3s var(--ease), transform 0.45s var(--rebote);
+  }
+  .toast.visible { opacity: 1; transform: translate(-50%, 0); }
+  .toast-ic { width: 38px; height: 38px; flex-shrink: 0; border-radius: 12px; display: grid; place-items: center; background: var(--verde); color: var(--tarjeta); }
+  .toast-ic svg { width: 20px; height: 20px; }
+  .toast-txt { min-width: 0; }
+  .toast-txt strong { display: block; font-family: var(--fuente-titulo); font-size: 15px; }
+  .toast-txt span { display: block; font-size: 13px; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== ENTRADA ===================== -->
+<div class="login" id="vistaLogin">
+  <form class="login-caja" id="formLogin" novalidate>
+    <div class="marca">
+      <span class="marca-ic" aria-hidden="true">MY</span>
+      <span class="marca-txt"><strong>MayoristasYa</strong><span>Panel de ventas</span></span>
+    </div>
+
+    <h1>Entrá a tu panel</h1>
+    <p class="login-bajada">Pegá la clave que generaste en Apps Script. Queda guardada solo en este dispositivo.</p>
+
+    <!-- Para que el administrador de contraseñas del celular la pueda recordar -->
+    <input class="sr-solo" type="text" name="usuario" value="panel-mayoristasya" autocomplete="username" tabindex="-1" aria-hidden="true">
+
+    <div class="campo">
+      <label for="clave">Clave del panel</label>
+      <div class="campo-caja">
+        <input id="clave" name="clave" type="password" autocomplete="current-password"
+               autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+        <button type="button" class="ver-clave" id="verClave" aria-label="Mostrar la clave" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="login-error" id="errorLogin" role="alert" hidden></p>
+
+    <button type="submit" class="btn btn-primario" id="btnEntrar">Entrar</button>
+    <button type="button" class="btn btn-texto" id="btnDemo">Ver con datos de ejemplo</button>
+
+    <p class="login-nota">Esta página no guarda ventas: las lee de tu planilla con la clave.</p>
+  </form>
+</div>
+
+<!-- ===================== PANEL ===================== -->
+<div id="vistaPanel" hidden>
+  <header class="barra">
+    <div class="marca">
+      <span class="marca-ic" aria-hidden="true">MY</span>
+      <span class="marca-txt"><strong>Ventas</strong><span>MayoristasYa</span></span>
+    </div>
+    <span class="vivo" id="estadoVivo">
+      <span class="vivo-punto" aria-hidden="true"></span>
+      <span id="estadoTexto">Conectando…</span>
+    </span>
+    <button type="button" class="btn-icono" id="btnActualizar" aria-label="Actualizar ahora">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11A8 8 0 0 0 5.3 6.3L3 8.5"/><path d="M3 3.5v5h5"/><path d="M4 13a8 8 0 0 0 14.7 4.7L21 15.5"/><path d="M21 20.5v-5h-5"/></svg>
+    </button>
+    <button type="button" class="btn-icono" id="btnSalir" aria-label="Cerrar sesión">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg>
+    </button>
+  </header>
+
+  <p class="aviso-demo" id="avisoDemo" hidden>Datos de ejemplo: no son tus ventas reales</p>
+
+  <main class="contenido">
+    <div class="rangos" role="tablist" aria-label="Período">
+      <button type="button" class="rango" role="tab" data-rango="hoy" aria-selected="true">Hoy</button>
+      <button type="button" class="rango" role="tab" data-rango="7d" aria-selected="false" tabindex="-1">7 días</button>
+      <button type="button" class="rango" role="tab" data-rango="30d" aria-selected="false" tabindex="-1">30 días</button>
+      <button type="button" class="rango" role="tab" data-rango="todo" aria-selected="false" tabindex="-1">Todo</button>
+    </div>
+
+    <section class="kpis" aria-label="Resumen del período">
+      <article class="kpi kpi-principal">
+        <span class="kpi-tit">Ingresos</span>
+        <strong class="kpi-valor num" id="kIngresos">—</strong>
+        <span class="kpi-sub" id="kIngresosSub"></span>
+      </article>
+      <article class="kpi">
+        <span class="kpi-tit">Ventas</span>
+        <strong class="kpi-valor num" id="kVentas">—</strong>
+        <span class="kpi-sub" id="kVentasSub"></span>
+      </article>
+      <article class="kpi">
+        <span class="kpi-tit">Ticket promedio</span>
+        <strong class="kpi-valor num" id="kTicket">—</strong>
+        <span class="kpi-sub" id="kTicketSub"></span>
+      </article>
+      <article class="kpi">
+        <span class="kpi-tit">Pagos completados</span>
+        <strong class="kpi-valor num" id="kConv">—</strong>
+        <span class="kpi-sub" id="kConvSub"></span>
+      </article>
+    </section>
+
+    <section class="alerta" id="alertaEnvios" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg>
+      <div>
+        <strong id="alertaTitulo"></strong>
+        <span>Están pagadas pero el mail de entrega no salió. Revisá la planilla.</span>
+      </div>
+    </section>
+
+    <div class="columnas">
+      <section class="tarjeta" aria-labelledby="tituloGrafico">
+        <div class="tarjeta-cab">
+          <h2 id="tituloGrafico">Ingresos</h2>
+          <small id="grSub"></small>
+        </div>
+        <div class="gr-area" id="grArea"></div>
+        <div class="gr-ejes num" id="grEjes"></div>
+        <p class="gr-detalle num" id="grDetalle" aria-live="polite"></p>
+      </section>
+
+      <section class="tarjeta" aria-labelledby="tituloPacks">
+        <div class="tarjeta-cab">
+          <h2 id="tituloPacks">Por pack</h2>
+          <small>ingresos del período</small>
+        </div>
+        <ul class="packs" id="listaPacks"></ul>
+      </section>
+    </div>
+
+    <section class="tarjeta tarjeta-feed" aria-labelledby="tituloFeed">
+      <div class="tarjeta-cab">
+        <h2 id="tituloFeed">Últimos movimientos</h2>
+        <div class="feed-filtro" role="group" aria-label="Qué mostrar">
+          <button type="button" data-feed="pagadas" aria-pressed="true">Pagadas</button>
+          <button type="button" data-feed="todas" aria-pressed="false">Todas</button>
+        </div>
+      </div>
+      <ul class="feed" id="feed"></ul>
+    </section>
+
+    <p class="pie">Se actualiza sola cada 15 segundos mientras la tengas abierta.</p>
+  </main>
+</div>
+
+<!-- Aviso cuando entra una venta -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-ic" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+  </span>
+  <span class="toast-txt"><strong id="toastTitulo"></strong><span id="toastDetalle"></span></span>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- Configuración ----------------
+     La misma dirección que usa el sitio para cobrar (ya es pública en
+     js/pagos.js). La clave NO va acá: la pegás al entrar. */
+  var API_URL =
+    "https://script.google.com/macros/s/AKfycbxeehDKvTB-HmC0hhvy5TAlu3YnN2zxziQgphq91PZ-CLKN1PWxb-IV4xL7fjc68MMx/exec";
+  var CADA_MS = 15000;   /* cada cuánto pregunta si hay ventas nuevas */
+  var CORTE_MS = 12000;  /* si tarda más, se da por fallida */
+  var LLAVE_CLAVE = "mwPanelClave";
+  var LLAVE_RANGO = "mwPanelRango";
+  var ZONA = "America/Argentina/Buenos_Aires";
+  var DIA_MS = 86400000;
+
+  function $(id) { return document.getElementById(id); }
+
+  /* Todas las fechas se agrupan en hora argentina, esté donde esté el dispositivo */
+  var fDia = new Intl.DateTimeFormat("en-CA", { timeZone: ZONA, year: "numeric", month: "2-digit", day: "2-digit" });
+  var fMes = new Intl.DateTimeFormat("en-CA", { timeZone: ZONA, year: "numeric", month: "2-digit" });
+  var fHora = new Intl.DateTimeFormat("en-GB", { timeZone: ZONA, hour: "2-digit", hourCycle: "h23" });
+  var fCorto = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, day: "numeric", month: "numeric" });
+  var fHoraMin = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  var fDiaLargo = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, weekday: "short", day: "numeric", month: "short" });
+  var fMesCorto = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", month: "short" });
+  var fMesLargo = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", month: "long", year: "numeric" });
+
+  var st = {
+    sesion: 0,
+    clave: null,
+    demo: false,
+    logueado: false,
+    cargado: false,
+    pedidos: [],
+    rango: "hoy",
+    feed: "pagadas",
+    ultimaOk: 0,
+    error: false,
+    enCurso: false,
+    conocidas: null,
+    resaltar: {},
+    sinVer: 0,
+    timer: null,
+    firma: "",
+    barraActiva: -1,
+    demoLista: [],
+    demoTicks: 0
+  };
+  var tituloBase = document.title;
+
+  /* ---------------- Guardado local ----------------
+     Puede tirar error en modo privado: el panel funciona igual, solo que
+     pide la clave cada vez. */
+  function leer(llave) { try { return window.localStorage.getItem(llave); } catch (e) { return null; } }
+  function guardar(llave, v) { try { window.localStorage.setItem(llave, v); } catch (e) { /* nada */ } }
+  function borrar(llave) { try { window.localStorage.removeItem(llave); } catch (e) { /* nada */ } }
+
+  /* ---------------- Formatos ---------------- */
+  function plata(n) { return "$" + Math.round(n || 0).toLocaleString("es-AR"); }
+
+  function plataCorta(n) {
+    if (n >= 1e6) return "$" + (n / 1e6).toLocaleString("es-AR", { maximumFractionDigits: 1 }) + " M";
+    if (n >= 1e4) return "$" + Math.round(n / 1e3).toLocaleString("es-AR") + " mil";
+    return plata(n);
+  }
+
+  function hace(ms) {
+    var s = Math.max(0, Math.round((Date.now() - ms) / 1000));
+    if (s < 60) return "hace " + s + " s";
+    var m = Math.round(s / 60);
+    if (m < 60) return "hace " + m + " min";
+    var h = Math.round(m / 60);
+    if (h < 24) return "hace " + h + " h";
+    return fCorto.format(ms) + " · " + fHoraMin.format(ms);
+  }
+
+  function plural(n, uno, varios) { return n + " " + (n === 1 ? uno : varios); }
+
+  function codigoPack(nombre) {
+    var digitos = String(nombre).match(/\d+/);
+    if (digitos) return digitos[0];
+    var n = String(nombre).toLowerCase();
+    if (n.indexOf("public") > -1) return "PUB";
+    if (n.indexOf("negocio") > -1) return "NEG";
+    return String(nombre).slice(0, 3).toUpperCase() || "?";
+  }
+
+  /* ---------------- Datos ----------------
+     Todo lo que viene de la planilla (nombres de clientes incluidos) se
+     trata como texto y se pinta con textContent, nunca con innerHTML: un
+     cliente que ponga código en su nombre no puede ejecutar nada acá. */
+  function normalizar(o) {
+    if (!o) return null;
+    var t = Number(o.t);
+    if (!isFinite(t) || t <= 0) return null;
+    var p = String(o.p || "Sin nombre").slice(0, 60);
+    var n = String(o.n || "").slice(0, 40);
+    var r = String(o.r || "").slice(0, 80);
+    return {
+      t: t,
+      p: p,
+      m: Math.max(0, Number(o.m) || 0),
+      pg: o.pg === true,
+      en: o.en === true,
+      n: n,
+      id: r || t + "|" + p + "|" + n,
+      dia: fDia.format(t),
+      mes: fMes.format(t),
+      hora: parseInt(fHora.format(t), 10) % 24
+    };
+  }
+
+  function recibir(lista) {
+    var pedidos = [];
+    for (var i = 0; i < lista.length; i++) {
+      var p = normalizar(lista[i]);
+      if (p) pedidos.push(p);
+    }
+    pedidos.sort(function (a, b) { return b.t - a.t; });
+
+    /* Venta nueva = pagada que la vez anterior no estaba pagada. Cubre las
+       dos formas: fila nueva, o pedido pendiente que Mercado Pago aprobó.
+       La primera carga no avisa nada: son las que ya existían. */
+    if (st.conocidas) {
+      var nuevas = pedidos.filter(function (x) { return x.pg && !st.conocidas[x.id]; });
+      if (nuevas.length) avisarNuevas(nuevas);
+    }
+    st.conocidas = {};
+    pedidos.forEach(function (x) { if (x.pg) st.conocidas[x.id] = true; });
+
+    st.pedidos = pedidos;
+    st.cargado = true;
+    pintarTodo(false);
+  }
+
+  /* ---------------- Períodos ---------------- */
+  function largoRango() { return st.rango === "hoy" ? 1 : st.rango === "7d" ? 7 : 30; }
+
+  function dias(cuantos, saltear) {
+    var ahora = Date.now(), claves = {};
+    for (var i = 0; i < cuantos; i++) claves[fDia.format(ahora - (i + saltear) * DIA_MS)] = true;
+    return claves;
+  }
+
+  function periodoActual() { return st.rango === "todo" ? null : dias(largoRango(), 0); }
+  function periodoAnterior() { return st.rango === "todo" ? null : dias(largoRango(), largoRango()); }
+
+  function calcular(claves) {
+    var r = { ingresos: 0, ventas: 0, pedidos: 0 };
+    st.pedidos.forEach(function (p) {
+      if (claves && !claves[p.dia]) return;
+      r.pedidos++;
+      if (p.pg) { r.ventas++; r.ingresos += p.m; }
+    });
+    r.ticket = r.ventas ? r.ingresos / r.ventas : 0;
+    r.conversion = r.pedidos ? r.ventas / r.pedidos : 0;
+    return r;
+  }
+
+  /* ---------------- Pintar ---------------- */
+  function firmaDatos() {
+    var suma = 0, pg = 0, en = 0;
+    st.pedidos.forEach(function (p) { suma += p.m; if (p.pg) pg++; if (p.en) en++; });
+    return [st.cargado, st.pedidos.length, suma, pg, en, st.pedidos[0] ? st.pedidos[0].t : 0,
+      st.rango, st.feed, fDia.format(Date.now())].join("|");
+  }
+
+  /* Solo se redibuja si algo cambió: así no se pierde lo que estabas tocando
+     cada 15 segundos. Si no cambió nada, solo se actualizan los "hace X". */
+  function pintarTodo(forzar) {
+    var f = firmaDatos();
+    if (!forzar && f === st.firma) { refrescarTiempos(); return; }
+    st.firma = f;
+    pintarKpis();
+    pintarAlerta();
+    pintarGrafico();
+    pintarPacks();
+    pintarFeed();
+    pintarEstado();
+  }
+
+  var COMPARA = { hoy: "vs. ayer", "7d": "vs. 7 días previos", "30d": "vs. 30 días previos" };
+
+  function ponerDelta(el, actual, anterior) {
+    el.className = "kpi-sub";
+    if (st.rango === "todo") { el.textContent = "Histórico completo"; return; }
+    var comp = COMPARA[st.rango];
+    if (!anterior) {
+      el.textContent = actual ? "▲ Nuevo " + comp : "Sin cambios " + comp;
+      if (actual) el.classList.add("sube");
+      return;
+    }
+    var pct = Math.round(((actual - anterior) / anterior) * 100);
+    if (pct === 0) { el.textContent = "= " + comp; return; }
+    el.textContent = (pct > 0 ? "▲ " : "▼ ") + Math.abs(pct) + "% " + comp;
+    el.classList.add(pct > 0 ? "sube" : "baja");
+  }
+
+  function pintarKpis() {
+    var ids = ["kIngresos", "kVentas", "kTicket", "kConv"];
+    if (!st.cargado) {
+      ids.forEach(function (id) { $(id).textContent = "—"; $(id + "Sub").textContent = ""; });
+      return;
+    }
+    var act = calcular(periodoActual());
+    var ant = calcular(periodoAnterior());
+
+    $("kIngresos").textContent = plata(act.ingresos);
+    ponerDelta($("kIngresosSub"), act.ingresos, ant.ingresos);
+
+    $("kVentas").textContent = act.ventas.toLocaleString("es-AR");
+    ponerDelta($("kVentasSub"), act.ventas, ant.ventas);
+
+    $("kTicket").textContent = act.ventas ? plata(act.ticket) : "—";
+    $("kTicketSub").className = "kpi-sub";
+    $("kTicketSub").textContent = "por venta";
+
+    $("kConv").textContent = act.pedidos ? Math.round(act.conversion * 100) + "%" : "—";
+    $("kConvSub").className = "kpi-sub";
+    $("kConvSub").textContent = act.ventas + " de " + plural(act.pedidos, "pedido", "pedidos");
+  }
+
+  function pintarAlerta() {
+    var sinEnviar = st.pedidos.filter(function (p) { return p.pg && !p.en; }).length;
+    $("alertaEnvios").hidden = !sinEnviar;
+    $("alertaTitulo").textContent = sinEnviar === 1
+      ? "1 venta pagada sin enviar"
+      : sinEnviar + " ventas pagadas sin enviar";
+  }
+
+  function serieGrafico() {
+    var ahora = Date.now(), cols = [], mapa = {};
+    var pagados = st.pedidos.filter(function (p) { return p.pg; });
+
+    if (st.rango === "hoy") {
+      var hoy = fDia.format(ahora);
+      for (var h = 0; h < 24; h++) {
+        cols.push({ etiqueta: h + " h", largo: "De " + h + " a " + (h + 1) + " h", m: 0, n: 0 });
+      }
+      pagados.forEach(function (p) { if (p.dia === hoy) { cols[p.hora].m += p.m; cols[p.hora].n++; } });
+      return { cols: cols, ejes: ["0 h", "12 h", "23 h"] };
+    }
+
+    if (st.rango === "todo") {
+      var partes = fMes.format(ahora).split("-");
+      var anio = Number(partes[0]), mes = Number(partes[1]);
+      for (var i = 11; i >= 0; i--) {
+        var a = anio, m = mes - i;
+        while (m <= 0) { m += 12; a--; }
+        var clave = a + "-" + (m < 10 ? "0" : "") + m;
+        var ref = Date.UTC(a, m - 1, 15);
+        var col = { etiqueta: fMesCorto.format(ref).replace(".", ""), largo: fMesLargo.format(ref), m: 0, n: 0 };
+        mapa[clave] = col;
+        cols.push(col);
+      }
+      pagados.forEach(function (p) { var c = mapa[p.mes]; if (c) { c.m += p.m; c.n++; } });
+      return { cols: cols, ejes: [cols[0].etiqueta, cols[6].etiqueta, cols[11].etiqueta] };
+    }
+
+    var cuantos = largoRango();
+    for (var j = cuantos - 1; j >= 0; j--) {
+      var ms = ahora - j * DIA_MS, cl = fDia.format(ms);
+      var c2 = { etiqueta: fCorto.format(ms), largo: fDiaLargo.format(ms), m: 0, n: 0 };
+      mapa[cl] = c2;
+      cols.push(c2);
+    }
+    pagados.forEach(function (p) { var c = mapa[p.dia]; if (c) { c.m += p.m; c.n++; } });
+    return { cols: cols, ejes: [cols[0].etiqueta, cols[Math.floor(cuantos / 2)].etiqueta, cols[cuantos - 1].etiqueta] };
+  }
+
+  function escribirDetalle(prefijo, monto, ventas) {
+    var d = $("grDetalle");
+    d.textContent = "";
+    d.appendChild(document.createTextNode(prefijo + ": "));
+    var b = document.createElement("b");
+    b.textContent = plata(monto);
+    d.appendChild(b);
+    d.appendChild(document.createTextNode(" · " + plural(ventas, "venta", "ventas")));
+  }
+
+  function pintarGrafico() {
+    $("grSub").textContent = { hoy: "por hora", "7d": "por día", "30d": "por día", todo: "por mes" }[st.rango];
+    var area = $("grArea"), ejes = $("grEjes");
+    area.textContent = "";
+    ejes.textContent = "";
+
+    if (!st.cargado) { $("grDetalle").textContent = "Cargando…"; return; }
+
+    var s = serieGrafico(), max = 0, totalM = 0, totalN = 0;
+    s.cols.forEach(function (c) { if (c.m > max) max = c.m; totalM += c.m; totalN += c.n; });
+
+    var guia = document.createElement("span");
+    guia.className = "gr-guia";
+    area.appendChild(guia);
+
+    var tope = document.createElement("span");
+    tope.className = "gr-tope num";
+    tope.textContent = max ? plataCorta(max) : "";
+    area.appendChild(tope);
+
+    var barras = [];
+    s.cols.forEach(function (c, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "gr-barra" + (c.m ? " tiene" : "");
+      b.setAttribute("aria-label", c.largo + ": " + plata(c.m) + ", " + plural(c.n, "venta", "ventas"));
+      var relleno = document.createElement("span");
+      relleno.className = "gr-relleno";
+      relleno.style.setProperty("--h", (max ? (c.m / max) * 100 : 0) + "%");
+      b.appendChild(relleno);
+
+      function elegir() {
+        st.barraActiva = i;
+        barras.forEach(function (x, k) { x.classList.toggle("activa", k === i); });
+        escribirDetalle(c.largo, c.m, c.n);
+      }
+      b.addEventListener("click", elegir);
+      b.addEventListener("mouseenter", elegir);
+      b.addEventListener("focus", elegir);
+
+      barras.push(b);
+      area.appendChild(b);
+    });
+
+    s.ejes.forEach(function (txt) {
+      var e = document.createElement("span");
+      e.textContent = txt;
+      ejes.appendChild(e);
+    });
+
+    if (st.barraActiva >= 0 && st.barraActiva < barras.length) {
+      barras[st.barraActiva].classList.add("activa");
+      var ca = s.cols[st.barraActiva];
+      escribirDetalle(ca.largo, ca.m, ca.n);
+    } else if (totalN) {
+      escribirDetalle("Total del período", totalM, totalN);
+    } else {
+      $("grDetalle").textContent = "Todavía no hay ventas en este período.";
+    }
+  }
+
+  function pintarPacks() {
+    var ul = $("listaPacks");
+    ul.textContent = "";
+    if (!st.cargado) return;
+
+    var claves = periodoActual(), mapa = {}, lista = [], total = 0;
+    st.pedidos.forEach(function (p) {
+      if (!p.pg || (claves && !claves[p.dia])) return;
+      if (!mapa[p.p]) { mapa[p.p] = { nombre: p.p, n: 0, m: 0 }; lista.push(mapa[p.p]); }
+      mapa[p.p].n++;
+      mapa[p.p].m += p.m;
+      total += p.m;
+    });
+
+    if (!lista.length) {
+      var vacio = document.createElement("li");
+      vacio.className = "vacio";
+      vacio.textContent = "Sin ventas en este período.";
+      ul.appendChild(vacio);
+      return;
+    }
+
+    lista.sort(function (a, b) { return b.m - a.m; });
+    var max = lista[0].m || 1;
+
+    lista.forEach(function (it) {
+      var li = document.createElement("li");
+      li.className = "pk";
+
+      var nombre = document.createElement("span");
+      nombre.className = "pk-nombre";
+      nombre.textContent = it.nombre;
+
+      var monto = document.createElement("span");
+      monto.className = "pk-plata num";
+      monto.textContent = plata(it.m);
+
+      var barra = document.createElement("span");
+      barra.className = "pk-barra";
+      var relleno = document.createElement("span");
+      relleno.style.setProperty("--w", Math.max(2, (it.m / max) * 100) + "%");
+      barra.appendChild(relleno);
+
+      var cant = document.createElement("span");
+      cant.className = "pk-cant";
+      cant.textContent = plural(it.n, "venta", "ventas") + " · " + Math.round((it.m / (total || 1)) * 100) + "% de los ingresos";
+
+      li.appendChild(nombre);
+      li.appendChild(monto);
+      li.appendChild(barra);
+      li.appendChild(cant);
+      ul.appendChild(li);
+    });
+  }
+
+  function pintarFeed() {
+    var ul = $("feed");
+    ul.textContent = "";
+    if (!st.cargado) return;
+
+    var lista = st.pedidos.filter(function (p) { return st.feed === "todas" || p.pg; }).slice(0, 25);
+
+    if (!lista.length) {
+      var vacio = document.createElement("li");
+      vacio.className = "vacio";
+      vacio.textContent = st.feed === "todas" ? "Todavía no hay pedidos." : "Todavía no hay ventas pagadas.";
+      ul.appendChild(vacio);
+      return;
+    }
+
+    var ahora = Date.now();
+    lista.forEach(function (p) {
+      var li = document.createElement("li");
+      li.className = "mov" + (p.pg ? "" : " mov-pend");
+      if (st.resaltar[p.id] && ahora - st.resaltar[p.id] < 6000) li.classList.add("es-nueva");
+
+      var ic = document.createElement("span");
+      ic.className = "mov-ic";
+      ic.setAttribute("aria-hidden", "true");
+      ic.textContent = codigoPack(p.p);
+
+      var cuerpo = document.createElement("span");
+      cuerpo.className = "mov-cuerpo";
+
+      var tit = document.createElement("span");
+      tit.className = "mov-tit";
+      tit.textContent = p.p + (p.n ? " · " + p.n : "");
+
+      var meta = document.createElement("span");
+      meta.className = "mov-meta";
+
+      var cuando = document.createElement("time");
+      cuando.className = "js-hace";
+      cuando.setAttribute("data-t", String(p.t));
+      cuando.setAttribute("datetime", new Date(p.t).toISOString());
+      cuando.textContent = hace(p.t);
+
+      var estado = document.createElement("span");
+      if (p.pg && p.en) { estado.className = "estado estado-ok"; estado.textContent = "Entregado"; }
+      else if (p.pg) { estado.className = "estado estado-envio"; estado.textContent = "Pagado · sin enviar"; }
+      else { estado.className = "estado estado-pend"; estado.textContent = "Sin pagar"; }
+
+      meta.appendChild(cuando);
+      meta.appendChild(estado);
+      cuerpo.appendChild(tit);
+      cuerpo.appendChild(meta);
+
+      var monto = document.createElement("span");
+      monto.className = "mov-plata num";
+      monto.textContent = plata(p.m);
+
+      li.appendChild(ic);
+      li.appendChild(cuerpo);
+      li.appendChild(monto);
+      ul.appendChild(li);
+    });
+  }
+
+  function pintarEstado() {
+    var el = $("estadoVivo"), txt = $("estadoTexto");
+    el.className = "vivo";
+    if (st.demo) { el.classList.add("en-linea"); txt.textContent = "Demo en vivo"; return; }
+    if (document.visibilityState !== "visible") { txt.textContent = "En pausa"; return; }
+    if (st.error) {
+      el.classList.add("con-error");
+      txt.textContent = st.ultimaOk ? "Sin conexión" : "Reintentando…";
+      return;
+    }
+    if (!st.ultimaOk) { txt.textContent = "Conectando…"; return; }
+    el.classList.add("en-linea");
+    txt.textContent = "En vivo · " + hace(st.ultimaOk);
+  }
+
+  function refrescarTiempos() {
+    var marcas = document.querySelectorAll(".js-hace");
+    for (var i = 0; i < marcas.length; i++) {
+      marcas[i].textContent = hace(Number(marcas[i].getAttribute("data-t")));
+    }
+    pintarEstado();
+  }
+
+  /* ---------------- Aviso de venta nueva ---------------- */
+  var timerToast = null;
+
+  function mostrarToast(titulo, detalle) {
+    $("toastTitulo").textContent = titulo;
+    $("toastDetalle").textContent = detalle;
+    var t = $("toast");
+    t.classList.add("visible");
+    clearTimeout(timerToast);
+    timerToast = setTimeout(function () { t.classList.remove("visible"); }, 6000);
+  }
+
+  function avisarNuevas(nuevas) {
+    var total = 0, ahora = Date.now();
+    nuevas.forEach(function (p) { st.resaltar[p.id] = ahora; total += p.m; });
+
+    if (nuevas.length === 1) {
+      var p = nuevas[0];
+      mostrarToast("Nueva venta · " + plata(p.m), p.p + (p.n ? " · " + p.n : ""));
+    } else {
+      mostrarToast(nuevas.length + " ventas nuevas · " + plata(total), "Mirá los últimos movimientos");
+    }
+
+    /* Si el panel está abierto pero en otra ventana, se avisa en la pestaña */
+    if (!document.hasFocus()) {
+      st.sinVer += nuevas.length;
+      document.title = "(" + st.sinVer + ") Nueva venta · " + tituloBase;
+    }
+
+    /* Vibra en Android (en iPhone el navegador no lo permite). Es tu panel
+       privado, no la tienda: acá sí tiene sentido que te avise. */
+    if (navigator.vibrate) {
+      try { navigator.vibrate([90, 60, 90]); } catch (e) { /* nada */ }
+    }
+  }
+
+  /* ---------------- Conexión ---------------- */
+  function programar() {
+    clearTimeout(st.timer);
+    if (document.visibilityState !== "visible") return; /* celular bloqueado = no gasta nada */
+    if (!(st.logueado || st.demo)) return;
+    st.timer = setTimeout(pedirDatos, CADA_MS);
+  }
+
+  function pedirDatos() {
+    clearTimeout(st.timer);
+    if (st.demo) { tickDemo(); return; }
+    if (!st.clave || st.enCurso) return;
+
+    st.enCurso = true;
+    var sesion = st.sesion;
+    $("btnActualizar").classList.add("girando");
+
+    var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var corte = setTimeout(function () { if (ctrl) ctrl.abort(); }, CORTE_MS);
+
+    /* POST con texto plano: la clave viaja en el cuerpo, nunca en la URL
+       (las URL quedan en historiales y registros). */
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "panel", clave: st.clave }),
+      cache: "no-store",
+      redirect: "follow",
+      credentials: "omit",
+      signal: ctrl ? ctrl.signal : undefined
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        if (sesion !== st.sesion) return;
+        if (d && d.ok === true) {
+          st.error = false;
+          st.ultimaOk = Date.now();
+          if (!st.logueado) {
+            st.logueado = true;
+            guardar(LLAVE_CLAVE, st.clave);
+            mostrarPanel();
+          }
+          recibir(Array.isArray(d.pedidos) ? d.pedidos : []);
+          return;
+        }
+        if (d && d.error === "clave") {
+          cerrarSesion(st.logueado
+            ? "La clave guardada ya no funciona. Si la regeneraste, pegá la nueva."
+            : "Esa clave no es correcta. Copiala entera del Registro de ejecución.");
+          return;
+        }
+        if (d && d.error === "sin_configurar") {
+          cerrarSesion("Todavía no generaste la clave: corré generarClavePanel en Apps Script.");
+          return;
+        }
+        throw new Error("Respuesta inesperada");
+      })
+      .catch(function () {
+        if (sesion !== st.sesion) return;
+        st.error = true;
+        if (!st.logueado) {
+          st.clave = null;
+          mostrarErrorLogin("No pudimos conectar. Revisá tu internet y que hayas implementado la nueva versión del script.");
+          restaurarBotonEntrar();
+        }
+      })
+      .then(function () {
+        clearTimeout(corte);
+        if (sesion !== st.sesion) return;
+        st.enCurso = false;
+        $("btnActualizar").classList.remove("girando");
+        pintarEstado();
+        programar();
+      });
+  }
+
+  /* ---------------- Entrar y salir ---------------- */
+  function mostrarErrorLogin(msg) { var e = $("errorLogin"); e.textContent = msg; e.hidden = false; }
+  function ocultarErrorLogin() { $("errorLogin").hidden = true; }
+
+  function restaurarBotonEntrar() {
+    var b = $("btnEntrar");
+    b.disabled = false;
+    b.textContent = "Entrar";
+  }
+
+  function mostrarPanel() {
+    $("vistaLogin").hidden = true;
+    $("vistaPanel").hidden = false;
+    $("avisoDemo").hidden = !st.demo;
+    restaurarBotonEntrar();
+    ocultarErrorLogin();
+    pintarTodo(true);
+  }
+
+  function reiniciarEstado() {
+    st.sesion++;
+    clearTimeout(st.timer);
+    st.clave = null;
+    st.demo = false;
+    st.logueado = false;
+    st.cargado = false;
+    st.pedidos = [];
+    st.conocidas = null;
+    st.resaltar = {};
+    st.firma = "";
+    st.enCurso = false;
+    st.error = false;
+    st.ultimaOk = 0;
+    st.sinVer = 0;
+    st.barraActiva = -1;
+    st.demoLista = [];
+    st.demoTicks = 0;
+    document.title = tituloBase;
+    $("btnActualizar").classList.remove("girando");
+  }
+
+  function entrar(clave) {
+    reiniciarEstado();
+    st.clave = clave;
+    var b = $("btnEntrar");
+    b.disabled = true;
+    b.textContent = "Conectando…";
+    ocultarErrorLogin();
+    pedirDatos();
+  }
+
+  function cerrarSesion(mensaje) {
+    reiniciarEstado();
+    borrar(LLAVE_CLAVE);
+    $("vistaPanel").hidden = true;
+    $("vistaLogin").hidden = false;
+    $("clave").value = "";
+    restaurarBotonEntrar();
+    if (mensaje) mostrarErrorLogin(mensaje); else ocultarErrorLogin();
+  }
+
+  /* ---------------- Demo ----------------
+     Para ver cómo queda antes de configurar Apps Script. Siempre con el
+     cartel de "datos de ejemplo" y sin guardar nada. */
+  var PACKS_DEMO = [
+    ["Pack 100", 4999, 0.34],
+    ["Pack 500", 14999, 0.38],
+    ["Pack 1000", 19999, 0.22],
+    ["Espacio Publicitario", 24999, 0.04],
+    ["Negocio Mayorista", 130000, 0.02]
+  ];
+  var NOMBRES_DEMO = ["Lautaro", "Ana", "Diego", "Sofía", "Martín", "Camila", "Julián", "Valentina",
+    "Nicolás", "Micaela", "Tomás", "Florencia", "Agustín", "Lucía", "Federico", "Rocío"];
+
+  function azar(semilla) {
+    return function () {
+      semilla = (semilla + 0x6d2b79f5) | 0;
+      var t = Math.imul(semilla ^ (semilla >>> 15), 1 | semilla);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function elegirPack(r) {
+    var x = r(), acumulado = 0;
+    for (var i = 0; i < PACKS_DEMO.length; i++) {
+      acumulado += PACKS_DEMO[i][2];
+      if (x <= acumulado) return PACKS_DEMO[i];
+    }
+    return PACKS_DEMO[0];
+  }
+
+  function generarDemo() {
+    var r = azar(20260910), ahora = Date.now(), lista = [], k = 0;
+    /* Los pedidos de "hoy" tienen que caer dentro del día argentino: si se
+       reparten en las últimas horas corridas, a la madrugada caen en ayer y
+       la vista inicial de la demo arranca en $0. */
+    var hm = fHoraMin.format(ahora).split(":");
+    var desdeMedianoche = Math.max(60000, (Number(hm[0]) * 60 + Number(hm[1])) * 60000);
+    for (var d = 70; d >= 0; d--) {
+      var cant = Math.floor(r() * 5) + (r() < 0.3 ? 2 : 0);
+      if (d === 0) cant = Math.max(cant, 4);
+      for (var i = 0; i < cant; i++) {
+        var t = d === 0
+          ? ahora - Math.floor(r() * desdeMedianoche)
+          : ahora - d * DIA_MS - Math.floor(r() * DIA_MS);
+        var pk = elegirPack(r), pagado = r() < 0.62;
+        lista.push({
+          t: t, p: pk[0], m: pk[1], pg: pagado,
+          en: pagado && !(d < 2 && r() < 0.3),
+          n: NOMBRES_DEMO[Math.floor(r() * NOMBRES_DEMO.length)],
+          r: "DEMO-" + k++
+        });
+      }
+    }
+    return lista;
+  }
+
+  function arrancarDemo() {
+    reiniciarEstado();
+    st.demo = true;
+    st.logueado = true;
+    st.demoLista = generarDemo();
+    mostrarPanel();
+    st.ultimaOk = Date.now();
+    recibir(st.demoLista);
+    programar();
+  }
+
+  /* En la demo entra una venta inventada cada tanto, para ver el aviso */
+  function tickDemo() {
+    st.demoTicks++;
+    if (st.demoTicks === 1 || Math.random() < 0.3) {
+      var pk = elegirPack(Math.random);
+      st.demoLista.push({
+        t: Date.now() - 1500, p: pk[0], m: pk[1], pg: true, en: false,
+        n: NOMBRES_DEMO[Math.floor(Math.random() * NOMBRES_DEMO.length)],
+        r: "DEMO-VIVO-" + Date.now()
+      });
+    }
+    st.ultimaOk = Date.now();
+    st.error = false;
+    recibir(st.demoLista);
+    programar();
+  }
+
+  /* ---------------- Controles ---------------- */
+  $("formLogin").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var valor = $("clave").value.replace(/\s+/g, "");
+    if (valor.length < 20) {
+      mostrarErrorLogin("Pegá la clave completa: es un código largo que te muestra Apps Script.");
+      $("clave").focus();
+      return;
+    }
+    entrar(valor);
+  });
+
+  $("verClave").addEventListener("click", function () {
+    var input = $("clave"), mostrar = input.type === "password";
+    input.type = mostrar ? "text" : "password";
+    this.setAttribute("aria-pressed", String(mostrar));
+    this.setAttribute("aria-label", mostrar ? "Ocultar la clave" : "Mostrar la clave");
+  });
+
+  $("btnDemo").addEventListener("click", arrancarDemo);
+  $("btnActualizar").addEventListener("click", pedirDatos);
+
+  $("btnSalir").addEventListener("click", function () {
+    var pregunta = st.demo
+      ? "¿Salir de la demo?"
+      : "¿Cerrar sesión en este dispositivo? Vas a tener que volver a pegar la clave.";
+    if (window.confirm(pregunta)) cerrarSesion();
+  });
+
+  var botonesRango = document.querySelectorAll(".rango");
+
+  function cambiarRango(rango, enfocar) {
+    st.rango = rango;
+    st.barraActiva = -1;
+    for (var i = 0; i < botonesRango.length; i++) {
+      var elegido = botonesRango[i].getAttribute("data-rango") === rango;
+      botonesRango[i].setAttribute("aria-selected", String(elegido));
+      botonesRango[i].tabIndex = elegido ? 0 : -1;
+      if (elegido && enfocar) botonesRango[i].focus();
+    }
+    guardar(LLAVE_RANGO, rango);
+    pintarTodo(true);
+  }
+
+  for (var ir = 0; ir < botonesRango.length; ir++) {
+    botonesRango[ir].addEventListener("click", function () { cambiarRango(this.getAttribute("data-rango"), false); });
+    botonesRango[ir].addEventListener("keydown", function (e) {
+      var paso = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!paso) return;
+      e.preventDefault();
+      var lista = [].slice.call(botonesRango), actual = lista.indexOf(this);
+      var siguiente = lista[(actual + paso + lista.length) % lista.length];
+      cambiarRango(siguiente.getAttribute("data-rango"), true);
+    });
+  }
+
+  var botonesFeed = document.querySelectorAll(".feed-filtro button");
+  for (var jf = 0; jf < botonesFeed.length; jf++) {
+    botonesFeed[jf].addEventListener("click", function () {
+      st.feed = this.getAttribute("data-feed");
+      for (var k = 0; k < botonesFeed.length; k++) {
+        botonesFeed[k].setAttribute("aria-pressed", String(botonesFeed[k] === this));
+      }
+      pintarTodo(true);
+    });
+  }
+
+  /* Con el celular bloqueado o la pestaña de fondo no se consulta nada; al
+     volver, se actualiza en el acto. */
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") {
+      if (st.logueado || st.demo) pedirDatos();
+    } else {
+      clearTimeout(st.timer);
+    }
+    pintarEstado();
+  });
+
+  window.addEventListener("focus", function () {
+    if (st.sinVer) { st.sinVer = 0; document.title = tituloBase; }
+  });
+
+  setInterval(function () {
+    if (document.visibilityState === "visible" && (st.logueado || st.demo) && st.cargado) refrescarTiempos();
+  }, 1000);
+
+  /* ---------------- Arranque ---------------- */
+  var rangoGuardado = leer(LLAVE_RANGO);
+  if (rangoGuardado && /^(hoy|7d|30d|todo)$/.test(rangoGuardado)) cambiarRango(rangoGuardado, false);
+
+  var claveGuardada = leer(LLAVE_CLAVE);
+  if (claveGuardada) {
+    /* Ya entró antes en este dispositivo: directo al panel. Si no hay
+       internet se queda reintentando en vez de pedir la clave de nuevo. */
+    st.clave = claveGuardada;
+    st.logueado = true;
+    mostrarPanel();
+    pedirDatos();
+  }
+})();
+</script>
+</body>
+</html>
