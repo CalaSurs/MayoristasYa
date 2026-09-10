@@ -1,0 +1,16 @@
+{
+  "name": "Panel de ventas · MayoristasYa",
+  "short_name": "Ventas",
+  "description": "Métricas de ventas de MayoristasYa en tiempo real",
+  "lang": "es-AR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f5fc",
+  "theme_color": "#6d4bd8",
+  "icons": [
+    { "src": "../images/favicon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "../images/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

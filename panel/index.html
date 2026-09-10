@@ -9,20 +9,23 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#f7f5fc" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#13101d" media="(prefers-color-scheme: dark)">
-<!-- Para agregarlo a la pantalla de inicio del celular y abrirlo como una app -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Ventas">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Panel de ventas · MayoristasYa</title>
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   /* =========================================================
-     Panel de ventas — mismo estilo que el sitio (minimalismo suave),
-     pensado primero para el celular.
+     Panel de ventas · MayoristasYa
+     Mismo estilo que el sitio (minimalismo suave). Pensado primero
+     para el celular: barra de pestañas abajo, como una app. En la
+     computadora pasa a barra lateral.
      ========================================================= */
   :root {
     --fondo: #f7f5fc;
@@ -43,7 +46,9 @@
     --ambar-suave: #fdf2dd;
     --rojo: #a33c2c;
     --rojo-suave: #fbe9e6;
+    --velo: rgba(20, 14, 40, 0.45);
     --sombra: 0 2px 8px rgba(80, 55, 160, 0.05), 0 10px 28px -14px rgba(80, 55, 160, 0.14);
+    --sombra-alta: 0 24px 60px -20px rgba(20, 10, 50, 0.45);
     --radio: 22px;
     --fuente-titulo: "Outfit", system-ui, sans-serif;
     --fuente: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -52,7 +57,6 @@
     color-scheme: light;
   }
 
-  /* De noche el celular no te encandila */
   @media (prefers-color-scheme: dark) {
     :root {
       --fondo: #13101d;
@@ -73,7 +77,9 @@
       --ambar-suave: #352a12;
       --rojo: #ff9a88;
       --rojo-suave: #3a1d19;
+      --velo: rgba(0, 0, 0, 0.6);
       --sombra: 0 14px 30px -18px rgba(0, 0, 0, 0.6);
+      --sombra-alta: 0 24px 60px -20px rgba(0, 0, 0, 0.8);
       color-scheme: dark;
     }
   }
@@ -91,8 +97,10 @@
     font-size: 15px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
   }
-  button, input { font: inherit; color: inherit; }
+  body.con-hoja { overflow: hidden; }
+  button, input, select { font: inherit; color: inherit; }
   button { cursor: pointer; }
   :focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
   h1, h2 { margin: 0; font-family: var(--fuente-titulo); color: var(--tinta); line-height: 1.2; }
@@ -111,11 +119,42 @@
     font-family: var(--fuente-titulo); font-weight: 800; font-size: 14px;
   }
   .marca-txt { min-width: 0; }
-  .marca-txt strong {
-    display: block; font-family: var(--fuente-titulo); color: var(--tinta);
-    font-size: 16px; line-height: 1.1;
-  }
+  .marca-txt strong { display: block; font-family: var(--fuente-titulo); color: var(--tinta); font-size: 16px; line-height: 1.1; }
   .marca-txt span { display: block; font-size: 12px; color: var(--suave); }
+
+  /* ---------- Botones comunes ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; height: 52px; padding: 0 20px; border: 0; border-radius: 999px;
+    font-family: var(--fuente-titulo); font-weight: 700; font-size: 15px;
+    transition: background 0.2s var(--ease), transform 0.2s var(--rebote);
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primario { background: var(--acento); color: var(--sobre-acento); }
+  .btn-primario:hover { background: var(--acento-hover); }
+  .btn-primario[disabled] { opacity: 0.65; cursor: wait; }
+  .btn-texto { height: 46px; margin-top: 6px; background: transparent; color: var(--acento-tinta); font-size: 14px; }
+  .btn-sec {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 44px; padding: 0 16px; border-radius: 999px;
+    border: 1.5px solid var(--linea-2); background: var(--tarjeta); color: var(--tinta);
+    font-family: var(--fuente-titulo); font-weight: 700; font-size: 14px; white-space: nowrap;
+    transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+  .btn-sec:hover { background: var(--fondo); }
+  .btn-sec svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .btn-sec[disabled] { opacity: 0.5; cursor: not-allowed; }
+  .btn-peligro { width: 100%; margin-top: 14px; color: var(--rojo); border-color: var(--rojo-suave); }
+  .btn-icono {
+    width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px;
+    border: 1px solid var(--linea); background: var(--tarjeta); color: var(--texto);
+    display: grid; place-items: center;
+  }
+  .btn-icono svg { width: 18px; height: 18px; }
+  .btn-icono[aria-pressed="true"] { background: var(--acento-suave); color: var(--acento-tinta); border-color: transparent; }
+  .btn-icono.girando svg { animation: girar 0.9s linear infinite; }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  .link { border: 0; background: transparent; padding: 4px 2px; color: var(--acento-tinta); font-weight: 700; font-size: 13px; }
 
   /* ---------- Entrada ---------- */
   .login {
@@ -137,7 +176,7 @@
   .campo input {
     width: 100%; height: 52px; padding: 0 52px 0 14px;
     border-radius: 14px; border: 1.5px solid var(--linea-2); background: var(--fondo);
-    font-size: 16px; /* 16px o más: iPhone no hace zoom al tocar */
+    font-size: 16px;
   }
   .campo input:focus { outline: none; border-color: var(--acento); box-shadow: 0 0 0 4px var(--acento-suave); }
   .ver-clave {
@@ -146,207 +185,409 @@
     display: grid; place-items: center;
   }
   .ver-clave svg { width: 20px; height: 20px; }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    width: 100%; height: 52px; padding: 0 20px; border: 0; border-radius: 999px;
-    font-family: var(--fuente-titulo); font-weight: 700; font-size: 15px;
-    transition: background 0.2s var(--ease), transform 0.2s var(--rebote);
-  }
-  .btn:active { transform: scale(0.98); }
-  .btn-primario { background: var(--acento); color: var(--sobre-acento); }
-  .btn-primario:hover { background: var(--acento-hover); }
-  .btn-primario[disabled] { opacity: 0.65; cursor: wait; }
-  .btn-texto { height: 46px; margin-top: 6px; background: transparent; color: var(--acento-tinta); font-size: 14px; }
   .login-error {
     margin: 0 0 14px; padding: 10px 12px; border-radius: 12px;
     background: var(--rojo-suave); color: var(--rojo); font-size: 13px; font-weight: 700;
   }
   .login-nota { margin: 16px 0 0; font-size: 12px; color: var(--suave); text-align: center; }
 
-  /* ---------- Barra de arriba ---------- */
+  /* ---------- Estructura de la app ---------- */
+  .lateral { display: none; }
+  .principal { min-width: 0; }
+
   .barra {
     position: sticky; top: 0; z-index: 20;
     display: flex; align-items: center; gap: 8px;
     padding: calc(env(safe-area-inset-top) + 10px) 14px 10px;
     background: var(--fondo);
-    background: color-mix(in srgb, var(--fondo) 84%, transparent);
+    background: color-mix(in srgb, var(--fondo) 86%, transparent);
     -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--linea);
   }
-  .barra .marca { flex: 1; }
-  @media (max-width: 420px) { .barra .marca-txt { display: none; } }
-  .vivo {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 700; color: var(--suave); white-space: nowrap;
-  }
+  .barra-titulo { flex: 1; display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .barra-titulo h1 { font-size: 19px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .vivo { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--suave); white-space: nowrap; }
   .vivo-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--suave); flex-shrink: 0; }
   .vivo.en-linea { color: var(--verde); }
   .vivo.en-linea .vivo-punto { background: var(--verde); animation: latido 2s infinite; }
   .vivo.con-error { color: var(--rojo); }
   .vivo.con-error .vivo-punto { background: var(--rojo); }
+  @media (max-width: 520px) { .vivo-hace { display: none; } }
   @keyframes latido {
     0% { box-shadow: 0 0 0 0 rgba(31, 107, 70, 0.45); }
     70% { box-shadow: 0 0 0 7px rgba(31, 107, 70, 0); }
     100% { box-shadow: 0 0 0 0 rgba(31, 107, 70, 0); }
   }
-  .btn-icono {
-    width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px;
-    border: 1px solid var(--linea); background: var(--tarjeta); color: var(--texto);
-    display: grid; place-items: center;
-  }
-  .btn-icono svg { width: 18px; height: 18px; }
-  .btn-icono.girando svg { animation: girar 0.9s linear infinite; }
-  @keyframes girar { to { transform: rotate(360deg); } }
   .aviso-demo {
-    margin: 12px 14px 0; padding: 10px 14px; border-radius: 14px;
+    max-width: 1180px; margin: 12px auto 0; padding: 10px 14px; border-radius: 14px;
     background: var(--ambar-suave); color: var(--ambar);
     font-size: 13px; font-weight: 700; text-align: center;
   }
+  .aviso-demo-caja { padding: 0 14px; }
 
-  /* ---------- Contenido ---------- */
-  .contenido {
-    max-width: 1120px; margin: 0 auto;
-    padding: 14px 14px calc(env(safe-area-inset-bottom) + 28px);
+  .nav-inferior {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    padding: 6px 6px calc(env(safe-area-inset-bottom) + 6px);
+    background: var(--tarjeta);
+    background: color-mix(in srgb, var(--tarjeta) 92%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--linea);
   }
+  .nav-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 4px 2px; border: 0; background: transparent; border-radius: 12px;
+    color: var(--suave); font-size: 11px; font-weight: 700;
+  }
+  .nav-ic { display: grid; place-items: center; width: 52px; height: 30px; border-radius: 999px; transition: background 0.2s var(--ease); }
+  .nav-ic svg { width: 21px; height: 21px; }
+  .nav-btn[aria-current="page"] { color: var(--acento-tinta); }
+  .nav-btn[aria-current="page"] .nav-ic { background: var(--acento-suave); }
+
+  @media (min-width: 1000px) {
+    .app { display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: 100vh; }
+    .lateral {
+      display: flex; flex-direction: column; gap: 18px;
+      position: sticky; top: 0; height: 100vh; height: 100dvh;
+      padding: 22px 14px; background: var(--tarjeta); border-right: 1px solid var(--linea);
+    }
+    .lateral .marca { padding: 0 8px 8px; }
+    .nav-lateral { display: flex; flex-direction: column; gap: 4px; }
+    .nav-lat {
+      display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 12px;
+      border: 0; border-radius: 12px; background: transparent;
+      color: var(--texto); font-weight: 700; font-size: 14px; text-align: left;
+    }
+    .nav-lat svg { width: 20px; height: 20px; color: var(--suave); flex-shrink: 0; }
+    .nav-lat:hover { background: var(--fondo); }
+    .nav-lat[aria-current="page"] { background: var(--acento-suave); color: var(--acento-tinta); }
+    .nav-lat[aria-current="page"] svg { color: var(--acento-tinta); }
+    .lateral-pie { margin-top: auto; padding: 12px; border-radius: 14px; background: var(--fondo); font-size: 12px; color: var(--suave); }
+    .lateral-pie strong { display: block; color: var(--tinta); font-size: 13px; }
+    .nav-inferior, .solo-movil { display: none !important; }
+    .barra { padding: 14px 28px; }
+    .aviso-demo-caja { padding: 0 28px; }
+  }
+
+  /* ---------- Período ---------- */
+  .periodo { max-width: 1180px; margin: 0 auto; padding: 12px 14px 0; }
+  @media (min-width: 1000px) { .periodo { padding: 18px 28px 0; } }
   .rangos {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
-    padding: 4px; margin-bottom: 12px; border-radius: 999px;
-    background: var(--tarjeta); border: 1px solid var(--linea);
+    display: flex; gap: 4px; padding: 4px; overflow-x: auto; scrollbar-width: none;
+    border-radius: 999px; background: var(--tarjeta); border: 1px solid var(--linea);
+    -webkit-overflow-scrolling: touch;
   }
-  @media (min-width: 760px) { .rangos { max-width: 420px; } }
+  .rangos::-webkit-scrollbar { display: none; }
+  @media (min-width: 760px) { .rangos { display: inline-flex; max-width: 100%; } }
   .rango {
-    height: 38px; border: 0; border-radius: 999px; background: transparent;
-    font-size: 13px; font-weight: 700; color: var(--suave);
+    flex: 1 0 auto; height: 36px; padding: 0 12px; border: 0; border-radius: 999px;
+    background: transparent; white-space: nowrap; font-size: 13px; font-weight: 700; color: var(--suave);
     transition: background 0.2s var(--ease), color 0.2s var(--ease);
   }
   .rango[aria-selected="true"] { background: var(--acento); color: var(--sobre-acento); }
+  /* Si quedan períodos escondidos a la derecha, el borde se desvanece: avisa que se puede deslizar */
+  .rangos.hay-mas { -webkit-mask-image: linear-gradient(90deg, #000 78%, transparent); mask-image: linear-gradient(90deg, #000 78%, transparent); }
+  .rango-personal { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .rango-personal label { flex: 1 1 140px; display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: var(--suave); }
+  .rango-personal input {
+    height: 44px; padding: 0 10px; border-radius: 12px; border: 1.5px solid var(--linea-2);
+    background: var(--tarjeta); font-size: 16px; color: var(--tinta);
+  }
 
-  .kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
-  @media (min-width: 760px) { .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; } }
-  .kpi {
-    min-width: 0; padding: 14px 14px 12px;
-    background: var(--tarjeta); border: 1px solid var(--linea);
-    border-radius: var(--radio); box-shadow: var(--sombra);
-  }
-  .kpi-tit { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; color: var(--suave); }
-  .kpi-valor {
-    display: block; font-family: var(--fuente-titulo); font-weight: 800; color: var(--tinta);
-    font-size: clamp(20px, 6vw, 28px); line-height: 1.1; letter-spacing: -0.02em;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .kpi-principal .kpi-valor { color: var(--acento-tinta); }
-  .kpi-sub {
-    display: block; margin-top: 6px; min-height: 18px;
-    font-size: 12px; font-weight: 600; color: var(--suave);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .kpi-sub.sube { color: var(--verde); }
-  .kpi-sub.baja { color: var(--rojo); }
+  /* ---------- Contenido ---------- */
+  .contenido { max-width: 1180px; margin: 0 auto; padding: 12px 14px calc(env(safe-area-inset-bottom) + 96px); }
+  @media (min-width: 1000px) { .contenido { padding: 16px 28px 40px; } }
+  .seccion { display: flex; flex-direction: column; gap: 12px; }
+  @media (min-width: 1000px) { .seccion { gap: 16px; } }
 
-  .alerta {
-    display: flex; align-items: flex-start; gap: 12px;
-    margin-bottom: 12px; padding: 14px 16px; border-radius: var(--radio);
-    background: var(--ambar-suave); color: var(--ambar);
-  }
-  .alerta svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
-  .alerta strong { display: block; font-family: var(--fuente-titulo); font-size: 15px; }
-  .alerta span { font-size: 13px; font-weight: 600; }
-
-  .columnas { display: grid; gap: 12px; }
-  @media (min-width: 1000px) {
-    .columnas { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 14px; align-items: start; }
-  }
   .tarjeta {
     min-width: 0; padding: 16px;
     background: var(--tarjeta); border: 1px solid var(--linea);
     border-radius: var(--radio); box-shadow: var(--sombra);
   }
-  .tarjeta-feed { margin-top: 12px; }
-  @media (min-width: 1000px) { .tarjeta-feed { margin-top: 14px; } }
-  .tarjeta-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+  @media (min-width: 760px) { .tarjeta { padding: 18px 20px; } }
+  .tarjeta-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
   .tarjeta h2 { font-size: 16px; }
   .tarjeta-cab small { font-size: 12px; font-weight: 600; color: var(--suave); }
+  .vacio { margin: 0; padding: 20px 6px; text-align: center; font-size: 14px; color: var(--suave); list-style: none; }
 
-  /* ---------- Gráfico de barras ---------- */
+  /* ---------- Indicadores ---------- */
+  .kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  @media (min-width: 760px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } }
+  @media (min-width: 1400px) { .kpis { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .kpi {
+    min-width: 0; padding: 14px 14px 12px;
+    background: var(--tarjeta); border: 1px solid var(--linea);
+    border-radius: var(--radio); box-shadow: var(--sombra);
+  }
+  .kpi-tit { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; color: var(--suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kpi-valor {
+    display: block; font-family: var(--fuente-titulo); font-weight: 800; color: var(--tinta);
+    font-size: clamp(20px, 5.6vw, 26px); line-height: 1.15; letter-spacing: -0.02em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .kpi-principal .kpi-valor { color: var(--acento-tinta); }
+  .kpi-sub { display: block; margin-top: 6px; min-height: 18px; font-size: 12px; font-weight: 600; color: var(--suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sube { color: var(--verde) !important; }
+  .baja { color: var(--rojo) !important; }
+
+  /* ---------- Alerta ---------- */
+  .alerta {
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; align-items: start;
+    padding: 14px 16px; border-radius: var(--radio); background: var(--ambar-suave); color: var(--ambar);
+  }
+  .alerta svg { width: 20px; height: 20px; margin-top: 1px; grid-row: span 2; }
+  .alerta strong { display: block; font-family: var(--fuente-titulo); font-size: 15px; }
+  .alerta-txt span { font-size: 13px; font-weight: 600; }
+  .alerta-btn {
+    grid-column: 2; justify-self: start; margin-top: 8px; height: 34px; padding: 0 14px;
+    border: 0; border-radius: 999px; background: var(--ambar); color: var(--ambar-suave);
+    font-weight: 800; font-size: 13px;
+  }
+  @media (min-width: 760px) {
+    .alerta { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; }
+    .alerta svg { grid-row: auto; }
+    .alerta-btn { grid-column: auto; margin-top: 0; }
+  }
+
+  /* ---------- Meta del mes ---------- */
+  .meta-cifras { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; margin-bottom: 10px; }
+  .meta-cifras strong { font-family: var(--fuente-titulo); font-size: clamp(24px, 7vw, 32px); color: var(--tinta); letter-spacing: -0.02em; }
+  .meta-cifras span { font-size: 13px; font-weight: 700; color: var(--suave); }
+  .meta-barra { position: relative; height: 12px; border-radius: 999px; background: var(--acento-suave); margin-bottom: 8px; }
+  .meta-relleno { display: block; height: 100%; width: var(--w, 0%); border-radius: 999px; background: var(--acento); transition: width 0.7s var(--ease); }
+  .meta-proy { position: absolute; top: -4px; bottom: -4px; left: var(--x, 0%); width: 3px; margin-left: -1.5px; border-radius: 3px; background: var(--tinta); opacity: 0.55; }
+  .meta-leyenda { margin: 0 0 12px; font-size: 12px; color: var(--suave); }
+  .meta-datos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .meta-datos li { min-width: 0; padding: 10px; border-radius: 14px; background: var(--fondo); }
+  .meta-datos span { display: block; font-size: 11px; font-weight: 700; color: var(--suave); line-height: 1.3; }
+  .meta-datos strong { display: block; margin-top: 2px; font-family: var(--fuente-titulo); font-size: 15px; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .meta-estado { margin: 12px 0 0; font-size: 13px; font-weight: 600; }
+  .meta-vacia p { margin: 0 0 12px; font-size: 14px; }
+
+  /* ---------- Gráfico ---------- */
+  .grid-resumen { display: grid; gap: 12px; }
+  @media (min-width: 1100px) { .grid-resumen { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; align-items: start; } }
+  .segmentado { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--fondo); border: 1px solid var(--linea); }
+  .segmentado button { height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; font-size: 12px; font-weight: 700; color: var(--suave); }
+  .segmentado button[aria-pressed="true"] { background: var(--tarjeta); color: var(--tinta); box-shadow: var(--sombra); }
+  .gr-herr { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .leyenda { display: flex; gap: 12px; font-size: 12px; font-weight: 600; color: var(--suave); }
+  .leyenda span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; background: var(--acento); }
+  .leyenda .ley-ant::before { background: var(--linea-2); }
+  .chip-toggle {
+    height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--linea-2);
+    background: var(--tarjeta); font-size: 12px; font-weight: 700; color: var(--suave);
+  }
+  .chip-toggle[aria-pressed="true"] { border-color: transparent; background: var(--acento-suave); color: var(--acento-tinta); }
   .gr-area {
-    position: relative; height: 170px; padding-top: 20px;
+    position: relative; height: 180px; padding-top: 20px;
     display: flex; align-items: flex-end; gap: 3px;
     border-bottom: 1px solid var(--linea-2);
   }
-  @media (min-width: 760px) { .gr-area { height: 210px; gap: 5px; } }
+  @media (min-width: 760px) { .gr-area { height: 220px; gap: 5px; } }
   .gr-tope { position: absolute; top: 0; left: 0; font-size: 11px; font-weight: 700; color: var(--suave); }
   .gr-guia { position: absolute; left: 0; right: 0; top: 20px; border-top: 1px dashed var(--linea-2); }
   .gr-barra {
-    flex: 1; min-width: 0; height: 100%; padding: 0; border: 0; background: transparent;
-    display: flex; align-items: flex-end; border-radius: 6px 6px 0 0;
+    position: relative; flex: 1; min-width: 0; height: 100%; padding: 0; border: 0;
+    background: transparent; display: flex; align-items: flex-end; justify-content: center; border-radius: 6px 6px 0 0;
   }
+  .gr-fantasma { display: none; position: absolute; left: 0; right: 0; bottom: 0; height: var(--ha, 0%); border-radius: 5px 5px 2px 2px; background: var(--linea-2); }
   .gr-relleno {
-    display: block; width: 100%; height: var(--h); min-height: 2px;
+    position: relative; display: block; width: 100%; height: var(--h, 0%); min-height: 2px;
     border-radius: 5px 5px 2px 2px; background: var(--linea-2);
     transition: height 0.5s var(--ease), background 0.2s var(--ease);
   }
+  .gr-area.comparando .gr-fantasma { display: block; }
+  .gr-area.comparando .gr-relleno { width: 58%; }
   .gr-barra.tiene .gr-relleno { background: var(--acento); }
   .gr-barra.activa .gr-relleno { background: var(--acento-tinta); }
   .gr-ejes { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--suave); }
   .gr-detalle { margin: 10px 0 0; min-height: 21px; font-size: 13px; font-weight: 600; }
   .gr-detalle b { color: var(--tinta); }
 
-  /* ---------- Por pack ---------- */
-  .packs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
-  .pk { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: baseline; }
-  .pk-nombre { font-size: 14px; font-weight: 700; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pk-plata { font-family: var(--fuente-titulo); font-size: 15px; font-weight: 800; color: var(--tinta); }
-  .pk-barra { grid-column: 1 / -1; height: 8px; margin-top: 4px; border-radius: 999px; background: var(--acento-suave); overflow: hidden; }
-  .pk-barra span { display: block; height: 100%; width: var(--w); border-radius: 999px; background: var(--acento); transition: width 0.6s var(--ease); }
-  .pk-cant { grid-column: 1 / -1; font-size: 12px; font-weight: 600; color: var(--suave); }
+  /* ---------- Lo que dicen tus números ---------- */
+  .insights { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  @media (min-width: 560px) and (max-width: 1099px) { .insights { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .insight { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: 16px; background: var(--fondo); min-width: 0; }
+  .insight-ic { width: 36px; height: 36px; flex-shrink: 0; border-radius: 11px; display: grid; place-items: center; background: var(--acento-suave); color: var(--acento-tinta); }
+  .insight-ic svg { width: 18px; height: 18px; }
+  .insight-txt { min-width: 0; }
+  .insight-tit { display: block; font-size: 11px; font-weight: 800; color: var(--suave); text-transform: uppercase; letter-spacing: 0.05em; }
+  .insight-valor { display: block; font-family: var(--fuente-titulo); font-weight: 800; color: var(--tinta); font-size: 16px; line-height: 1.25; }
+  .insight-sub { display: block; font-size: 12px; color: var(--texto); }
 
-  /* ---------- Últimos movimientos ---------- */
-  .feed-filtro { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--fondo); border: 1px solid var(--linea); flex-shrink: 0; }
-  .feed-filtro button { height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; font-size: 12px; font-weight: 700; color: var(--suave); }
-  .feed-filtro button[aria-pressed="true"] { background: var(--tarjeta); color: var(--tinta); box-shadow: var(--sombra); }
-  .feed { list-style: none; margin: 0; padding: 0; }
-  .mov {
-    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center;
-    padding: 11px 6px; border-top: 1px solid var(--linea); border-radius: 12px;
+  /* ---------- Listas de ventas ---------- */
+  .lista-ventas { list-style: none; margin: 0; padding: 0; }
+  .lista-ventas > li + li { border-top: 1px solid var(--linea); }
+  .venta {
+    width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center;
+    padding: 11px 8px; border: 0; background: transparent; border-radius: 12px; text-align: left;
   }
-  .mov:first-child { border-top: 0; }
-  .mov-ic {
-    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  .venta:hover { background: var(--fondo); }
+  .venta-ic, .prod-ic {
+    width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; display: grid; place-items: center;
     background: var(--acento-suave); color: var(--acento-tinta);
     font-family: var(--fuente-titulo); font-weight: 800; font-size: 12px;
   }
-  .mov-cuerpo { min-width: 0; }
-  .mov-tit { display: block; font-size: 14px; font-weight: 700; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .mov-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 8px; font-size: 12px; font-weight: 600; color: var(--suave); }
-  .mov-plata { font-family: var(--fuente-titulo); font-size: 15px; font-weight: 800; color: var(--tinta); text-align: right; white-space: nowrap; }
-  .mov-pend .mov-plata { color: var(--suave); font-weight: 700; }
-  .mov-pend .mov-ic { background: var(--fondo); color: var(--suave); }
-  .estado { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
-  .estado-ok { background: var(--verde-suave); color: var(--verde); }
-  .estado-envio { background: var(--ambar-suave); color: var(--ambar); }
-  .estado-pend { background: var(--fondo); color: var(--suave); border: 1px solid var(--linea); }
-  .mov.es-nueva { animation: nueva 4s var(--ease); }
+  .venta-pend .venta-ic { background: var(--fondo); color: var(--suave); }
+  .venta-cuerpo { min-width: 0; }
+  .venta-tit { display: block; font-size: 14px; font-weight: 700; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .venta-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 8px; font-size: 12px; font-weight: 600; color: var(--suave); }
+  .venta-plata { font-family: var(--fuente-titulo); font-size: 15px; font-weight: 800; color: var(--tinta); text-align: right; white-space: nowrap; }
+  .venta-pend .venta-plata { color: var(--suave); font-weight: 700; }
+  .venta.es-nueva { animation: nueva 4s var(--ease); }
   @keyframes nueva {
     0% { background: var(--verde-suave); transform: translateY(-6px); }
     12% { background: var(--verde-suave); transform: none; }
     100% { background: transparent; }
   }
-  .vacio { margin: 0; padding: 22px 6px; text-align: center; font-size: 14px; color: var(--suave); }
-  .pie { margin: 18px 0 0; text-align: center; font-size: 12px; color: var(--suave); }
+  .estado { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .estado-ok { background: var(--verde-suave); color: var(--verde); }
+  .estado-envio { background: var(--ambar-suave); color: var(--ambar); }
+  .estado-pend { background: var(--fondo); color: var(--suave); border: 1px solid var(--linea); }
 
-  /* ---------- Aviso de venta nueva ---------- */
+  /* ---------- Sección Ventas ---------- */
+  .herramientas { display: grid; gap: 10px; margin-bottom: 12px; }
+  @media (min-width: 760px) {
+    .herramientas { grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; }
+    .herramientas .chips { grid-column: 1 / -1; }
+  }
+  .buscador { position: relative; }
+  .buscador svg { position: absolute; left: 12px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); color: var(--suave); pointer-events: none; }
+  .buscador input {
+    width: 100%; height: 44px; padding: 0 12px 0 38px; border-radius: 14px;
+    border: 1.5px solid var(--linea-2); background: var(--fondo); font-size: 16px; color: var(--tinta);
+  }
+  .buscador input:focus, .select-caja select:focus, .campo-num input:focus, .rango-personal input:focus {
+    outline: none; border-color: var(--acento); box-shadow: 0 0 0 4px var(--acento-suave);
+  }
+  .chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: 0 0 auto; height: 34px; padding: 0 14px; border-radius: 999px;
+    border: 1px solid var(--linea-2); background: var(--tarjeta);
+    font-size: 13px; font-weight: 700; color: var(--texto);
+  }
+  .chip[aria-pressed="true"] { background: var(--tinta); border-color: var(--tinta); color: var(--tarjeta); }
+  @media (max-width: 400px) { .chips { gap: 5px; } .chip { padding: 0 9px; } }
+  .fila-herr { display: flex; gap: 8px; }
+  .select-caja { position: relative; flex: 1; min-width: 0; }
+  .select-caja select {
+    width: 100%; height: 44px; padding: 0 36px 0 12px; border-radius: 14px;
+    border: 1.5px solid var(--linea-2); background: var(--fondo); color: var(--tinta);
+    font-size: 15px; font-weight: 600; -webkit-appearance: none; appearance: none;
+  }
+  .select-caja svg { position: absolute; right: 12px; top: 50%; width: 16px; height: 16px; transform: translateY(-50%); color: var(--suave); pointer-events: none; }
+  .ventas-resumen { margin: 0 0 6px; font-size: 13px; font-weight: 700; color: var(--suave); }
+  .btn-mas { width: 100%; margin-top: 10px; }
+
+  /* ---------- Productos ---------- */
+  .productos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  @media (min-width: 760px) { .productos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } }
+  .prod { min-width: 0; padding: 14px; border-radius: 18px; background: var(--fondo); border: 1px solid var(--linea); }
+  .prod-cab { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+  .prod-nombre { display: block; font-weight: 800; color: var(--tinta); font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prod-share { display: block; font-size: 12px; font-weight: 600; color: var(--suave); }
+  .prod-plata { font-family: var(--fuente-titulo); font-weight: 800; font-size: 17px; color: var(--tinta); white-space: nowrap; }
+  .prod-barra { height: 8px; margin: 12px 0; border-radius: 999px; background: var(--acento-suave); overflow: hidden; }
+  .prod-barra span { display: block; height: 100%; width: var(--w, 0%); border-radius: 999px; background: var(--acento); transition: width 0.6s var(--ease); }
+  .prod-datos { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+  .prod-datos dt { font-size: 11px; font-weight: 700; color: var(--suave); }
+  .prod-datos dd { margin: 0; font-family: var(--fuente-titulo); font-weight: 800; color: var(--tinta); font-size: 14px; }
+
+  /* ---------- Ajustes ---------- */
+  .ajustes-grid { display: grid; gap: 12px; }
+  @media (min-width: 1100px) { .ajustes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; } }
+  .ajustes-tit { margin-bottom: 4px; }
+  .ajuste { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; border-top: 1px solid var(--linea); }
+  .ajustes-tit + .ajuste { border-top: 0; }
+  .ajuste-txt { min-width: 0; }
+  .ajuste-txt strong { display: block; font-size: 14px; color: var(--tinta); }
+  .ajuste-txt span { display: block; margin-top: 2px; font-size: 12px; color: var(--suave); }
+  .campo-num { position: relative; flex-shrink: 0; }
+  .campo-num input {
+    width: 136px; height: 44px; padding: 0 12px 0 26px; border-radius: 12px;
+    border: 1.5px solid var(--linea-2); background: var(--fondo);
+    font-size: 16px; font-weight: 700; text-align: right; color: var(--tinta);
+  }
+  .campo-num .pre { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--suave); pointer-events: none; }
+  .campo-num.pct input { width: 100px; padding: 0 28px 0 12px; }
+  .campo-num.pct .pre { left: auto; right: 12px; }
+  .switch {
+    position: relative; width: 48px; height: 28px; flex-shrink: 0; padding: 0;
+    border: 0; border-radius: 999px; background: var(--linea-2);
+    transition: background 0.2s var(--ease);
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
+    border-radius: 50%; background: #ffffff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s var(--rebote);
+  }
+  .switch[aria-checked="true"] { background: var(--acento); }
+  .switch[aria-checked="true"]::after { transform: translateX(20px); }
+  .instalar-listo { margin: 6px 0 0; padding: 12px; border-radius: 14px; background: var(--verde-suave); color: var(--verde); font-weight: 700; font-size: 14px; }
+  .instalar-bloque { margin-top: 10px; padding: 12px; border-radius: 14px; background: var(--fondo); }
+  .instalar-bloque strong { display: block; font-size: 13px; color: var(--tinta); }
+  .pasos { margin: 6px 0 0; padding-left: 20px; font-size: 13px; }
+  .pasos li { margin: 3px 0; }
+  .conexion { margin: 0; }
+  .conexion div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--linea); font-size: 13px; }
+  .conexion div:first-child { border-top: 0; }
+  .conexion dt { color: var(--suave); font-weight: 600; }
+  .conexion dd { margin: 0; color: var(--tinta); font-weight: 700; text-align: right; }
+
+  /* ---------- Detalle de un pedido ---------- */
+  .hoja-fondo { position: fixed; inset: 0; z-index: 60; background: var(--velo); opacity: 0; transition: opacity 0.25s var(--ease); }
+  .hoja-fondo.abierta { opacity: 1; }
+  .hoja {
+    position: fixed; z-index: 61; left: 0; right: 0; bottom: 0; max-height: 88vh; overflow-y: auto;
+    padding: 10px 18px calc(env(safe-area-inset-bottom) + 22px);
+    background: var(--tarjeta); border-radius: 26px 26px 0 0; box-shadow: var(--sombra-alta);
+    transform: translateY(100%); transition: transform 0.38s var(--ease);
+  }
+  .hoja.abierta { transform: none; }
+  .hoja-agarre { display: block; width: 38px; height: 5px; margin: 0 auto 12px; border-radius: 999px; background: var(--linea-2); }
+  @media (min-width: 760px) {
+    .hoja {
+      left: 50%; right: auto; bottom: auto; top: 50%; width: min(460px, 92vw);
+      padding: 20px 22px 22px; border-radius: 24px;
+      opacity: 0; transform: translate(-50%, -46%) scale(0.97);
+      transition: transform 0.3s var(--rebote), opacity 0.2s var(--ease);
+    }
+    .hoja.abierta { opacity: 1; transform: translate(-50%, -50%); }
+    .hoja-agarre { display: none; }
+  }
+  .hoja-cab { display: flex; align-items: center; gap: 12px; }
+  .hoja-cab-txt { flex: 1; min-width: 0; }
+  .hoja-cab h2 { font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hoja-monto { margin: 16px 0 12px; font-family: var(--fuente-titulo); font-size: 34px; font-weight: 800; color: var(--tinta); letter-spacing: -0.02em; }
+  .hoja-datos { margin: 0; }
+  .hoja-datos div { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--linea); font-size: 14px; }
+  .hoja-datos dt { color: var(--suave); font-weight: 600; flex-shrink: 0; }
+  .hoja-datos dd { margin: 0; color: var(--tinta); font-weight: 700; text-align: right; min-width: 0; overflow-wrap: anywhere; }
+  .hoja-ref { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+  .hoja-nota { margin: 12px 0 0; padding: 12px; border-radius: 14px; background: var(--fondo); font-size: 13px; }
+  .hoja-nota.alerta-nota { background: var(--ambar-suave); color: var(--ambar); font-weight: 600; }
+
+  /* ---------- Aviso flotante ---------- */
   .toast {
-    position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 18px); z-index: 50;
+    position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 86px); z-index: 70;
     width: min(92vw, 420px);
     display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 18px;
-    background: var(--tinta); color: var(--fondo);
-    box-shadow: 0 18px 40px -16px rgba(20, 10, 50, 0.55);
+    background: var(--tinta); color: var(--fondo); box-shadow: var(--sombra-alta);
     opacity: 0; transform: translate(-50%, 24px); pointer-events: none;
     transition: opacity 0.3s var(--ease), transform 0.45s var(--rebote);
   }
   .toast.visible { opacity: 1; transform: translate(-50%, 0); }
+  @media (min-width: 1000px) {
+    .toast { left: auto; right: 24px; bottom: 24px; transform: translateY(24px); }
+    .toast.visible { transform: none; }
+  }
   .toast-ic { width: 38px; height: 38px; flex-shrink: 0; border-radius: 12px; display: grid; place-items: center; background: var(--verde); color: var(--tarjeta); }
+  .toast.info .toast-ic { background: var(--acento); color: var(--sobre-acento); }
   .toast-ic svg { width: 20px; height: 20px; }
   .toast-txt { min-width: 0; }
   .toast-txt strong { display: block; font-family: var(--fuente-titulo); font-size: 15px; }
@@ -370,7 +611,6 @@
     <h1>Entrá a tu panel</h1>
     <p class="login-bajada">Pegá la clave que generaste en Apps Script. Queda guardada solo en este dispositivo.</p>
 
-    <!-- Para que el administrador de contraseñas del celular la pueda recordar -->
     <input class="sr-solo" type="text" name="usuario" value="panel-mayoristasya" autocomplete="username" tabindex="-1" aria-hidden="true">
 
     <div class="campo">
@@ -393,102 +633,363 @@
   </form>
 </div>
 
-<!-- ===================== PANEL ===================== -->
-<div id="vistaPanel" hidden>
-  <header class="barra">
+<!-- ===================== APP ===================== -->
+<div class="app" id="vistaApp" hidden>
+
+  <!-- Barra lateral (computadora) -->
+  <aside class="lateral" aria-label="Secciones">
     <div class="marca">
       <span class="marca-ic" aria-hidden="true">MY</span>
-      <span class="marca-txt"><strong>Ventas</strong><span>MayoristasYa</span></span>
+      <span class="marca-txt"><strong>MayoristasYa</strong><span>Panel de ventas</span></span>
     </div>
-    <span class="vivo" id="estadoVivo">
-      <span class="vivo-punto" aria-hidden="true"></span>
-      <span id="estadoTexto">Conectando…</span>
-    </span>
-    <button type="button" class="btn-icono" id="btnActualizar" aria-label="Actualizar ahora">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11A8 8 0 0 0 5.3 6.3L3 8.5"/><path d="M3 3.5v5h5"/><path d="M4 13a8 8 0 0 0 14.7 4.7L21 15.5"/><path d="M21 20.5v-5h-5"/></svg>
-    </button>
-    <button type="button" class="btn-icono" id="btnSalir" aria-label="Cerrar sesión">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg>
-    </button>
-  </header>
-
-  <p class="aviso-demo" id="avisoDemo" hidden>Datos de ejemplo: no son tus ventas reales</p>
-
-  <main class="contenido">
-    <div class="rangos" role="tablist" aria-label="Período">
-      <button type="button" class="rango" role="tab" data-rango="hoy" aria-selected="true">Hoy</button>
-      <button type="button" class="rango" role="tab" data-rango="7d" aria-selected="false" tabindex="-1">7 días</button>
-      <button type="button" class="rango" role="tab" data-rango="30d" aria-selected="false" tabindex="-1">30 días</button>
-      <button type="button" class="rango" role="tab" data-rango="todo" aria-selected="false" tabindex="-1">Todo</button>
+    <nav class="nav-lateral">
+      <button type="button" class="nav-lat" data-seccion="resumen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="4.5" rx="1.8"/><rect x="13.5" y="11" width="7" height="9.5" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/></svg>
+        Resumen
+      </button>
+      <button type="button" class="nav-lat" data-seccion="ventas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+        Ventas
+      </button>
+      <button type="button" class="nav-lat" data-seccion="productos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 9-4 9 4-9 4-9-4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+        Productos
+      </button>
+      <button type="button" class="nav-lat" data-seccion="ajustes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+        Ajustes
+      </button>
+    </nav>
+    <div class="lateral-pie">
+      <strong id="lateralModo">Conectado a tu planilla</strong>
+      <span>Se actualiza cada 15 segundos</span>
     </div>
+  </aside>
 
-    <section class="kpis" aria-label="Resumen del período">
-      <article class="kpi kpi-principal">
-        <span class="kpi-tit">Ingresos</span>
-        <strong class="kpi-valor num" id="kIngresos">—</strong>
-        <span class="kpi-sub" id="kIngresosSub"></span>
-      </article>
-      <article class="kpi">
-        <span class="kpi-tit">Ventas</span>
-        <strong class="kpi-valor num" id="kVentas">—</strong>
-        <span class="kpi-sub" id="kVentasSub"></span>
-      </article>
-      <article class="kpi">
-        <span class="kpi-tit">Ticket promedio</span>
-        <strong class="kpi-valor num" id="kTicket">—</strong>
-        <span class="kpi-sub" id="kTicketSub"></span>
-      </article>
-      <article class="kpi">
-        <span class="kpi-tit">Pagos completados</span>
-        <strong class="kpi-valor num" id="kConv">—</strong>
-        <span class="kpi-sub" id="kConvSub"></span>
-      </article>
-    </section>
-
-    <section class="alerta" id="alertaEnvios" hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg>
-      <div>
-        <strong id="alertaTitulo"></strong>
-        <span>Están pagadas pero el mail de entrega no salió. Revisá la planilla.</span>
+  <div class="principal">
+    <header class="barra">
+      <div class="barra-titulo">
+        <span class="marca-ic solo-movil" aria-hidden="true">MY</span>
+        <h1 id="tituloSeccion">Resumen</h1>
       </div>
-    </section>
+      <span class="vivo" id="estadoVivo">
+        <span class="vivo-punto" aria-hidden="true"></span>
+        <span id="estadoTexto">Conectando…</span><span class="vivo-hace" id="estadoHace"></span>
+      </span>
+      <button type="button" class="btn-icono" id="btnDiscreto" aria-pressed="false" aria-label="Ocultar montos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+      <button type="button" class="btn-icono" id="btnActualizar" aria-label="Actualizar ahora">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11A8 8 0 0 0 5.3 6.3L3 8.5"/><path d="M3 3.5v5h5"/><path d="M4 13a8 8 0 0 0 14.7 4.7L21 15.5"/><path d="M21 20.5v-5h-5"/></svg>
+      </button>
+    </header>
 
-    <div class="columnas">
-      <section class="tarjeta" aria-labelledby="tituloGrafico">
-        <div class="tarjeta-cab">
-          <h2 id="tituloGrafico">Ingresos</h2>
-          <small id="grSub"></small>
+    <div class="aviso-demo-caja" id="avisoDemo" hidden>
+      <p class="aviso-demo">Datos de ejemplo: no son tus ventas reales</p>
+    </div>
+
+    <!-- Período (se oculta en Ajustes) -->
+    <div class="periodo" id="barraPeriodo">
+      <div class="rangos" role="tablist" aria-label="Período">
+        <button type="button" class="rango" role="tab" data-rango="hoy">Hoy</button>
+        <button type="button" class="rango" role="tab" data-rango="7d">7 días</button>
+        <button type="button" class="rango" role="tab" data-rango="30d">30 días</button>
+        <button type="button" class="rango" role="tab" data-rango="mes">Mes</button>
+        <button type="button" class="rango" role="tab" data-rango="todo">Todo</button>
+        <button type="button" class="rango" role="tab" data-rango="personal">Fechas</button>
+      </div>
+      <div class="rango-personal" id="rangoPersonal" hidden>
+        <label>Desde <input type="date" id="fechaDesde"></label>
+        <label>Hasta <input type="date" id="fechaHasta"></label>
+      </div>
+    </div>
+
+    <main class="contenido">
+
+      <!-- ===================== RESUMEN ===================== -->
+      <section class="seccion" id="sec-resumen">
+        <div class="alerta" id="alertaEnvios" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg>
+          <div class="alerta-txt">
+            <strong id="alertaTitulo"></strong>
+            <span>Están pagadas pero el mail de entrega no salió.</span>
+          </div>
+          <button type="button" class="alerta-btn" id="alertaVer">Ver cuáles</button>
         </div>
-        <div class="gr-area" id="grArea"></div>
-        <div class="gr-ejes num" id="grEjes"></div>
-        <p class="gr-detalle num" id="grDetalle" aria-live="polite"></p>
+
+        <div class="kpis" aria-label="Indicadores del período">
+          <article class="kpi kpi-principal">
+            <span class="kpi-tit">Ingresos</span>
+            <strong class="kpi-valor num" id="kIng">—</strong>
+            <span class="kpi-sub" id="kIngSub"></span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-tit">Neto estimado</span>
+            <strong class="kpi-valor num" id="kNeto">—</strong>
+            <span class="kpi-sub" id="kNetoSub"></span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-tit">Ventas</span>
+            <strong class="kpi-valor num" id="kVentas">—</strong>
+            <span class="kpi-sub" id="kVentasSub"></span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-tit">Ticket promedio</span>
+            <strong class="kpi-valor num" id="kTicket">—</strong>
+            <span class="kpi-sub" id="kTicketSub"></span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-tit">Pagos completados</span>
+            <strong class="kpi-valor num" id="kConv">—</strong>
+            <span class="kpi-sub" id="kConvSub"></span>
+          </article>
+          <article class="kpi">
+            <span class="kpi-tit">Quedaron sin pagar</span>
+            <strong class="kpi-valor num" id="kPend">—</strong>
+            <span class="kpi-sub" id="kPendSub"></span>
+          </article>
+        </div>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <h2>Meta del mes</h2>
+            <small id="metaMes"></small>
+          </div>
+          <div id="metaContenido" hidden>
+            <div class="meta-cifras">
+              <strong class="num" id="metaActual"></strong>
+              <span class="num" id="metaDe"></span>
+            </div>
+            <div class="meta-barra" id="metaBarra" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+              <span class="meta-relleno" id="metaRelleno"></span>
+              <span class="meta-proy" id="metaProy"></span>
+            </div>
+            <p class="meta-leyenda">La rayita marca dónde cerrarías el mes a este ritmo.</p>
+            <ul class="meta-datos">
+              <li><span>Proyección al cierre</span><strong class="num" id="metaProyTxt"></strong></li>
+              <li><span>Te falta</span><strong class="num" id="metaFalta"></strong></li>
+              <li><span>Por día para llegar</span><strong class="num" id="metaPorDia"></strong></li>
+            </ul>
+            <p class="meta-estado" id="metaEstado"></p>
+          </div>
+          <div class="meta-vacia" id="metaVacia" hidden>
+            <p>Poné una meta de ingresos y te muestro cuánto te falta y si llegás a este ritmo.</p>
+            <button type="button" class="btn-sec" data-ir="ajustes">Definir meta</button>
+          </div>
+        </article>
+
+        <div class="grid-resumen">
+          <article class="tarjeta">
+            <div class="tarjeta-cab">
+              <h2>Evolución <small id="grUnidad"></small></h2>
+              <div class="segmentado" role="group" aria-label="Qué graficar">
+                <button type="button" data-metrica="m" aria-pressed="true">Ingresos</button>
+                <button type="button" data-metrica="n" aria-pressed="false">Ventas</button>
+              </div>
+            </div>
+            <div class="gr-herr">
+              <div class="leyenda" id="grLeyenda" hidden>
+                <span class="ley-act">Este período</span>
+                <span class="ley-ant">Período anterior</span>
+              </div>
+              <button type="button" class="chip-toggle" id="btnComparar" aria-pressed="true">Comparar</button>
+            </div>
+            <div class="gr-area" id="grArea"></div>
+            <div class="gr-ejes num" id="grEjes"></div>
+            <p class="gr-detalle num" id="grDetalle" aria-live="polite"></p>
+          </article>
+
+          <article class="tarjeta">
+            <div class="tarjeta-cab">
+              <h2>Lo que dicen tus números</h2>
+              <small>últimos 30 días</small>
+            </div>
+            <ul class="insights" id="listaInsights"></ul>
+          </article>
+        </div>
+
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <h2>Últimas ventas</h2>
+            <button type="button" class="link" data-ir="ventas">Ver todas</button>
+          </div>
+          <ul class="lista-ventas" id="ultimasVentas"></ul>
+        </article>
       </section>
 
-      <section class="tarjeta" aria-labelledby="tituloPacks">
-        <div class="tarjeta-cab">
-          <h2 id="tituloPacks">Por pack</h2>
-          <small>ingresos del período</small>
-        </div>
-        <ul class="packs" id="listaPacks"></ul>
+      <!-- ===================== VENTAS ===================== -->
+      <section class="seccion" id="sec-ventas" hidden>
+        <article class="tarjeta">
+          <div class="herramientas">
+            <div class="buscador">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <label class="sr-solo" for="buscar">Buscar pedidos</label>
+              <input type="search" id="buscar" placeholder="Buscar nombre o pack" autocomplete="off" enterkeyhint="search">
+            </div>
+            <div class="select-caja">
+              <label class="sr-solo" for="filtroPack">Filtrar por pack</label>
+              <select id="filtroPack"><option value="">Todos los packs</option></select>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+            <button type="button" class="btn-sec" id="btnExportar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+              Exportar Excel
+            </button>
+            <div class="chips" role="group" aria-label="Estado">
+              <button type="button" class="chip" data-filtro="todas" aria-pressed="true">Todas</button>
+              <button type="button" class="chip" data-filtro="pagadas" aria-pressed="false">Pagadas</button>
+              <button type="button" class="chip" data-filtro="sinenviar" aria-pressed="false">Sin enviar</button>
+              <button type="button" class="chip" data-filtro="sinpagar" aria-pressed="false">Sin pagar</button>
+            </div>
+          </div>
+          <p class="ventas-resumen num" id="ventasResumen"></p>
+          <ul class="lista-ventas" id="listaVentas"></ul>
+          <button type="button" class="btn-sec btn-mas" id="btnVerMas" hidden>Ver más</button>
+        </article>
       </section>
-    </div>
 
-    <section class="tarjeta tarjeta-feed" aria-labelledby="tituloFeed">
-      <div class="tarjeta-cab">
-        <h2 id="tituloFeed">Últimos movimientos</h2>
-        <div class="feed-filtro" role="group" aria-label="Qué mostrar">
-          <button type="button" data-feed="pagadas" aria-pressed="true">Pagadas</button>
-          <button type="button" data-feed="todas" aria-pressed="false">Todas</button>
+      <!-- ===================== PRODUCTOS ===================== -->
+      <section class="seccion" id="sec-productos" hidden>
+        <article class="tarjeta">
+          <div class="tarjeta-cab">
+            <h2>Rendimiento por pack</h2>
+            <small id="prodSub"></small>
+          </div>
+          <ul class="productos" id="listaProductos"></ul>
+        </article>
+      </section>
+
+      <!-- ===================== AJUSTES ===================== -->
+      <section class="seccion" id="sec-ajustes" hidden>
+        <div class="ajustes-grid">
+          <article class="tarjeta">
+            <h2 class="ajustes-tit">Objetivos y cuentas</h2>
+            <div class="ajuste">
+              <div class="ajuste-txt">
+                <strong><label for="ajMeta">Meta de ingresos del mes</label></strong>
+                <span>Para ver cuánto te falta y la proyección.</span>
+              </div>
+              <div class="campo-num">
+                <span class="pre" aria-hidden="true">$</span>
+                <input type="text" id="ajMeta" inputmode="numeric" placeholder="0" autocomplete="off">
+              </div>
+            </div>
+            <div class="ajuste">
+              <div class="ajuste-txt">
+                <strong><label for="ajComision">Comisión de Mercado Pago</label></strong>
+                <span>Mirá el % en el detalle de una venta en Mercado Pago.</span>
+              </div>
+              <div class="campo-num pct">
+                <input type="text" id="ajComision" inputmode="decimal" placeholder="0" autocomplete="off">
+                <span class="pre" aria-hidden="true">%</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <h2 class="ajustes-tit">Avisos de venta</h2>
+            <div class="ajuste">
+              <div class="ajuste-txt"><strong id="lblSonido">Sonido</strong><span>Suena cuando entra una venta.</span></div>
+              <button type="button" class="switch" id="swSonido" role="switch" aria-checked="false" aria-labelledby="lblSonido"></button>
+            </div>
+            <div class="ajuste">
+              <div class="ajuste-txt"><strong id="lblVibrar">Vibrar</strong><span>Solo en Android: iPhone no lo permite.</span></div>
+              <button type="button" class="switch" id="swVibrar" role="switch" aria-checked="true" aria-labelledby="lblVibrar"></button>
+            </div>
+            <div class="ajuste">
+              <div class="ajuste-txt"><strong id="lblDiscreto">Modo discreto</strong><span>Oculta los montos si alguien mira tu pantalla.</span></div>
+              <button type="button" class="switch" id="swDiscreto" role="switch" aria-checked="false" aria-labelledby="lblDiscreto"></button>
+            </div>
+            <div class="ajuste">
+              <div class="ajuste-txt"><strong>Probar</strong><span>Simula el aviso de una venta nueva.</span></div>
+              <button type="button" class="btn-sec" id="btnProbar">Probar aviso</button>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <h2 class="ajustes-tit">Instalar en el celular</h2>
+            <p class="instalar-listo" id="instalarListo" hidden>Ya está instalado en este dispositivo.</p>
+            <div id="instalarPasos">
+              <button type="button" class="btn-sec" id="btnInstalar" hidden>Instalar ahora</button>
+              <div class="instalar-bloque" id="pasosIos">
+                <strong>iPhone</strong>
+                <ol class="pasos">
+                  <li>Abrí esta página en <b>Safari</b> (no desde WhatsApp ni Instagram).</li>
+                  <li>Tocá <b>Compartir</b>, el cuadrado con la flecha para arriba.</li>
+                  <li>Deslizá la lista hacia abajo y tocá <b>Agregar a pantalla de inicio</b>.</li>
+                </ol>
+              </div>
+              <div class="instalar-bloque" id="pasosAndroid">
+                <strong>Android</strong>
+                <ol class="pasos">
+                  <li>Abrí esta página en <b>Chrome</b>.</li>
+                  <li>Tocá los <b>tres puntos</b> de arriba a la derecha.</li>
+                  <li>Elegí <b>Instalar app</b> o <b>Agregar a la pantalla principal</b>.</li>
+                </ol>
+              </div>
+            </div>
+          </article>
+
+          <article class="tarjeta">
+            <h2 class="ajustes-tit">Conexión</h2>
+            <dl class="conexion">
+              <div><dt>Estado</dt><dd id="conEstado">—</dd></div>
+              <div><dt>Última actualización</dt><dd id="conActualizado">—</dd></div>
+              <div><dt>Pedidos cargados</dt><dd id="conPedidos" class="num">—</dd></div>
+              <div><dt>Frecuencia</dt><dd>Cada 15 segundos</dd></div>
+            </dl>
+            <button type="button" class="btn-sec btn-peligro" id="btnSalir">Cerrar sesión en este dispositivo</button>
+          </article>
         </div>
-      </div>
-      <ul class="feed" id="feed"></ul>
-    </section>
+      </section>
+    </main>
+  </div>
 
-    <p class="pie">Se actualiza sola cada 15 segundos mientras la tengas abierta.</p>
-  </main>
+  <!-- Pestañas (celular) -->
+  <nav class="nav-inferior" aria-label="Secciones">
+    <button type="button" class="nav-btn" data-seccion="resumen">
+      <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="4.5" rx="1.8"/><rect x="13.5" y="11" width="7" height="9.5" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/></svg></span>
+      Resumen
+    </button>
+    <button type="button" class="nav-btn" data-seccion="ventas">
+      <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
+      Ventas
+    </button>
+    <button type="button" class="nav-btn" data-seccion="productos">
+      <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 9-4 9 4-9 4-9-4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></span>
+      Productos
+    </button>
+    <button type="button" class="nav-btn" data-seccion="ajustes">
+      <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></span>
+      Ajustes
+    </button>
+  </nav>
 </div>
 
-<!-- Aviso cuando entra una venta -->
+<!-- ===================== DETALLE DE PEDIDO ===================== -->
+<div class="hoja-fondo" id="hojaFondo" hidden></div>
+<section class="hoja" id="hoja" role="dialog" aria-modal="true" aria-labelledby="hojaTitulo" hidden>
+  <span class="hoja-agarre" aria-hidden="true"></span>
+  <div class="hoja-cab">
+    <span class="prod-ic" id="hojaIc" aria-hidden="true"></span>
+    <div class="hoja-cab-txt">
+      <h2 id="hojaTitulo"></h2>
+      <span class="estado" id="hojaEstado"></span>
+    </div>
+    <button type="button" class="btn-icono" id="hojaCerrar" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <p class="hoja-monto num" id="hojaMonto"></p>
+  <dl class="hoja-datos">
+    <div><dt>Comprador</dt><dd id="hojaComprador"></dd></div>
+    <div><dt>Fecha</dt><dd id="hojaFecha"></dd></div>
+    <div><dt>Referencia</dt><dd class="hoja-ref"><span class="num" id="hojaRef"></span><button type="button" class="link" id="hojaCopiar">Copiar</button></dd></div>
+  </dl>
+  <p class="hoja-nota" id="hojaNota"></p>
+</section>
+
+<!-- Aviso flotante -->
 <div class="toast" id="toast" role="status" aria-live="polite">
   <span class="toast-ic" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
@@ -500,68 +1001,111 @@
 (function () {
   "use strict";
 
-  /* ---------------- Configuración ----------------
+  /* ======================= Configuración =======================
      La misma dirección que usa el sitio para cobrar (ya es pública en
      js/pagos.js). La clave NO va acá: la pegás al entrar. */
   var API_URL =
     "https://script.google.com/macros/s/AKfycbxeehDKvTB-HmC0hhvy5TAlu3YnN2zxziQgphq91PZ-CLKN1PWxb-IV4xL7fjc68MMx/exec";
-  var CADA_MS = 15000;   /* cada cuánto pregunta si hay ventas nuevas */
-  var CORTE_MS = 12000;  /* si tarda más, se da por fallida */
+  var CADA_MS = 15000;
+  var CORTE_MS = 12000;
+  var POR_PAGINA = 30;
   var LLAVE_CLAVE = "mwPanelClave";
-  var LLAVE_RANGO = "mwPanelRango";
+  var LLAVE_PREFS = "mwPanelPrefs";
   var ZONA = "America/Argentina/Buenos_Aires";
   var DIA_MS = 86400000;
+  var SECCIONES = { resumen: "Resumen", ventas: "Ventas", productos: "Productos", ajustes: "Ajustes" };
+  var RANGOS = ["hoy", "7d", "30d", "mes", "todo", "personal"];
 
   function $(id) { return document.getElementById(id); }
+  function todos(sel) { return [].slice.call(document.querySelectorAll(sel)); }
 
-  /* Todas las fechas se agrupan en hora argentina, esté donde esté el dispositivo */
+  /* ======================= Fechas =======================
+     Las ventas se agrupan en hora argentina, esté donde esté el
+     dispositivo. Los días se manejan como texto "AAAA-MM-DD": se comparan
+     directo y sumar días no se confunde con los husos horarios. */
   var fDia = new Intl.DateTimeFormat("en-CA", { timeZone: ZONA, year: "numeric", month: "2-digit", day: "2-digit" });
   var fMes = new Intl.DateTimeFormat("en-CA", { timeZone: ZONA, year: "numeric", month: "2-digit" });
   var fHora = new Intl.DateTimeFormat("en-GB", { timeZone: ZONA, hour: "2-digit", hourCycle: "h23" });
-  var fCorto = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, day: "numeric", month: "numeric" });
   var fHoraMin = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
-  var fDiaLargo = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, weekday: "short", day: "numeric", month: "short" });
-  var fMesCorto = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", month: "short" });
-  var fMesLargo = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", month: "long", year: "numeric" });
+  var fCortoZona = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, day: "numeric", month: "numeric" });
+  var fCompleta = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  var fCortoUTC = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", day: "numeric", month: "numeric" });
+  var fLargoUTC = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", weekday: "short", day: "numeric", month: "short" });
+  var fMesCortoUTC = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", month: "short" });
+  var fMesLargoUTC = new Intl.DateTimeFormat("es-AR", { timeZone: "UTC", month: "long", year: "numeric" });
+  var NOMBRES_DIA = ["domingos", "lunes", "martes", "miércoles", "jueves", "viernes", "sábados"];
 
-  var st = {
-    sesion: 0,
-    clave: null,
-    demo: false,
-    logueado: false,
-    cargado: false,
-    pedidos: [],
-    rango: "hoy",
-    feed: "pagadas",
-    ultimaOk: 0,
-    error: false,
-    enCurso: false,
-    conocidas: null,
-    resaltar: {},
-    sinVer: 0,
-    timer: null,
-    firma: "",
-    barraActiva: -1,
-    demoLista: [],
-    demoTicks: 0
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function utcDeClave(k) { return Date.UTC(+k.slice(0, 4), +k.slice(5, 7) - 1, +k.slice(8, 10), 12); }
+  function claveDeUtc(ms) { var d = new Date(ms); return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()); }
+  function sumarDias(k, n) { return claveDeUtc(utcDeClave(k) + n * DIA_MS); }
+  function diasEnMes(y, m) { return new Date(Date.UTC(y, m, 0)).getUTCDate(); }
+  function claveValida(k) { return /^\d{4}-\d{2}-\d{2}$/.test(k || "") && claveDeUtc(utcDeClave(k)) === k; }
+  function hoyClave() { return fDia.format(Date.now()); }
+  function entreClaves(desde, hasta) {
+    var out = [], k = desde, guarda = 0;
+    while (k <= hasta && guarda < 5000) { out.push(k); k = sumarDias(k, 1); guarda++; }
+    return out;
+  }
+
+  /* ======================= Preferencias =======================
+     Se guardan en este dispositivo. Puede tirar error en modo privado:
+     el panel funciona igual, solo que no se acuerda. */
+  var PREFS_BASE = {
+    rango: "hoy", desde: "", hasta: "", seccion: "resumen",
+    meta: 0, comision: 0, sonido: false, vibrar: true, discreto: false,
+    metrica: "m", comparar: true
   };
-  var tituloBase = document.title;
 
-  /* ---------------- Guardado local ----------------
-     Puede tirar error en modo privado: el panel funciona igual, solo que
-     pide la clave cada vez. */
   function leer(llave) { try { return window.localStorage.getItem(llave); } catch (e) { return null; } }
   function guardar(llave, v) { try { window.localStorage.setItem(llave, v); } catch (e) { /* nada */ } }
   function borrar(llave) { try { window.localStorage.removeItem(llave); } catch (e) { /* nada */ } }
 
-  /* ---------------- Formatos ---------------- */
-  function plata(n) { return "$" + Math.round(n || 0).toLocaleString("es-AR"); }
+  function cargarPrefs() {
+    var p = {}, g = {};
+    Object.keys(PREFS_BASE).forEach(function (k) { p[k] = PREFS_BASE[k]; });
+    try { g = JSON.parse(leer(LLAVE_PREFS) || "{}") || {}; } catch (e) { g = {}; }
+    Object.keys(PREFS_BASE).forEach(function (k) {
+      if (typeof g[k] === typeof PREFS_BASE[k]) p[k] = g[k];
+    });
+    if (RANGOS.indexOf(p.rango) === -1) p.rango = "hoy";
+    if (!SECCIONES[p.seccion]) p.seccion = "resumen";
+    if (p.metrica !== "m" && p.metrica !== "n") p.metrica = "m";
+    if (!(p.meta >= 0)) p.meta = 0;
+    if (!(p.comision >= 0 && p.comision <= 30)) p.comision = 0;
+    return p;
+  }
 
+  var prefs = cargarPrefs();
+  function guardarPrefs() { guardar(LLAVE_PREFS, JSON.stringify(prefs)); }
+
+  /* ======================= Estado ======================= */
+  var st = {
+    sesion: 0, clave: null, demo: false, logueado: false, cargado: false,
+    pedidos: [], ultimaOk: 0, error: false, enCurso: false,
+    conocidas: null, resaltar: {}, sinVer: 0, timer: null, firma: "",
+    barraActiva: -1, demoLista: [], demoTicks: 0,
+    filtro: "todas", pack: "", busqueda: "", mostrar: POR_PAGINA,
+    hojaAbierta: false, focoPrevio: null
+  };
+  var tituloBase = document.title;
+
+  function metaEfectiva() { return prefs.meta > 0 ? prefs.meta : st.demo ? 600000 : 0; }
+  function comisionEfectiva() { return prefs.comision > 0 ? prefs.comision : st.demo ? 5 : 0; }
+
+  /* ======================= Formatos ======================= */
+  function plataReal(n) { return "$" + Math.round(n || 0).toLocaleString("es-AR"); }
+  function plata(n) { return prefs.discreto ? "$ •••" : plataReal(n); }
   function plataCorta(n) {
+    if (prefs.discreto) return "$ •••";
     if (n >= 1e6) return "$" + (n / 1e6).toLocaleString("es-AR", { maximumFractionDigits: 1 }) + " M";
     if (n >= 1e4) return "$" + Math.round(n / 1e3).toLocaleString("es-AR") + " mil";
-    return plata(n);
+    return plataReal(n);
   }
+  function numero(n) { return Math.round(n || 0).toLocaleString("es-AR"); }
+  function porcentaje(n) { return n.toLocaleString("es-AR", { maximumFractionDigits: 2 }) + "%"; }
+  function plural(n, uno, varios) { return numero(n) + " " + (n === 1 ? uno : varios); }
+  function sinAcentos(s) { return String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
 
   function hace(ms) {
     var s = Math.max(0, Math.round((Date.now() - ms) / 1000));
@@ -570,10 +1114,8 @@
     if (m < 60) return "hace " + m + " min";
     var h = Math.round(m / 60);
     if (h < 24) return "hace " + h + " h";
-    return fCorto.format(ms) + " · " + fHoraMin.format(ms);
+    return fCortoZona.format(ms) + " · " + fHoraMin.format(ms);
   }
-
-  function plural(n, uno, varios) { return n + " " + (n === 1 ? uno : varios); }
 
   function codigoPack(nombre) {
     var digitos = String(nombre).match(/\d+/);
@@ -584,10 +1126,38 @@
     return String(nombre).slice(0, 3).toUpperCase() || "?";
   }
 
-  /* ---------------- Datos ----------------
+  function estadoDe(p) {
+    if (p.pg && p.en) return { clase: "estado estado-ok", texto: "Entregado" };
+    if (p.pg) return { clase: "estado estado-envio", texto: "Pagado · sin enviar" };
+    return { clase: "estado estado-pend", texto: "Sin pagar" };
+  }
+
+  /* Íconos fijos (texto constante del panel, nunca datos de clientes) */
+  var ICONOS = {
+    estrella: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/>',
+    calendario: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    reloj: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    racha: '<path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/>'
+  };
+  function icono(nombre) {
+    var span = document.createElement("span");
+    span.className = "insight-ic";
+    span.setAttribute("aria-hidden", "true");
+    span.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICONOS[nombre] + "</svg>";
+    return span;
+  }
+
+  function el(tag, clase, texto) {
+    var e = document.createElement(tag);
+    if (clase) e.className = clase;
+    if (texto !== undefined) e.textContent = texto;
+    return e;
+  }
+
+  /* ======================= Datos =======================
      Todo lo que viene de la planilla (nombres de clientes incluidos) se
-     trata como texto y se pinta con textContent, nunca con innerHTML: un
-     cliente que ponga código en su nombre no puede ejecutar nada acá. */
+     pinta con textContent, nunca con innerHTML: si alguien pone código
+     en su nombre al comprar, acá se ve como texto y no se ejecuta. */
   function normalizar(o) {
     if (!o) return null;
     var t = Number(o.t);
@@ -595,17 +1165,13 @@
     var p = String(o.p || "Sin nombre").slice(0, 60);
     var n = String(o.n || "").slice(0, 40);
     var r = String(o.r || "").slice(0, 80);
+    var dia = fDia.format(t);
     return {
-      t: t,
-      p: p,
-      m: Math.max(0, Number(o.m) || 0),
-      pg: o.pg === true,
-      en: o.en === true,
-      n: n,
+      t: t, p: p, m: Math.max(0, Number(o.m) || 0), pg: o.pg === true, en: o.en === true, n: n, r: r,
       id: r || t + "|" + p + "|" + n,
-      dia: fDia.format(t),
-      mes: fMes.format(t),
-      hora: parseInt(fHora.format(t), 10) % 24
+      dia: dia, mes: fMes.format(t),
+      hora: parseInt(fHora.format(t), 10) % 24,
+      sem: new Date(utcDeClave(dia)).getUTCDay()
     };
   }
 
@@ -617,9 +1183,8 @@
     }
     pedidos.sort(function (a, b) { return b.t - a.t; });
 
-    /* Venta nueva = pagada que la vez anterior no estaba pagada. Cubre las
-       dos formas: fila nueva, o pedido pendiente que Mercado Pago aprobó.
-       La primera carga no avisa nada: son las que ya existían. */
+    /* Venta nueva = pagada que antes no lo estaba (fila nueva, o pedido
+       pendiente que Mercado Pago aprobó). La primera carga no avisa. */
     if (st.conocidas) {
       var nuevas = pedidos.filter(function (x) { return x.pg && !st.conocidas[x.id]; });
       if (nuevas.length) avisarNuevas(nuevas);
@@ -632,390 +1197,826 @@
     pintarTodo(false);
   }
 
-  /* ---------------- Períodos ---------------- */
-  function largoRango() { return st.rango === "hoy" ? 1 : st.rango === "7d" ? 7 : 30; }
-
-  function dias(cuantos, saltear) {
-    var ahora = Date.now(), claves = {};
-    for (var i = 0; i < cuantos; i++) claves[fDia.format(ahora - (i + saltear) * DIA_MS)] = true;
-    return claves;
+  /* ======================= Períodos ======================= */
+  function rangoPersonalValido() {
+    return claveValida(prefs.desde) && claveValida(prefs.hasta) && prefs.desde <= prefs.hasta;
   }
 
-  function periodoActual() { return st.rango === "todo" ? null : dias(largoRango(), 0); }
-  function periodoAnterior() { return st.rango === "todo" ? null : dias(largoRango(), largoRango()); }
+  /* anterior = el período de igual largo inmediatamente previo, para comparar */
+  function periodo(anterior) {
+    var r = prefs.rango, hoy = hoyClave(), dias;
+    if (r === "todo") return null;
+    if (r === "hoy") {
+      dias = [anterior ? sumarDias(hoy, -1) : hoy];
+    } else if (r === "7d" || r === "30d") {
+      var n = r === "7d" ? 7 : 30, fin = anterior ? sumarDias(hoy, -n) : hoy;
+      dias = entreClaves(sumarDias(fin, -(n - 1)), fin);
+    } else if (r === "mes") {
+      var y = +hoy.slice(0, 4), m = +hoy.slice(5, 7), d = +hoy.slice(8, 10);
+      if (!anterior) {
+        dias = entreClaves(hoy.slice(0, 8) + "01", hoy);
+      } else {
+        /* Mes pasado hasta el mismo día: 1 al 10 contra 1 al 10 */
+        var py = m === 1 ? y - 1 : y, pm = m === 1 ? 12 : m - 1, base = py + "-" + pad(pm) + "-";
+        dias = entreClaves(base + "01", base + pad(Math.min(d, diasEnMes(py, pm))));
+      }
+    } else {
+      if (!rangoPersonalValido()) return { dias: [], set: {}, invalido: true };
+      var elegidos = entreClaves(prefs.desde, prefs.hasta);
+      if (!anterior) {
+        dias = elegidos;
+      } else {
+        var finAnt = sumarDias(prefs.desde, -1);
+        dias = entreClaves(sumarDias(finAnt, -(elegidos.length - 1)), finAnt);
+      }
+    }
+    var set = {};
+    dias.forEach(function (k) { set[k] = true; });
+    return { dias: dias, set: set };
+  }
 
-  function calcular(claves) {
-    var r = { ingresos: 0, ventas: 0, pedidos: 0 };
+  function enPeriodo(p, per) { return !per || per.set[p.dia] === true; }
+
+  var COMPARA = { hoy: "vs. ayer", "7d": "vs. anterior", "30d": "vs. anterior", mes: "vs. mes pasado", personal: "vs. anterior" };
+
+  function textoPeriodo() {
+    switch (prefs.rango) {
+      case "hoy": return "hoy";
+      case "7d": return "últimos 7 días";
+      case "30d": return "últimos 30 días";
+      case "mes": return "este mes";
+      case "todo": return "todo el historial";
+      default:
+        return rangoPersonalValido()
+          ? fCortoUTC.format(utcDeClave(prefs.desde)) + " al " + fCortoUTC.format(utcDeClave(prefs.hasta))
+          : "fechas sin elegir";
+    }
+  }
+
+  function calcular(per) {
+    var r = { ingresos: 0, ventas: 0, pedidos: 0, pendN: 0, pendM: 0 };
     st.pedidos.forEach(function (p) {
-      if (claves && !claves[p.dia]) return;
+      if (!enPeriodo(p, per)) return;
       r.pedidos++;
-      if (p.pg) { r.ventas++; r.ingresos += p.m; }
+      if (p.pg) { r.ventas++; r.ingresos += p.m; } else { r.pendN++; r.pendM += p.m; }
     });
     r.ticket = r.ventas ? r.ingresos / r.ventas : 0;
-    r.conversion = r.pedidos ? r.ventas / r.pedidos : 0;
+    r.conv = r.pedidos ? r.ventas / r.pedidos : 0;
     return r;
   }
 
-  /* ---------------- Pintar ---------------- */
-  function firmaDatos() {
+  /* ======================= Pintar ======================= */
+  function firma() {
     var suma = 0, pg = 0, en = 0;
     st.pedidos.forEach(function (p) { suma += p.m; if (p.pg) pg++; if (p.en) en++; });
-    return [st.cargado, st.pedidos.length, suma, pg, en, st.pedidos[0] ? st.pedidos[0].t : 0,
-      st.rango, st.feed, fDia.format(Date.now())].join("|");
+    return [st.cargado, st.demo, st.pedidos.length, suma, pg, en, st.pedidos[0] ? st.pedidos[0].t : 0,
+      hoyClave(), JSON.stringify(prefs), st.filtro, st.pack, st.busqueda, st.mostrar].join("|");
   }
 
-  /* Solo se redibuja si algo cambió: así no se pierde lo que estabas tocando
-     cada 15 segundos. Si no cambió nada, solo se actualizan los "hace X". */
+  /* Solo redibuja si algo cambió: así no se pierde lo que estás tocando cada
+     15 segundos. Si no cambió nada, solo actualiza los "hace X". */
   function pintarTodo(forzar) {
-    var f = firmaDatos();
+    var f = firma();
     if (!forzar && f === st.firma) { refrescarTiempos(); return; }
     st.firma = f;
-    pintarKpis();
+    pintarPeriodo();
     pintarAlerta();
+    pintarKpis();
+    pintarMeta();
     pintarGrafico();
-    pintarPacks();
-    pintarFeed();
+    pintarInsights();
+    pintarUltimas();
+    pintarVentas();
+    pintarProductos();
+    pintarAjustes();
     pintarEstado();
   }
 
-  var COMPARA = { hoy: "vs. ayer", "7d": "vs. 7 días previos", "30d": "vs. 30 días previos" };
+  function marcarRangos() {
+    var r = document.querySelector(".rangos");
+    if (r) r.classList.toggle("hay-mas", r.scrollWidth - r.clientWidth - r.scrollLeft > 4);
+  }
 
-  function ponerDelta(el, actual, anterior) {
-    el.className = "kpi-sub";
-    if (st.rango === "todo") { el.textContent = "Histórico completo"; return; }
-    var comp = COMPARA[st.rango];
+  function pintarPeriodo() {
+    todos(".rango").forEach(function (b) {
+      var elegido = b.getAttribute("data-rango") === prefs.rango;
+      b.setAttribute("aria-selected", String(elegido));
+      b.tabIndex = elegido ? 0 : -1;
+    });
+    $("rangoPersonal").hidden = prefs.rango !== "personal";
+    if (document.activeElement !== $("fechaDesde")) $("fechaDesde").value = prefs.desde;
+    if (document.activeElement !== $("fechaHasta")) $("fechaHasta").value = prefs.hasta;
+    $("fechaDesde").max = hoyClave();
+    $("fechaHasta").max = hoyClave();
+
+    var discreto = prefs.discreto;
+    $("btnDiscreto").setAttribute("aria-pressed", String(discreto));
+    $("btnDiscreto").setAttribute("aria-label", discreto ? "Mostrar montos" : "Ocultar montos");
+    marcarRangos();
+  }
+
+  function ponerSub(id, texto, clase) {
+    var e = $(id);
+    e.className = "kpi-sub" + (clase ? " " + clase : "");
+    e.textContent = texto;
+  }
+
+  function ponerDelta(id, actual, anterior) {
+    if (prefs.rango === "todo") { ponerSub(id, "Histórico completo"); return; }
+    var comp = COMPARA[prefs.rango];
     if (!anterior) {
-      el.textContent = actual ? "▲ Nuevo " + comp : "Sin cambios " + comp;
-      if (actual) el.classList.add("sube");
+      if (actual) ponerSub(id, "▲ Nuevo " + comp, "sube"); else ponerSub(id, "Sin movimiento");
       return;
     }
     var pct = Math.round(((actual - anterior) / anterior) * 100);
-    if (pct === 0) { el.textContent = "= " + comp; return; }
-    el.textContent = (pct > 0 ? "▲ " : "▼ ") + Math.abs(pct) + "% " + comp;
-    el.classList.add(pct > 0 ? "sube" : "baja");
+    if (pct === 0) { ponerSub(id, "= " + comp); return; }
+    ponerSub(id, (pct > 0 ? "▲ " : "▼ ") + Math.abs(pct) + "% " + comp, pct > 0 ? "sube" : "baja");
   }
 
   function pintarKpis() {
-    var ids = ["kIngresos", "kVentas", "kTicket", "kConv"];
-    if (!st.cargado) {
-      ids.forEach(function (id) { $(id).textContent = "—"; $(id + "Sub").textContent = ""; });
+    var ids = ["kIng", "kNeto", "kVentas", "kTicket", "kConv", "kPend"];
+    var per = periodo(false);
+    if (!st.cargado || (per && per.invalido)) {
+      ids.forEach(function (id) { $(id).textContent = "—"; ponerSub(id + "Sub", st.cargado ? "Elegí las fechas" : ""); });
       return;
     }
-    var act = calcular(periodoActual());
-    var ant = calcular(periodoAnterior());
+    var a = calcular(per), b = calcular(periodo(true));
 
-    $("kIngresos").textContent = plata(act.ingresos);
-    ponerDelta($("kIngresosSub"), act.ingresos, ant.ingresos);
+    $("kIng").textContent = plata(a.ingresos);
+    ponerDelta("kIngSub", a.ingresos, b.ingresos);
 
-    $("kVentas").textContent = act.ventas.toLocaleString("es-AR");
-    ponerDelta($("kVentasSub"), act.ventas, ant.ventas);
+    var com = comisionEfectiva();
+    if (com > 0) {
+      $("kNeto").textContent = plata(a.ingresos * (1 - com / 100));
+      ponerSub("kNetoSub", "Comisión " + porcentaje(com) + (prefs.comision > 0 ? "" : " (ej.)"));
+    } else {
+      $("kNeto").textContent = "—";
+      ponerSub("kNetoSub", "Definila en Ajustes");
+    }
 
-    $("kTicket").textContent = act.ventas ? plata(act.ticket) : "—";
-    $("kTicketSub").className = "kpi-sub";
-    $("kTicketSub").textContent = "por venta";
+    $("kVentas").textContent = numero(a.ventas);
+    ponerDelta("kVentasSub", a.ventas, b.ventas);
 
-    $("kConv").textContent = act.pedidos ? Math.round(act.conversion * 100) + "%" : "—";
-    $("kConvSub").className = "kpi-sub";
-    $("kConvSub").textContent = act.ventas + " de " + plural(act.pedidos, "pedido", "pedidos");
+    $("kTicket").textContent = a.ventas ? plata(a.ticket) : "—";
+    if (a.ventas) ponerDelta("kTicketSub", a.ticket, b.ticket); else ponerSub("kTicketSub", "por venta");
+
+    $("kConv").textContent = a.pedidos ? Math.round(a.conv * 100) + "%" : "—";
+    ponerSub("kConvSub", numero(a.ventas) + " de " + plural(a.pedidos, "pedido", "pedidos"));
+
+    $("kPend").textContent = numero(a.pendN);
+    ponerSub("kPendSub", a.pendN ? plata(a.pendM) + " sin cobrar" : "Todos pagaron");
   }
 
   function pintarAlerta() {
-    var sinEnviar = st.pedidos.filter(function (p) { return p.pg && !p.en; }).length;
-    $("alertaEnvios").hidden = !sinEnviar;
-    $("alertaTitulo").textContent = sinEnviar === 1
-      ? "1 venta pagada sin enviar"
-      : sinEnviar + " ventas pagadas sin enviar";
+    var n = st.pedidos.filter(function (p) { return p.pg && !p.en; }).length;
+    $("alertaEnvios").hidden = !n;
+    $("alertaTitulo").textContent = n === 1 ? "1 venta pagada sin enviar" : numero(n) + " ventas pagadas sin enviar";
   }
 
+  function pintarMeta() {
+    var hoy = hoyClave(), y = +hoy.slice(0, 4), m = +hoy.slice(5, 7), d = +hoy.slice(8, 10);
+    var dim = diasEnMes(y, m), meta = metaEfectiva(), tiene = st.cargado && meta > 0;
+    $("metaMes").textContent = fMesLargoUTC.format(Date.UTC(y, m - 1, 15)) + (st.demo && !prefs.meta ? " · meta de ejemplo" : "");
+    $("metaContenido").hidden = !tiene;
+    $("metaVacia").hidden = tiene || !st.cargado;
+    if (!tiene) return;
+
+    var mesK = hoy.slice(0, 7), actual = 0;
+    st.pedidos.forEach(function (p) { if (p.pg && p.mes === mesK) actual += p.m; });
+    var pct = actual / meta, proy = (actual / d) * dim;
+    var falta = Math.max(0, meta - actual), restantes = dim - d + 1, porDia = falta / restantes;
+
+    $("metaActual").textContent = plata(actual);
+    $("metaDe").textContent = "de " + plata(meta) + " · " + Math.round(pct * 100) + "%";
+    $("metaRelleno").style.setProperty("--w", Math.min(100, pct * 100) + "%");
+    $("metaProy").style.setProperty("--x", Math.min(100, (proy / meta) * 100) + "%");
+    $("metaBarra").setAttribute("aria-valuenow", String(Math.min(100, Math.round(pct * 100))));
+    $("metaBarra").setAttribute("aria-label", "Meta del mes: " + Math.round(pct * 100) + "% alcanzado");
+    $("metaProyTxt").textContent = plata(proy);
+    $("metaFalta").textContent = falta ? plata(falta) : "Nada";
+    $("metaPorDia").textContent = falta ? plata(porDia) : "—";
+
+    var e = $("metaEstado");
+    e.className = "meta-estado";
+    if (actual >= meta) {
+      e.textContent = "Meta cumplida. Todo lo que entre hasta fin de mes es extra.";
+      e.classList.add("sube");
+    } else if (proy >= meta) {
+      e.textContent = "A este ritmo la superás: cerrarías el mes en " + Math.round((proy / meta) * 100) + "% de la meta.";
+      e.classList.add("sube");
+    } else {
+      e.textContent = "A este ritmo llegás al " + Math.round((proy / meta) * 100) + "%. Necesitás " + plata(porDia) +
+        " por día " + (restantes === 1 ? "hoy, que es el último día." : "durante los " + restantes + " días que quedan.");
+    }
+  }
+
+  /* ---------- Gráfico ---------- */
   function serieGrafico() {
-    var ahora = Date.now(), cols = [], mapa = {};
-    var pagados = st.pedidos.filter(function (p) { return p.pg; });
+    var per = periodo(false), ant = prefs.comparar ? periodo(true) : null;
+    var porCantidad = prefs.metrica === "n", cols = [], i;
+    var pagos = st.pedidos.filter(function (p) { return p.pg; });
 
-    if (st.rango === "hoy") {
-      var hoy = fDia.format(ahora);
-      for (var h = 0; h < 24; h++) {
-        cols.push({ etiqueta: h + " h", largo: "De " + h + " a " + (h + 1) + " h", m: 0, n: 0 });
-      }
-      pagados.forEach(function (p) { if (p.dia === hoy) { cols[p.hora].m += p.m; cols[p.hora].n++; } });
-      return { cols: cols, ejes: ["0 h", "12 h", "23 h"] };
+    function columna(etiqueta, largo) { return { etiqueta: etiqueta, largo: largo, v: 0, n: 0, a: 0, an: 0 }; }
+    function sumar(c, p, esAnterior) {
+      var v = porCantidad ? 1 : p.m;
+      if (esAnterior) { c.a += v; c.an++; } else { c.v += v; c.n++; }
+    }
+    function ejes(lista) {
+      var L = lista.length;
+      return L ? [lista[0].etiqueta, lista[Math.floor(L / 2)].etiqueta, lista[L - 1].etiqueta] : [];
     }
 
-    if (st.rango === "todo") {
-      var partes = fMes.format(ahora).split("-");
-      var anio = Number(partes[0]), mes = Number(partes[1]);
-      for (var i = 11; i >= 0; i--) {
-        var a = anio, m = mes - i;
-        while (m <= 0) { m += 12; a--; }
-        var clave = a + "-" + (m < 10 ? "0" : "") + m;
-        var ref = Date.UTC(a, m - 1, 15);
-        var col = { etiqueta: fMesCorto.format(ref).replace(".", ""), largo: fMesLargo.format(ref), m: 0, n: 0 };
-        mapa[clave] = col;
-        cols.push(col);
-      }
-      pagados.forEach(function (p) { var c = mapa[p.mes]; if (c) { c.m += p.m; c.n++; } });
-      return { cols: cols, ejes: [cols[0].etiqueta, cols[6].etiqueta, cols[11].etiqueta] };
+    /* Un solo día: por hora */
+    if (per && per.dias.length === 1) {
+      var dia = per.dias[0], diaAnt = ant ? ant.dias[0] : null;
+      for (i = 0; i < 24; i++) cols.push(columna(i + " h", "De " + i + " a " + (i + 1) + " h"));
+      pagos.forEach(function (p) {
+        if (p.dia === dia) sumar(cols[p.hora], p, false);
+        else if (diaAnt && p.dia === diaAnt) sumar(cols[p.hora], p, true);
+      });
+      return { cols: cols, ejes: ["0 h", "12 h", "23 h"], comparable: !!ant, unidad: "por hora" };
     }
 
-    var cuantos = largoRango();
-    for (var j = cuantos - 1; j >= 0; j--) {
-      var ms = ahora - j * DIA_MS, cl = fDia.format(ms);
-      var c2 = { etiqueta: fCorto.format(ms), largo: fDiaLargo.format(ms), m: 0, n: 0 };
-      mapa[cl] = c2;
-      cols.push(c2);
+    /* Hasta dos meses: por día */
+    if (per && per.dias.length <= 62) {
+      var mapa = {}, mapaAnt = {};
+      per.dias.forEach(function (k, idx) {
+        var c = columna(fCortoUTC.format(utcDeClave(k)), fLargoUTC.format(utcDeClave(k)));
+        cols.push(c);
+        mapa[k] = c;
+        if (ant && ant.dias[idx]) mapaAnt[ant.dias[idx]] = c;
+      });
+      pagos.forEach(function (p) {
+        if (mapa[p.dia]) sumar(mapa[p.dia], p, false);
+        else if (mapaAnt[p.dia]) sumar(mapaAnt[p.dia], p, true);
+      });
+      return { cols: cols, ejes: ejes(cols), comparable: !!ant, unidad: "por día" };
     }
-    pagados.forEach(function (p) { var c = mapa[p.dia]; if (c) { c.m += p.m; c.n++; } });
-    return { cols: cols, ejes: [cols[0].etiqueta, cols[Math.floor(cuantos / 2)].etiqueta, cols[cuantos - 1].etiqueta] };
+
+    /* Más largo o todo el historial: por mes */
+    var desdeMes, hastaMes;
+    if (per) {
+      desdeMes = per.dias[0].slice(0, 7);
+      hastaMes = per.dias[per.dias.length - 1].slice(0, 7);
+    } else {
+      hastaMes = hoyClave().slice(0, 7);
+      var primero = st.pedidos.length ? st.pedidos[st.pedidos.length - 1].mes : hastaMes;
+      var hy = +hastaMes.slice(0, 4), hm = +hastaMes.slice(5, 7) - 5;
+      while (hm <= 0) { hm += 12; hy--; }
+      var minimo = hy + "-" + pad(hm);
+      var cy = +hastaMes.slice(0, 4), cm = +hastaMes.slice(5, 7) - 35;
+      while (cm <= 0) { cm += 12; cy--; }
+      var tope = cy + "-" + pad(cm);
+      desdeMes = primero < minimo ? primero : minimo;
+      if (desdeMes < tope) desdeMes = tope;
+    }
+    var mapaM = {}, ky = +desdeMes.slice(0, 4), km = +desdeMes.slice(5, 7), guarda = 0;
+    while (guarda < 240) {
+      var claveMes = ky + "-" + pad(km), ref = Date.UTC(ky, km - 1, 15);
+      var cm2 = columna(fMesCortoUTC.format(ref).replace(".", ""), fMesLargoUTC.format(ref));
+      cols.push(cm2);
+      mapaM[claveMes] = cm2;
+      if (claveMes >= hastaMes) break;
+      km++;
+      if (km > 12) { km = 1; ky++; }
+      guarda++;
+    }
+    pagos.forEach(function (p) { if (mapaM[p.mes] && enPeriodo(p, per)) sumar(mapaM[p.mes], p, false); });
+    return { cols: cols, ejes: ejes(cols), comparable: false, unidad: "por mes" };
   }
 
-  function escribirDetalle(prefijo, monto, ventas) {
+  function valorGrafico(v) { return prefs.metrica === "n" ? plural(v, "venta", "ventas") : plata(v); }
+
+  function escribirDetalle(prefijo, c, comparar) {
     var d = $("grDetalle");
     d.textContent = "";
     d.appendChild(document.createTextNode(prefijo + ": "));
-    var b = document.createElement("b");
-    b.textContent = plata(monto);
-    d.appendChild(b);
-    d.appendChild(document.createTextNode(" · " + plural(ventas, "venta", "ventas")));
+    d.appendChild(el("b", "", valorGrafico(c.v)));
+    if (prefs.metrica === "m") d.appendChild(document.createTextNode(" · " + plural(c.n, "venta", "ventas")));
+    if (comparar) d.appendChild(document.createTextNode(" · antes " + valorGrafico(c.a)));
   }
 
   function pintarGrafico() {
-    $("grSub").textContent = { hoy: "por hora", "7d": "por día", "30d": "por día", todo: "por mes" }[st.rango];
-    var area = $("grArea"), ejes = $("grEjes");
+    var area = $("grArea"), ejes = $("grEjes"), det = $("grDetalle");
     area.textContent = "";
     ejes.textContent = "";
+    todos("[data-metrica]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-metrica") === prefs.metrica));
+    });
+    $("btnComparar").setAttribute("aria-pressed", String(prefs.comparar));
 
-    if (!st.cargado) { $("grDetalle").textContent = "Cargando…"; return; }
+    var per = periodo(false);
+    if (!st.cargado || (per && per.invalido)) {
+      $("grLeyenda").hidden = true;
+      $("grUnidad").textContent = "";
+      det.textContent = st.cargado ? "Elegí un rango de fechas válido." : "Cargando…";
+      return;
+    }
 
-    var s = serieGrafico(), max = 0, totalM = 0, totalN = 0;
-    s.cols.forEach(function (c) { if (c.m > max) max = c.m; totalM += c.m; totalN += c.n; });
+    var s = serieGrafico(), comparar = prefs.comparar && s.comparable;
+    var max = 0, tot = { v: 0, n: 0, a: 0 };
+    s.cols.forEach(function (c) {
+      max = Math.max(max, c.v, comparar ? c.a : 0);
+      tot.v += c.v; tot.n += c.n; tot.a += c.a;
+    });
 
-    var guia = document.createElement("span");
-    guia.className = "gr-guia";
-    area.appendChild(guia);
+    $("grUnidad").textContent = "· " + s.unidad;
+    $("grLeyenda").hidden = !comparar;
+    $("btnComparar").hidden = !s.comparable;
+    area.classList.toggle("comparando", comparar);
 
-    var tope = document.createElement("span");
-    tope.className = "gr-tope num";
-    tope.textContent = max ? plataCorta(max) : "";
-    area.appendChild(tope);
+    area.appendChild(el("span", "gr-guia"));
+    area.appendChild(el("span", "gr-tope num", max ? (prefs.metrica === "n" ? plural(max, "venta", "ventas") : plataCorta(max)) : ""));
 
     var barras = [];
     s.cols.forEach(function (c, i) {
-      var b = document.createElement("button");
+      var b = el("button", "gr-barra" + (c.v ? " tiene" : ""));
       b.type = "button";
-      b.className = "gr-barra" + (c.m ? " tiene" : "");
-      b.setAttribute("aria-label", c.largo + ": " + plata(c.m) + ", " + plural(c.n, "venta", "ventas"));
-      var relleno = document.createElement("span");
-      relleno.className = "gr-relleno";
-      relleno.style.setProperty("--h", (max ? (c.m / max) * 100 : 0) + "%");
+      b.setAttribute("aria-label", c.largo + ": " + valorGrafico(c.v) + (comparar ? ", antes " + valorGrafico(c.a) : ""));
+      var fantasma = el("span", "gr-fantasma");
+      fantasma.style.setProperty("--ha", (max ? (c.a / max) * 100 : 0) + "%");
+      var relleno = el("span", "gr-relleno");
+      relleno.style.setProperty("--h", (max ? (c.v / max) * 100 : 0) + "%");
+      b.appendChild(fantasma);
       b.appendChild(relleno);
 
       function elegir() {
         st.barraActiva = i;
         barras.forEach(function (x, k) { x.classList.toggle("activa", k === i); });
-        escribirDetalle(c.largo, c.m, c.n);
+        escribirDetalle(c.largo, c, comparar);
       }
       b.addEventListener("click", elegir);
       b.addEventListener("mouseenter", elegir);
       b.addEventListener("focus", elegir);
-
       barras.push(b);
       area.appendChild(b);
     });
 
-    s.ejes.forEach(function (txt) {
-      var e = document.createElement("span");
-      e.textContent = txt;
-      ejes.appendChild(e);
-    });
+    s.ejes.forEach(function (t) { ejes.appendChild(el("span", "", t)); });
 
     if (st.barraActiva >= 0 && st.barraActiva < barras.length) {
       barras[st.barraActiva].classList.add("activa");
-      var ca = s.cols[st.barraActiva];
-      escribirDetalle(ca.largo, ca.m, ca.n);
-    } else if (totalN) {
-      escribirDetalle("Total del período", totalM, totalN);
+      escribirDetalle(s.cols[st.barraActiva].largo, s.cols[st.barraActiva], comparar);
+    } else if (tot.n) {
+      escribirDetalle("Total del período", tot, comparar);
     } else {
-      $("grDetalle").textContent = "Todavía no hay ventas en este período.";
+      det.textContent = "Todavía no hay ventas en este período.";
     }
   }
 
-  function pintarPacks() {
-    var ul = $("listaPacks");
+  /* ---------- Lo que dicen tus números ---------- */
+  function agregarInsight(ul, ic, titulo, valor, sub) {
+    var li = el("li", "insight");
+    li.appendChild(icono(ic));
+    var txt = el("span", "insight-txt");
+    txt.appendChild(el("span", "insight-tit", titulo));
+    txt.appendChild(el("span", "insight-valor", valor));
+    txt.appendChild(el("span", "insight-sub", sub));
+    li.appendChild(txt);
+    ul.appendChild(li);
+  }
+
+  function pintarInsights() {
+    var ul = $("listaInsights");
     ul.textContent = "";
     if (!st.cargado) return;
 
-    var claves = periodoActual(), mapa = {}, lista = [], total = 0;
-    st.pedidos.forEach(function (p) {
-      if (!p.pg || (claves && !claves[p.dia])) return;
-      if (!mapa[p.p]) { mapa[p.p] = { nombre: p.p, n: 0, m: 0 }; lista.push(mapa[p.p]); }
-      mapa[p.p].n++;
-      mapa[p.p].m += p.m;
+    var hoy = hoyClave(), desde = sumarDias(hoy, -29);
+    var pagos = st.pedidos.filter(function (p) { return p.pg && p.dia >= desde && p.dia <= hoy; });
+    if (pagos.length < 3) {
+      ul.appendChild(el("li", "vacio", "Con 3 ventas o más en los últimos 30 días te muestro tu mejor día, la hora pico y el pack que más vende."));
+      return;
+    }
+
+    var porPack = {}, porSem = [0, 0, 0, 0, 0, 0, 0], porHora = [], diasCon = {}, total = 0, h;
+    for (h = 0; h < 24; h++) porHora.push(0);
+    pagos.forEach(function (p) {
+      porPack[p.p] = (porPack[p.p] || 0) + p.m;
+      porSem[p.sem] += p.m;
+      porHora[p.hora]++;
+      diasCon[p.dia] = true;
       total += p.m;
     });
 
-    if (!lista.length) {
-      var vacio = document.createElement("li");
-      vacio.className = "vacio";
-      vacio.textContent = "Sin ventas en este período.";
-      ul.appendChild(vacio);
+    var estrella = Object.keys(porPack).sort(function (a, b) { return porPack[b] - porPack[a]; })[0];
+    var mejorSem = porSem.indexOf(Math.max.apply(null, porSem));
+    var pico = porHora.indexOf(Math.max.apply(null, porHora));
+    var conVentas = Object.keys(diasCon).length;
+
+    agregarInsight(ul, "estrella", "Pack estrella", estrella,
+      Math.round((porPack[estrella] / (total || 1)) * 100) + "% de lo que facturaste");
+    agregarInsight(ul, "calendario", "Tu mejor día", "Los " + NOMBRES_DIA[mejorSem],
+      plata(porSem[mejorSem]) + " facturados esos días");
+    agregarInsight(ul, "reloj", "Hora pico", "De " + pico + " a " + (pico + 1) + " h",
+      "Publicá en redes un rato antes");
+    agregarInsight(ul, "racha", "Días con ventas", conVentas + " de 30",
+      conVentas >= 20 ? "Vendés casi todos los días" : "Hay días sin ventas: ahí hay margen");
+  }
+
+  /* ---------- Filas de ventas ---------- */
+  function crearFilaVenta(p) {
+    var li = document.createElement("li");
+    var b = el("button", "venta" + (p.pg ? "" : " venta-pend"));
+    b.type = "button";
+    if (st.resaltar[p.id] && Date.now() - st.resaltar[p.id] < 6000) b.classList.add("es-nueva");
+
+    var ic = el("span", "venta-ic", codigoPack(p.p));
+    ic.setAttribute("aria-hidden", "true");
+
+    var cuerpo = el("span", "venta-cuerpo");
+    cuerpo.appendChild(el("span", "venta-tit", p.p + (p.n ? " · " + p.n : "")));
+    var meta = el("span", "venta-meta");
+    var cuando = el("time", "js-hace", hace(p.t));
+    cuando.setAttribute("data-t", String(p.t));
+    cuando.setAttribute("datetime", new Date(p.t).toISOString());
+    var est = estadoDe(p);
+    meta.appendChild(cuando);
+    meta.appendChild(el("span", est.clase, est.texto));
+    cuerpo.appendChild(meta);
+
+    b.appendChild(ic);
+    b.appendChild(cuerpo);
+    b.appendChild(el("span", "venta-plata num", plata(p.m)));
+    b.addEventListener("click", function () { abrirDetalle(p, b); });
+    li.appendChild(b);
+    return li;
+  }
+
+  function pintarUltimas() {
+    var ul = $("ultimasVentas");
+    ul.textContent = "";
+    if (!st.cargado) return;
+    var lista = st.pedidos.filter(function (p) { return p.pg; }).slice(0, 5);
+    if (!lista.length) { ul.appendChild(el("li", "vacio", "Todavía no hay ventas pagadas.")); return; }
+    lista.forEach(function (p) { ul.appendChild(crearFilaVenta(p)); });
+  }
+
+  /* ---------- Sección Ventas ---------- */
+  function ventasFiltradas() {
+    var per = periodo(false), q = sinAcentos(st.busqueda.trim());
+    if (per && per.invalido) return [];
+    return st.pedidos.filter(function (p) {
+      if (!enPeriodo(p, per)) return false;
+      if (st.filtro === "pagadas" && !p.pg) return false;
+      if (st.filtro === "sinenviar" && !(p.pg && !p.en)) return false;
+      if (st.filtro === "sinpagar" && p.pg) return false;
+      if (st.pack && p.p !== st.pack) return false;
+      if (q && sinAcentos(p.p + " " + p.n + " " + p.r).indexOf(q) === -1) return false;
+      return true;
+    });
+  }
+
+  function pintarVentas() {
+    todos("[data-filtro]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-filtro") === st.filtro));
+    });
+    if (document.activeElement !== $("buscar")) $("buscar").value = st.busqueda;
+
+    /* Opciones del filtro de pack: todos los que aparecen en la planilla */
+    var select = $("filtroPack"), nombres = {};
+    st.pedidos.forEach(function (p) { nombres[p.p] = true; });
+    var lista = Object.keys(nombres).sort();
+    if (st.pack && !nombres[st.pack]) st.pack = "";
+    select.textContent = "";
+    select.appendChild(el("option", "", "Todos los packs"));
+    select.options[0].value = "";
+    lista.forEach(function (n) {
+      var o = el("option", "", n);
+      o.value = n;
+      select.appendChild(o);
+    });
+    select.value = st.pack;
+
+    var ul = $("listaVentas");
+    ul.textContent = "";
+    if (!st.cargado) { $("ventasResumen").textContent = "Cargando…"; return; }
+
+    var per = periodo(false);
+    var filtradas = ventasFiltradas(), cobrado = 0;
+    filtradas.forEach(function (p) { if (p.pg) cobrado += p.m; });
+
+    if (per && per.invalido) {
+      $("ventasResumen").textContent = "Elegí un rango de fechas válido.";
+    } else {
+      $("ventasResumen").textContent = plural(filtradas.length, "pedido", "pedidos") + " · " + plata(cobrado) + " cobrados · " + textoPeriodo();
+    }
+    $("btnExportar").disabled = !filtradas.length;
+
+    if (!filtradas.length) {
+      ul.appendChild(el("li", "vacio", st.pedidos.length ? "No hay pedidos con estos filtros." : "Todavía no hay pedidos."));
+      $("btnVerMas").hidden = true;
       return;
     }
 
-    lista.sort(function (a, b) { return b.m - a.m; });
+    filtradas.slice(0, st.mostrar).forEach(function (p) { ul.appendChild(crearFilaVenta(p)); });
+    var resto = filtradas.length - st.mostrar;
+    $("btnVerMas").hidden = resto <= 0;
+    $("btnVerMas").textContent = "Ver " + numero(Math.min(resto, POR_PAGINA)) + " más";
+  }
+
+  /* Excel abre bien el CSV con punto y coma y la marca UTF-8 al principio.
+     Los nombres los escriben los clientes: si uno empieza con = + - @ se le
+     antepone un apóstrofo, así Excel no lo toma como fórmula. */
+  function celdaCSV(v) {
+    var s = String(v === null || v === undefined ? "" : v);
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    if (/[";\r\n]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function exportarCSV() {
+    var filas = ventasFiltradas();
+    if (!filas.length) return;
+    var lineas = [["Fecha", "Hora", "Pack", "Comprador", "Monto", "Estado", "Referencia"]];
+    filas.forEach(function (p) {
+      lineas.push([p.dia, fHoraMin.format(p.t), p.p, p.n, Math.round(p.m), estadoDe(p).texto, p.r]);
+    });
+    var csv = "\uFEFF" + lineas.map(function (f) { return f.map(celdaCSV).join(";"); }).join("\r\n");
+    var archivo = "ventas-mayoristasya-" + hoyClave() + ".csv";
+    var url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    var a = el("a");
+    a.href = url;
+    a.download = archivo;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1500);
+    mostrarToast("Descargando " + plural(filas.length, "pedido", "pedidos"), archivo, "info");
+  }
+
+  /* ---------- Productos ---------- */
+  function pintarProductos() {
+    var ul = $("listaProductos");
+    ul.textContent = "";
+    $("prodSub").textContent = textoPeriodo();
+    if (!st.cargado) return;
+
+    var per = periodo(false), ant = periodo(true);
+    if (per && per.invalido) { ul.appendChild(el("li", "vacio", "Elegí un rango de fechas válido.")); return; }
+
+    var mapa = {}, lista = [], total = 0;
+    function item(nombre) {
+      if (!mapa[nombre]) { mapa[nombre] = { nombre: nombre, m: 0, n: 0, pedidos: 0, mAnt: 0 }; lista.push(mapa[nombre]); }
+      return mapa[nombre];
+    }
+    st.pedidos.forEach(function (p) {
+      if (enPeriodo(p, per)) {
+        var it = item(p.p);
+        it.pedidos++;
+        if (p.pg) { it.m += p.m; it.n++; total += p.m; }
+      } else if (ant && ant.set[p.dia] && p.pg) {
+        item(p.p).mAnt += p.m;
+      }
+    });
+    lista = lista.filter(function (it) { return it.pedidos > 0; });
+    lista.sort(function (a, b) { return b.m - a.m || b.pedidos - a.pedidos; });
+
+    if (!lista.length) { ul.appendChild(el("li", "vacio", "No hay pedidos en este período.")); return; }
+
     var max = lista[0].m || 1;
-
     lista.forEach(function (it) {
-      var li = document.createElement("li");
-      li.className = "pk";
+      var li = el("li", "prod");
+      var cab = el("div", "prod-cab");
+      var ic = el("span", "prod-ic", codigoPack(it.nombre));
+      ic.setAttribute("aria-hidden", "true");
+      var nombres = el("div");
+      nombres.style.minWidth = "0";
+      nombres.appendChild(el("span", "prod-nombre", it.nombre));
+      nombres.appendChild(el("span", "prod-share", Math.round((it.m / (total || 1)) * 100) + "% de los ingresos"));
+      cab.appendChild(ic);
+      cab.appendChild(nombres);
+      cab.appendChild(el("strong", "prod-plata num", plata(it.m)));
 
-      var nombre = document.createElement("span");
-      nombre.className = "pk-nombre";
-      nombre.textContent = it.nombre;
-
-      var monto = document.createElement("span");
-      monto.className = "pk-plata num";
-      monto.textContent = plata(it.m);
-
-      var barra = document.createElement("span");
-      barra.className = "pk-barra";
-      var relleno = document.createElement("span");
+      var barra = el("div", "prod-barra");
+      var relleno = el("span");
       relleno.style.setProperty("--w", Math.max(2, (it.m / max) * 100) + "%");
       barra.appendChild(relleno);
 
-      var cant = document.createElement("span");
-      cant.className = "pk-cant";
-      cant.textContent = plural(it.n, "venta", "ventas") + " · " + Math.round((it.m / (total || 1)) * 100) + "% de los ingresos";
+      var datos = el("dl", "prod-datos");
+      function dato(t, v, clase) {
+        var d = el("div");
+        d.appendChild(el("dt", "", t));
+        d.appendChild(el("dd", "num" + (clase ? " " + clase : ""), v));
+        datos.appendChild(d);
+      }
+      dato("Ventas", numero(it.n));
+      dato("Ticket promedio", it.n ? plata(it.m / it.n) : "—");
+      dato("Pagos completados", Math.round((it.n / it.pedidos) * 100) + "%");
+      if (prefs.rango === "todo") {
+        dato("Pedidos totales", numero(it.pedidos));
+      } else if (!it.mAnt) {
+        dato(COMPARA[prefs.rango], it.m ? "Nuevo" : "—", it.m ? "sube" : "");
+      } else {
+        var pct = Math.round(((it.m - it.mAnt) / it.mAnt) * 100);
+        dato(COMPARA[prefs.rango], (pct > 0 ? "▲ " : pct < 0 ? "▼ " : "= ") + Math.abs(pct) + "%", pct > 0 ? "sube" : pct < 0 ? "baja" : "");
+      }
 
-      li.appendChild(nombre);
-      li.appendChild(monto);
+      li.appendChild(cab);
       li.appendChild(barra);
-      li.appendChild(cant);
+      li.appendChild(datos);
       ul.appendChild(li);
     });
   }
 
-  function pintarFeed() {
-    var ul = $("feed");
-    ul.textContent = "";
-    if (!st.cargado) return;
+  /* ---------- Ajustes ---------- */
+  function pintarAjustes() {
+    if (document.activeElement !== $("ajMeta")) $("ajMeta").value = prefs.meta ? numero(prefs.meta) : "";
+    if (document.activeElement !== $("ajComision")) $("ajComision").value = prefs.comision ? String(prefs.comision).replace(".", ",") : "";
+    $("swSonido").setAttribute("aria-checked", String(prefs.sonido));
+    $("swVibrar").setAttribute("aria-checked", String(prefs.vibrar));
+    $("swDiscreto").setAttribute("aria-checked", String(prefs.discreto));
 
-    var lista = st.pedidos.filter(function (p) { return st.feed === "todas" || p.pg; }).slice(0, 25);
-
-    if (!lista.length) {
-      var vacio = document.createElement("li");
-      vacio.className = "vacio";
-      vacio.textContent = st.feed === "todas" ? "Todavía no hay pedidos." : "Todavía no hay ventas pagadas.";
-      ul.appendChild(vacio);
-      return;
-    }
-
-    var ahora = Date.now();
-    lista.forEach(function (p) {
-      var li = document.createElement("li");
-      li.className = "mov" + (p.pg ? "" : " mov-pend");
-      if (st.resaltar[p.id] && ahora - st.resaltar[p.id] < 6000) li.classList.add("es-nueva");
-
-      var ic = document.createElement("span");
-      ic.className = "mov-ic";
-      ic.setAttribute("aria-hidden", "true");
-      ic.textContent = codigoPack(p.p);
-
-      var cuerpo = document.createElement("span");
-      cuerpo.className = "mov-cuerpo";
-
-      var tit = document.createElement("span");
-      tit.className = "mov-tit";
-      tit.textContent = p.p + (p.n ? " · " + p.n : "");
-
-      var meta = document.createElement("span");
-      meta.className = "mov-meta";
-
-      var cuando = document.createElement("time");
-      cuando.className = "js-hace";
-      cuando.setAttribute("data-t", String(p.t));
-      cuando.setAttribute("datetime", new Date(p.t).toISOString());
-      cuando.textContent = hace(p.t);
-
-      var estado = document.createElement("span");
-      if (p.pg && p.en) { estado.className = "estado estado-ok"; estado.textContent = "Entregado"; }
-      else if (p.pg) { estado.className = "estado estado-envio"; estado.textContent = "Pagado · sin enviar"; }
-      else { estado.className = "estado estado-pend"; estado.textContent = "Sin pagar"; }
-
-      meta.appendChild(cuando);
-      meta.appendChild(estado);
-      cuerpo.appendChild(tit);
-      cuerpo.appendChild(meta);
-
-      var monto = document.createElement("span");
-      monto.className = "mov-plata num";
-      monto.textContent = plata(p.m);
-
-      li.appendChild(ic);
-      li.appendChild(cuerpo);
-      li.appendChild(monto);
-      ul.appendChild(li);
-    });
+    $("conPedidos").textContent = st.cargado ? numero(st.pedidos.length) : "—";
+    $("conActualizado").textContent = st.ultimaOk ? fHoraMin.format(st.ultimaOk) + " (" + hace(st.ultimaOk) + ")" : "—";
+    $("conEstado").textContent = st.demo ? "Demo con datos de ejemplo" : st.error ? "Sin conexión, reintentando" : st.ultimaOk ? "Conectado" : "Conectando…";
+    $("lateralModo").textContent = st.demo ? "Demo con datos de ejemplo" : "Conectado a tu planilla";
+    pintarInstalar();
   }
 
+  var eventoInstalar = null;
+
+  function pintarInstalar() {
+    var instalada = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+    var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    $("instalarListo").hidden = !instalada;
+    $("instalarPasos").hidden = instalada;
+    $("btnInstalar").hidden = !eventoInstalar;
+    /* Primero los pasos del celular que está usando */
+    var pasos = $("instalarPasos");
+    if (ios && pasos.firstElementChild !== $("pasosIos")) pasos.insertBefore($("pasosIos"), $("pasosAndroid"));
+    if (!ios) pasos.insertBefore($("pasosAndroid"), $("pasosIos"));
+  }
+
+  /* ---------- Estado de conexión ---------- */
   function pintarEstado() {
-    var el = $("estadoVivo"), txt = $("estadoTexto");
-    el.className = "vivo";
-    if (st.demo) { el.classList.add("en-linea"); txt.textContent = "Demo en vivo"; return; }
-    if (document.visibilityState !== "visible") { txt.textContent = "En pausa"; return; }
-    if (st.error) {
-      el.classList.add("con-error");
-      txt.textContent = st.ultimaOk ? "Sin conexión" : "Reintentando…";
-      return;
-    }
-    if (!st.ultimaOk) { txt.textContent = "Conectando…"; return; }
-    el.classList.add("en-linea");
-    txt.textContent = "En vivo · " + hace(st.ultimaOk);
+    var e = $("estadoVivo"), txt = $("estadoTexto"), extra = $("estadoHace");
+    e.className = "vivo";
+    extra.textContent = "";
+    if (st.demo) { e.classList.add("en-linea"); txt.textContent = "Demo"; }
+    else if (document.visibilityState !== "visible") { txt.textContent = "En pausa"; }
+    else if (st.error) { e.classList.add("con-error"); txt.textContent = st.ultimaOk ? "Sin conexión" : "Reintentando…"; }
+    else if (!st.ultimaOk) { txt.textContent = "Conectando…"; }
+    else { e.classList.add("en-linea"); txt.textContent = "En vivo"; extra.textContent = " · " + hace(st.ultimaOk); }
   }
 
   function refrescarTiempos() {
-    var marcas = document.querySelectorAll(".js-hace");
-    for (var i = 0; i < marcas.length; i++) {
-      marcas[i].textContent = hace(Number(marcas[i].getAttribute("data-t")));
-    }
+    todos(".js-hace").forEach(function (m) { m.textContent = hace(Number(m.getAttribute("data-t"))); });
     pintarEstado();
+    if (st.ultimaOk) $("conActualizado").textContent = fHoraMin.format(st.ultimaOk) + " (" + hace(st.ultimaOk) + ")";
   }
 
-  /* ---------------- Aviso de venta nueva ---------------- */
+  /* ======================= Detalle de un pedido ======================= */
+  var pedidoEnHoja = null;
+
+  function abrirDetalle(p, origen) {
+    pedidoEnHoja = p;
+    st.focoPrevio = origen || document.activeElement;
+    var est = estadoDe(p);
+    $("hojaIc").textContent = codigoPack(p.p);
+    $("hojaTitulo").textContent = p.p;
+    $("hojaEstado").className = est.clase;
+    $("hojaEstado").textContent = est.texto;
+    $("hojaMonto").textContent = plata(p.m);
+    $("hojaComprador").textContent = p.n || "Sin nombre";
+    $("hojaFecha").textContent = fCompleta.format(p.t);
+    $("hojaRef").textContent = p.r || "Sin referencia";
+    $("hojaCopiar").hidden = !p.r;
+
+    var nota = $("hojaNota");
+    nota.className = "hoja-nota";
+    if (p.pg && p.en) {
+      nota.textContent = "Pagado y entregado: el mail con el pack ya salió.";
+    } else if (p.pg) {
+      nota.className = "hoja-nota alerta-nota";
+      nota.textContent = "Está pagado pero el mail no salió. Buscá la referencia en la planilla y volvé a tildar \"Pagado\", o mandale el pack a mano.";
+    } else {
+      nota.textContent = "Llegó a la pantalla de pago pero no lo completó. Puede que haya pagado por otro medio o que lo haya abandonado.";
+    }
+
+    $("hojaFondo").hidden = false;
+    $("hoja").hidden = false;
+    document.body.classList.add("con-hoja");
+    st.hojaAbierta = true;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        $("hojaFondo").classList.add("abierta");
+        $("hoja").classList.add("abierta");
+      });
+    });
+    $("hojaCerrar").focus();
+  }
+
+  function cerrarDetalle() {
+    if (!st.hojaAbierta) return;
+    st.hojaAbierta = false;
+    $("hojaFondo").classList.remove("abierta");
+    $("hoja").classList.remove("abierta");
+    document.body.classList.remove("con-hoja");
+    setTimeout(function () {
+      if (st.hojaAbierta) return;
+      $("hojaFondo").hidden = true;
+      $("hoja").hidden = true;
+    }, 400);
+    if (st.focoPrevio && document.body.contains(st.focoPrevio)) st.focoPrevio.focus();
+  }
+
+  function copiarReferencia() {
+    if (!pedidoEnHoja || !pedidoEnHoja.r) return;
+    var ref = pedidoEnHoja.r;
+    function listo() { mostrarToast("Referencia copiada", ref, "info"); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ref).then(listo, function () { copiarViejo(ref); listo(); });
+    } else {
+      copiarViejo(ref);
+      listo();
+    }
+  }
+
+  function copiarViejo(texto) {
+    var t = el("textarea");
+    t.value = texto;
+    t.setAttribute("readonly", "");
+    t.style.position = "fixed";
+    t.style.opacity = "0";
+    document.body.appendChild(t);
+    t.select();
+    try { document.execCommand("copy"); } catch (e) { /* nada */ }
+    t.remove();
+  }
+
+  /* ======================= Avisos ======================= */
   var timerToast = null;
 
-  function mostrarToast(titulo, detalle) {
+  function mostrarToast(titulo, detalle, tipo) {
     $("toastTitulo").textContent = titulo;
-    $("toastDetalle").textContent = detalle;
+    $("toastDetalle").textContent = detalle || "";
     var t = $("toast");
+    t.classList.toggle("info", tipo === "info");
     t.classList.add("visible");
     clearTimeout(timerToast);
-    timerToast = setTimeout(function () { t.classList.remove("visible"); }, 6000);
+    timerToast = setTimeout(function () { t.classList.remove("visible"); }, 5500);
+  }
+
+  /* El sonido se genera acá mismo, sin archivos. El navegador solo deja
+     sonar después de que tocaste algo en la página: por eso se "despierta"
+     con el primer toque. */
+  var audio = null;
+
+  function despertarAudio() {
+    if (!prefs.sonido) return;
+    try {
+      if (!audio) {
+        var Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        audio = new Ctx();
+      }
+      if (audio.state === "suspended") audio.resume();
+    } catch (e) { /* nada */ }
+  }
+
+  function sonar() {
+    if (!prefs.sonido) return;
+    despertarAudio();
+    if (!audio) return;
+    try {
+      var t0 = audio.currentTime;
+      [[880, 0], [1318.5, 0.13]].forEach(function (nota) {
+        var osc = audio.createOscillator(), vol = audio.createGain();
+        osc.type = "sine";
+        osc.frequency.value = nota[0];
+        vol.gain.setValueAtTime(0.0001, t0 + nota[1]);
+        vol.gain.exponentialRampToValueAtTime(0.22, t0 + nota[1] + 0.02);
+        vol.gain.exponentialRampToValueAtTime(0.0001, t0 + nota[1] + 0.38);
+        osc.connect(vol);
+        vol.connect(audio.destination);
+        osc.start(t0 + nota[1]);
+        osc.stop(t0 + nota[1] + 0.42);
+      });
+    } catch (e) { /* nada */ }
+  }
+
+  function vibrar() {
+    if (prefs.vibrar && navigator.vibrate) {
+      try { navigator.vibrate([90, 60, 90]); } catch (e) { /* nada */ }
+    }
   }
 
   function avisarNuevas(nuevas) {
     var total = 0, ahora = Date.now();
     nuevas.forEach(function (p) { st.resaltar[p.id] = ahora; total += p.m; });
-
     if (nuevas.length === 1) {
-      var p = nuevas[0];
-      mostrarToast("Nueva venta · " + plata(p.m), p.p + (p.n ? " · " + p.n : ""));
+      mostrarToast("Nueva venta · " + plata(nuevas[0].m), nuevas[0].p + (nuevas[0].n ? " · " + nuevas[0].n : ""));
     } else {
-      mostrarToast(nuevas.length + " ventas nuevas · " + plata(total), "Mirá los últimos movimientos");
+      mostrarToast(nuevas.length + " ventas nuevas · " + plata(total), "Mirá la sección Ventas");
     }
-
-    /* Si el panel está abierto pero en otra ventana, se avisa en la pestaña */
     if (!document.hasFocus()) {
       st.sinVer += nuevas.length;
       document.title = "(" + st.sinVer + ") Nueva venta · " + tituloBase;
     }
-
-    /* Vibra en Android (en iPhone el navegador no lo permite). Es tu panel
-       privado, no la tienda: acá sí tiene sentido que te avise. */
-    if (navigator.vibrate) {
-      try { navigator.vibrate([90, 60, 90]); } catch (e) { /* nada */ }
-    }
+    vibrar();
+    sonar();
   }
 
-  /* ---------------- Conexión ---------------- */
+  /* ======================= Conexión ======================= */
   function programar() {
     clearTimeout(st.timer);
     if (document.visibilityState !== "visible") return; /* celular bloqueado = no gasta nada */
@@ -1035,8 +2036,7 @@
     var ctrl = typeof AbortController === "function" ? new AbortController() : null;
     var corte = setTimeout(function () { if (ctrl) ctrl.abort(); }, CORTE_MS);
 
-    /* POST con texto plano: la clave viaja en el cuerpo, nunca en la URL
-       (las URL quedan en historiales y registros). */
+    /* POST con texto plano: la clave viaja en el cuerpo, nunca en la URL */
     fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -1058,7 +2058,7 @@
           if (!st.logueado) {
             st.logueado = true;
             guardar(LLAVE_CLAVE, st.clave);
-            mostrarPanel();
+            mostrarApp();
           }
           recibir(Array.isArray(d.pedidos) ? d.pedidos : []);
           return;
@@ -1090,49 +2090,51 @@
         st.enCurso = false;
         $("btnActualizar").classList.remove("girando");
         pintarEstado();
+        if (st.logueado) pintarAjustes();
         programar();
       });
   }
 
-  /* ---------------- Entrar y salir ---------------- */
+  /* ======================= Entrar, salir y navegar ======================= */
   function mostrarErrorLogin(msg) { var e = $("errorLogin"); e.textContent = msg; e.hidden = false; }
   function ocultarErrorLogin() { $("errorLogin").hidden = true; }
+  function restaurarBotonEntrar() { var b = $("btnEntrar"); b.disabled = false; b.textContent = "Entrar"; }
 
-  function restaurarBotonEntrar() {
-    var b = $("btnEntrar");
-    b.disabled = false;
-    b.textContent = "Entrar";
+  function irA(seccion) {
+    if (!SECCIONES[seccion]) seccion = "resumen";
+    prefs.seccion = seccion;
+    guardarPrefs();
+    Object.keys(SECCIONES).forEach(function (s) { $("sec-" + s).hidden = s !== seccion; });
+    todos("[data-seccion]").forEach(function (b) {
+      if (b.getAttribute("data-seccion") === seccion) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    });
+    $("tituloSeccion").textContent = SECCIONES[seccion];
+    $("barraPeriodo").hidden = seccion === "ajustes";
+    window.scrollTo(0, 0);
+    pintarTodo(true);
   }
 
-  function mostrarPanel() {
+  function mostrarApp() {
     $("vistaLogin").hidden = true;
-    $("vistaPanel").hidden = false;
+    $("vistaApp").hidden = false;
     $("avisoDemo").hidden = !st.demo;
     restaurarBotonEntrar();
     ocultarErrorLogin();
-    pintarTodo(true);
+    irA(prefs.seccion);
   }
 
   function reiniciarEstado() {
     st.sesion++;
     clearTimeout(st.timer);
-    st.clave = null;
-    st.demo = false;
-    st.logueado = false;
-    st.cargado = false;
-    st.pedidos = [];
-    st.conocidas = null;
-    st.resaltar = {};
-    st.firma = "";
-    st.enCurso = false;
-    st.error = false;
-    st.ultimaOk = 0;
-    st.sinVer = 0;
-    st.barraActiva = -1;
-    st.demoLista = [];
-    st.demoTicks = 0;
+    st.clave = null; st.demo = false; st.logueado = false; st.cargado = false;
+    st.pedidos = []; st.conocidas = null; st.resaltar = {}; st.firma = "";
+    st.enCurso = false; st.error = false; st.ultimaOk = 0; st.sinVer = 0;
+    st.barraActiva = -1; st.demoLista = []; st.demoTicks = 0;
+    st.filtro = "todas"; st.pack = ""; st.busqueda = ""; st.mostrar = POR_PAGINA;
     document.title = tituloBase;
     $("btnActualizar").classList.remove("girando");
+    cerrarDetalle();
   }
 
   function entrar(clave) {
@@ -1148,22 +2150,19 @@
   function cerrarSesion(mensaje) {
     reiniciarEstado();
     borrar(LLAVE_CLAVE);
-    $("vistaPanel").hidden = true;
+    $("vistaApp").hidden = true;
     $("vistaLogin").hidden = false;
     $("clave").value = "";
     restaurarBotonEntrar();
     if (mensaje) mostrarErrorLogin(mensaje); else ocultarErrorLogin();
   }
 
-  /* ---------------- Demo ----------------
-     Para ver cómo queda antes de configurar Apps Script. Siempre con el
-     cartel de "datos de ejemplo" y sin guardar nada. */
+  /* ======================= Demo =======================
+     Para ver cómo queda antes de configurar nada. Siempre con el cartel de
+     "datos de ejemplo" y sin guardar ninguna venta. */
   var PACKS_DEMO = [
-    ["Pack 100", 4999, 0.34],
-    ["Pack 500", 14999, 0.38],
-    ["Pack 1000", 19999, 0.22],
-    ["Espacio Publicitario", 24999, 0.04],
-    ["Negocio Mayorista", 130000, 0.02]
+    ["Pack 100", 4999, 0.34], ["Pack 500", 14999, 0.38], ["Pack 1000", 19999, 0.22],
+    ["Espacio Publicitario", 24999, 0.04], ["Negocio Mayorista", 130000, 0.02]
   ];
   var NOMBRES_DEMO = ["Lautaro", "Ana", "Diego", "Sofía", "Martín", "Camila", "Julián", "Valentina",
     "Nicolás", "Micaela", "Tomás", "Florencia", "Agustín", "Lucía", "Federico", "Rocío"];
@@ -1188,24 +2187,21 @@
 
   function generarDemo() {
     var r = azar(20260910), ahora = Date.now(), lista = [], k = 0;
-    /* Los pedidos de "hoy" tienen que caer dentro del día argentino: si se
-       reparten en las últimas horas corridas, a la madrugada caen en ayer y
-       la vista inicial de la demo arranca en $0. */
+    /* Los pedidos de hoy tienen que caer dentro del día argentino */
     var hm = fHoraMin.format(ahora).split(":");
     var desdeMedianoche = Math.max(60000, (Number(hm[0]) * 60 + Number(hm[1])) * 60000);
-    for (var d = 70; d >= 0; d--) {
+    for (var d = 120; d >= 0; d--) {
       var cant = Math.floor(r() * 5) + (r() < 0.3 ? 2 : 0);
       if (d === 0) cant = Math.max(cant, 4);
       for (var i = 0; i < cant; i++) {
-        var t = d === 0
-          ? ahora - Math.floor(r() * desdeMedianoche)
-          : ahora - d * DIA_MS - Math.floor(r() * DIA_MS);
-        var pk = elegirPack(r), pagado = r() < 0.62;
+        var t = d === 0 ? ahora - Math.floor(r() * desdeMedianoche) : ahora - d * DIA_MS - Math.floor(r() * DIA_MS);
+        /* A la tarde-noche se vende más, como en la vida real */
+        if (d > 0 && r() < 0.5) t = t - (t % DIA_MS) + (22 + Math.floor(r() * 4)) * 3600000;
+        var pk = elegirPack(r), pagado = r() < 0.64;
         lista.push({
-          t: t, p: pk[0], m: pk[1], pg: pagado,
+          t: Math.min(t, ahora - 60000), p: pk[0], m: pk[1], pg: pagado,
           en: pagado && !(d < 2 && r() < 0.3),
-          n: NOMBRES_DEMO[Math.floor(r() * NOMBRES_DEMO.length)],
-          r: "DEMO-" + k++
+          n: NOMBRES_DEMO[Math.floor(r() * NOMBRES_DEMO.length)], r: "DEMO-" + k++
         });
       }
     }
@@ -1217,21 +2213,19 @@
     st.demo = true;
     st.logueado = true;
     st.demoLista = generarDemo();
-    mostrarPanel();
     st.ultimaOk = Date.now();
+    mostrarApp();
     recibir(st.demoLista);
     programar();
   }
 
-  /* En la demo entra una venta inventada cada tanto, para ver el aviso */
   function tickDemo() {
     st.demoTicks++;
     if (st.demoTicks === 1 || Math.random() < 0.3) {
       var pk = elegirPack(Math.random);
       st.demoLista.push({
         t: Date.now() - 1500, p: pk[0], m: pk[1], pg: true, en: false,
-        n: NOMBRES_DEMO[Math.floor(Math.random() * NOMBRES_DEMO.length)],
-        r: "DEMO-VIVO-" + Date.now()
+        n: NOMBRES_DEMO[Math.floor(Math.random() * NOMBRES_DEMO.length)], r: "DEMO-VIVO-" + Date.now()
       });
     }
     st.ultimaOk = Date.now();
@@ -1240,7 +2234,7 @@
     programar();
   }
 
-  /* ---------------- Controles ---------------- */
+  /* ======================= Controles ======================= */
   $("formLogin").addEventListener("submit", function (e) {
     e.preventDefault();
     var valor = $("clave").value.replace(/\s+/g, "");
@@ -1262,53 +2256,187 @@
   $("btnDemo").addEventListener("click", arrancarDemo);
   $("btnActualizar").addEventListener("click", pedirDatos);
 
-  $("btnSalir").addEventListener("click", function () {
-    var pregunta = st.demo
-      ? "¿Salir de la demo?"
-      : "¿Cerrar sesión en este dispositivo? Vas a tener que volver a pegar la clave.";
-    if (window.confirm(pregunta)) cerrarSesion();
+  todos("[data-seccion]").forEach(function (b) {
+    b.addEventListener("click", function () { irA(b.getAttribute("data-seccion")); });
+  });
+  todos("[data-ir]").forEach(function (b) {
+    b.addEventListener("click", function () { irA(b.getAttribute("data-ir")); });
   });
 
-  var botonesRango = document.querySelectorAll(".rango");
-
+  /* Período */
   function cambiarRango(rango, enfocar) {
-    st.rango = rango;
-    st.barraActiva = -1;
-    for (var i = 0; i < botonesRango.length; i++) {
-      var elegido = botonesRango[i].getAttribute("data-rango") === rango;
-      botonesRango[i].setAttribute("aria-selected", String(elegido));
-      botonesRango[i].tabIndex = elegido ? 0 : -1;
-      if (elegido && enfocar) botonesRango[i].focus();
+    prefs.rango = rango;
+    if (rango === "personal" && !rangoPersonalValido()) {
+      prefs.hasta = hoyClave();
+      prefs.desde = sumarDias(prefs.hasta, -6);
     }
-    guardar(LLAVE_RANGO, rango);
+    st.barraActiva = -1;
+    st.mostrar = POR_PAGINA;
+    guardarPrefs();
     pintarTodo(true);
+    var b = document.querySelector('.rango[data-rango="' + rango + '"]'), barra = document.querySelector(".rangos");
+    if (b && barra && (b.offsetLeft < barra.scrollLeft || b.offsetLeft + b.offsetWidth > barra.scrollLeft + barra.clientWidth)) {
+      barra.scrollLeft = b.offsetLeft - 8;
+      marcarRangos();
+    }
+    if (enfocar && b) b.focus();
   }
 
-  for (var ir = 0; ir < botonesRango.length; ir++) {
-    botonesRango[ir].addEventListener("click", function () { cambiarRango(this.getAttribute("data-rango"), false); });
-    botonesRango[ir].addEventListener("keydown", function (e) {
+  document.querySelector(".rangos").addEventListener("scroll", marcarRangos, { passive: true });
+  window.addEventListener("resize", marcarRangos);
+
+  todos(".rango").forEach(function (b) {
+    b.addEventListener("click", function () { cambiarRango(b.getAttribute("data-rango"), false); });
+    b.addEventListener("keydown", function (e) {
       var paso = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
       if (!paso) return;
       e.preventDefault();
-      var lista = [].slice.call(botonesRango), actual = lista.indexOf(this);
-      var siguiente = lista[(actual + paso + lista.length) % lista.length];
-      cambiarRango(siguiente.getAttribute("data-rango"), true);
+      var i = RANGOS.indexOf(b.getAttribute("data-rango"));
+      cambiarRango(RANGOS[(i + paso + RANGOS.length) % RANGOS.length], true);
     });
-  }
+  });
 
-  var botonesFeed = document.querySelectorAll(".feed-filtro button");
-  for (var jf = 0; jf < botonesFeed.length; jf++) {
-    botonesFeed[jf].addEventListener("click", function () {
-      st.feed = this.getAttribute("data-feed");
-      for (var k = 0; k < botonesFeed.length; k++) {
-        botonesFeed[k].setAttribute("aria-pressed", String(botonesFeed[k] === this));
-      }
+  ["fechaDesde", "fechaHasta"].forEach(function (id) {
+    $(id).addEventListener("change", function () {
+      if (id === "fechaDesde") prefs.desde = this.value; else prefs.hasta = this.value;
+      st.barraActiva = -1;
+      st.mostrar = POR_PAGINA;
+      guardarPrefs();
       pintarTodo(true);
     });
-  }
+  });
 
-  /* Con el celular bloqueado o la pestaña de fondo no se consulta nada; al
-     volver, se actualiza en el acto. */
+  /* Resumen */
+  $("alertaVer").addEventListener("click", function () {
+    prefs.rango = "todo";
+    st.filtro = "sinenviar";
+    st.pack = "";
+    st.busqueda = "";
+    st.mostrar = POR_PAGINA;
+    irA("ventas");
+  });
+
+  todos("[data-metrica]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      prefs.metrica = b.getAttribute("data-metrica");
+      guardarPrefs();
+      pintarTodo(true);
+    });
+  });
+
+  $("btnComparar").addEventListener("click", function () {
+    prefs.comparar = !prefs.comparar;
+    guardarPrefs();
+    pintarTodo(true);
+  });
+
+  /* Ventas */
+  todos("[data-filtro]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      st.filtro = b.getAttribute("data-filtro");
+      st.mostrar = POR_PAGINA;
+      pintarTodo(true);
+    });
+  });
+
+  $("filtroPack").addEventListener("change", function () {
+    st.pack = this.value;
+    st.mostrar = POR_PAGINA;
+    pintarTodo(true);
+  });
+
+  var timerBusqueda = null;
+  $("buscar").addEventListener("input", function () {
+    var valor = this.value;
+    clearTimeout(timerBusqueda);
+    timerBusqueda = setTimeout(function () {
+      st.busqueda = valor;
+      st.mostrar = POR_PAGINA;
+      pintarTodo(true);
+    }, 150);
+  });
+
+  $("btnVerMas").addEventListener("click", function () {
+    st.mostrar += POR_PAGINA;
+    pintarTodo(true);
+  });
+
+  $("btnExportar").addEventListener("click", exportarCSV);
+
+  /* Ajustes */
+  function alternarDiscreto() {
+    prefs.discreto = !prefs.discreto;
+    guardarPrefs();
+    pintarTodo(true);
+  }
+  $("btnDiscreto").addEventListener("click", alternarDiscreto);
+  $("swDiscreto").addEventListener("click", alternarDiscreto);
+
+  $("swSonido").addEventListener("click", function () {
+    prefs.sonido = !prefs.sonido;
+    guardarPrefs();
+    pintarAjustes();
+    if (prefs.sonido) { despertarAudio(); sonar(); }
+  });
+
+  $("swVibrar").addEventListener("click", function () {
+    prefs.vibrar = !prefs.vibrar;
+    guardarPrefs();
+    pintarAjustes();
+    vibrar();
+  });
+
+  $("btnProbar").addEventListener("click", function () {
+    mostrarToast("Nueva venta · " + plata(14999), "Pack 500 · así te va a avisar");
+    vibrar();
+    sonar();
+  });
+
+  $("ajMeta").addEventListener("input", function () {
+    var n = Number(this.value.replace(/\D/g, "")) || 0;
+    prefs.meta = Math.min(n, 1e11);
+    guardarPrefs();
+    pintarTodo(true);
+  });
+  $("ajMeta").addEventListener("blur", function () { this.value = prefs.meta ? numero(prefs.meta) : ""; });
+
+  $("ajComision").addEventListener("input", function () {
+    var n = parseFloat(this.value.replace(",", ".").replace(/[^\d.]/g, ""));
+    prefs.comision = isFinite(n) ? Math.min(Math.max(n, 0), 30) : 0;
+    guardarPrefs();
+    pintarTodo(true);
+  });
+
+  $("btnInstalar").addEventListener("click", function () {
+    if (!eventoInstalar) return;
+    eventoInstalar.prompt();
+    eventoInstalar = null;
+    pintarInstalar();
+  });
+
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    eventoInstalar = e;
+    pintarInstalar();
+  });
+
+  $("btnSalir").addEventListener("click", function () {
+    var pregunta = st.demo ? "¿Salir de la demo?" : "¿Cerrar sesión en este dispositivo? Vas a tener que volver a pegar la clave.";
+    if (window.confirm(pregunta)) cerrarSesion();
+  });
+
+  /* Detalle */
+  $("hojaCerrar").addEventListener("click", cerrarDetalle);
+  $("hojaFondo").addEventListener("click", cerrarDetalle);
+  $("hojaCopiar").addEventListener("click", copiarReferencia);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && st.hojaAbierta) cerrarDetalle();
+  });
+
+  document.addEventListener("pointerdown", despertarAudio, { passive: true });
+
+  /* Con el celular bloqueado no consulta nada; al volver actualiza en el acto */
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "visible") {
       if (st.logueado || st.demo) pedirDatos();
@@ -1326,17 +2454,14 @@
     if (document.visibilityState === "visible" && (st.logueado || st.demo) && st.cargado) refrescarTiempos();
   }, 1000);
 
-  /* ---------------- Arranque ---------------- */
-  var rangoGuardado = leer(LLAVE_RANGO);
-  if (rangoGuardado && /^(hoy|7d|30d|todo)$/.test(rangoGuardado)) cambiarRango(rangoGuardado, false);
-
+  /* ======================= Arranque ======================= */
   var claveGuardada = leer(LLAVE_CLAVE);
   if (claveGuardada) {
-    /* Ya entró antes en este dispositivo: directo al panel. Si no hay
-       internet se queda reintentando en vez de pedir la clave de nuevo. */
+    /* Ya entró antes en este dispositivo: directo al panel. Sin internet se
+       queda reintentando en vez de volver a pedir la clave. */
     st.clave = claveGuardada;
     st.logueado = true;
-    mostrarPanel();
+    mostrarApp();
     pedirDatos();
   }
 })();
