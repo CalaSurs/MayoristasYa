@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- Google Analytics (GA4) - configurar ID en js/analytics.js -->
-<script src="js/analytics.js?v=20260902b" defer></script>
+<script src="js/analytics.js?v=20260914" defer></script>
 <!-- Registro automático de pedidos (Google Sheets) - configurar URL en js/orders.js -->
-<script src="js/orders.js?v=20260902b" defer></script>
+<script src="js/orders.js?v=20260914" defer></script>
 <title>Proveedores Mayoristas Argentina | +1000 Contactos</title>
 <meta name="description" content="Lista de proveedores mayoristas para revender: ropa, calzado, tecnología, hogar y +25 rubros. Desde $4.999, pago único y entrega al instante por WhatsApp.">
 <meta name="author" content="MayoristasYa.com">
@@ -40,7 +40,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/styles.css?v=20260902b">
+<link rel="stylesheet" href="css/styles.css?v=20260914">
 
 <script type="application/ld+json">
 {
@@ -205,22 +205,27 @@
 
       <div class="pt-grid">
 
-        <div class="pt-izq">
-          <p class="pt-kicker">Guía de proveedores mayoristas</p>
+        <!-- Cada parte entra un toque después que la anterior. El --d es ese
+             retraso. Si el visitante pidió menos movimiento, no se mueve nada:
+             el CSS de la animación vive adentro de una consulta de medios. -->
+        <div class="pt-izq pt-anima">
+          <p class="pt-kicker" style="--d:0s">Guía de proveedores mayoristas</p>
 
           <h1 class="pt-titulo">
-            <span class="pt-l1">+1000</span>
-            <span class="pt-l2">proveedores</span>
-            <span class="pt-l3">de <em>+25 rubros</em></span>
+            <!-- El número cuenta desde cero al cargar. Sin JavaScript queda
+                 el +1000 escrito acá, que es lo que importa. -->
+            <span class="pt-l1" style="--d:.07s" data-count="1000" data-prefijo="+" data-formato="plano">+1000</span>
+            <span class="pt-l2" style="--d:.16s">proveedores</span>
+            <span class="pt-l3" style="--d:.25s">de <em>+25 rubros</em></span>
           </h1>
 
-          <p class="pt-bajada">
+          <p class="pt-bajada" style="--d:.34s">
             Fábricas, mayoristas y distribuidoras de todo el país, ordenadas por
             rubro y con el contacto directo de cada una. Comprás al precio de
             origen y revendés con ganancia.
           </p>
 
-          <div class="pt-acciones">
+          <div class="pt-acciones" style="--d:.43s">
             <a class="btn btn-primary btn-lg" href="#precios">
               Ver la lista de precios
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -230,77 +235,6 @@
               Escribir por WhatsApp
             </a>
           </div>
-        </div>
-
-        <div class="pt-der">
-
-          <!-- Vista previa del PDF: las fichas se van encendiendo solas -->
-          <div class="pt-visual" aria-hidden="true">
-            <span class="pt-blob pt-blob-a"></span>
-            <span class="pt-blob pt-blob-b"></span>
-
-            <!-- El marco lleva el flote: así los chips se mueven pegados a la tarjeta -->
-            <div class="pt-marco">
-            <div class="pt-tarjeta">
-              <div class="ptt-top">
-                <span class="ptt-pdf">PDF</span>
-                <span class="ptt-arch">lista-proveedores-2026.pdf</span>
-                <span class="ptt-pag">1 / 34</span>
-              </div>
-
-              <div class="ptt-hoja">
-                <span class="ptt-sello"><b>✓</b> Verificado 2026</span>
-                <div class="ptt-encabezado">
-                  <span class="ptt-tag">Indumentaria</span>
-                  <p class="ptt-titulo">Proveedores verificados</p>
-                  <p class="ptt-sub">120 contactos en esta sección</p>
-                </div>
-
-                <ul class="ptt-filas">
-                  <li style="--d:0s">
-                    <span class="ptf-ini">DS</span>
-                    <span class="ptf-datos">
-                      <b>Distribuidora San Martín</b>
-                      <small>Once, CABA · Mínimo 10 unidades</small>
-                    </span>
-                    <span class="ptf-tel">11 5•••-••••</span>
-                  </li>
-                  <li style="--d:1.6s">
-                    <span class="ptf-ini">TN</span>
-                    <span class="ptf-datos">
-                      <b>Textiles del Norte</b>
-                      <small>Flores, CABA · Mínimo 6 unidades</small>
-                    </span>
-                    <span class="ptf-tel">11 4•••-••••</span>
-                  </li>
-                  <li style="--d:3.2s">
-                    <span class="ptf-ini">MG</span>
-                    <span class="ptf-datos">
-                      <b>Mayorista Gutiérrez</b>
-                      <small>Avellaneda · Mínimo 12 unidades</small>
-                    </span>
-                    <span class="ptf-tel">11 6•••-••••</span>
-                  </li>
-                  <li style="--d:4.8s">
-                    <span class="ptf-ini">CB</span>
-                    <span class="ptf-datos">
-                      <b>Confecciones Belgrano</b>
-                      <small>Villa Crespo · Sin mínimo</small>
-                    </span>
-                    <span class="ptf-tel">11 3•••-••••</span>
-                  </li>
-                </ul>
-
-                <div class="ptt-pie">
-                  <span class="ptt-barra"><span class="ptt-barra-fill"></span></span>
-                  <span class="ptt-mas">+996 contactos</span>
-                </div>
-              </div>
-            </div>
-
-            </div>
-          </div>
-
         </div>
 
       </div>
@@ -479,24 +413,55 @@
 
       </div>
 
-      <!-- Espacio publicitario: no es una lista de proveedores, es un servicio.
-           Por eso va aparte de la grilla de packs. -->
-      <article class="ficha-pub reveal">
-        <div class="fp-info">
-          <span class="fp-etiqueta">Espacio publicitario</span>
-          <h3>Tu negocio, publicado en esta página</h3>
-          <p>Aparecés en la notificación que ven todos los que entran, igual que Cala Imports. Con tu marca, tu teléfono, tu web y tus redes, todo con link directo.</p>
+      <!-- Los otros tres productos. Ninguno es una lista de proveedores, así
+           que van juntos y aparte de la grilla de packs: en computadora, uno
+           al lado del otro para poder compararlos de un vistazo. -->
+      <div class="extras-cab reveal">
+        <h3>Y además</h3>
+        <p>Tres cosas más, para cuando los proveedores ya los tenés.</p>
+      </div>
 
-          <ul class="fp-lista">
-            <li>Tu ficha en la notificación que rota en el sitio</li>
-            <li>WhatsApp, web, Instagram y TikTok clickeables</li>
-            <li>Mayorista o minorista, cualquier rubro</li>
-            <li>Queda publicado: <strong>pago único, sin mensualidad</strong></li>
+      <div class="extras-grid reveal">
+
+        <!-- 1. El libro: los packs te dicen a quién comprarle, este qué hacer -->
+        <article class="extra extra-libro" style="--i:0">
+          <div class="ex-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5Z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5"/><path d="M8.5 7.5h6M8.5 11h4"/></svg>
+          </div>
+          <span class="ex-etiqueta">Ebook</span>
+          <h4>De 0 a tu primer millón</h4>
+          <p class="ex-bajada">Los packs te dan los proveedores. Este te dice qué hacer con ellos.</p>
+
+          <ul class="ex-lista">
+            <li><b>17 capítulos</b> en orden, como un camino</li>
+            <li><b>20 páginas</b> sin relleno</li>
+            <li>Precios y márgenes con un <b>ejemplo real</b></li>
+            <li>Termina con un <b>plan de 90 días</b></li>
           </ul>
-        </div>
 
-        <div class="fp-muestra">
-          <span class="fp-muestra-tit">Así se va a ver:</span>
+          <div class="ex-pie">
+            <div class="ex-precio">
+              <strong>$5.000</strong>
+              <span class="pk-unico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+                Pago único &middot; te llega al correo
+              </span>
+            </div>
+            <a class="btn btn-outline btn-block js-buy" href="checkout.html?pack=ebook">
+              Quiero el ebook
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- 2. Espacio publicitario: se vende mostrando cómo se ve -->
+        <article class="extra extra-pub" style="--i:1">
+          <div class="ex-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3l7-4.5v14l-7-4.5H4Z"/><path d="M18 9a4 4 0 0 1 0 6"/></svg>
+          </div>
+          <span class="ex-etiqueta">Espacio publicitario</span>
+          <h4>Tu negocio, acá adentro</h4>
+          <p class="ex-bajada">Aparecés en la notificación que ven todos los que entran, igual que Cala Imports.</p>
 
           <div class="fp-demo" aria-hidden="true">
             <span class="fpd-agarre"></span>
@@ -514,8 +479,14 @@
             </div>
           </div>
 
-          <div class="fp-compra">
-            <div class="fp-precio">
+          <ul class="ex-lista">
+            <li>WhatsApp, web, Instagram y TikTok con link</li>
+            <li>Mayorista o minorista, cualquier rubro</li>
+            <li>Queda publicado, <b>sin mensualidad</b></li>
+          </ul>
+
+          <div class="ex-pie">
+            <div class="ex-precio">
               <span class="pk-antes">$50.000</span>
               <strong>$24.999</strong>
               <span class="pk-unico">
@@ -523,65 +494,70 @@
                 Pago único &middot; 50% OFF
               </span>
             </div>
-            <a class="btn btn-primary btn-block js-buy" href="checkout.html?pack=publicidad">
+            <a class="btn btn-outline btn-block js-buy" href="checkout.html?pack=publicidad">
               Quiero mi espacio
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <!-- Negocio Mayorista: ficha aparte, no es un pack -->
-      <article class="ficha-negocio reveal">
-        <div class="fn-tapa">
-          <span class="fn-etiqueta">Nuevo</span>
-          <h3>Negocio Mayorista</h3>
-          <p>Armamos tu propio MayoristasYa: tu sitio, tu marca y los 3 packs adentro, para que vendas desde el día uno.</p>
-          <button type="button" class="fn-info" id="negocioInfoBtn" aria-haspopup="dialog" aria-label="Más información sobre Negocio Mayorista">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.5h.01"/></svg>
-          </button>
-        </div>
+        <!-- 3. Negocio Mayorista: el más caro, va destacado -->
+        <article class="extra extra-negocio es-destacado" style="--i:2">
+          <span class="ex-sello">El más completo</span>
+          <div class="ex-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18"/><path d="M6.5 6.5h.01M9.5 6.5h.01"/><path d="M7 13h6M7 16.5h4"/></svg>
+          </div>
+          <span class="ex-etiqueta">Llave en mano</span>
+          <h4>
+            Negocio Mayorista
+            <button type="button" class="fn-info" id="negocioInfoBtn" aria-haspopup="dialog" aria-label="Más información sobre Negocio Mayorista">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.5h.01"/></svg>
+            </button>
+          </h4>
+          <p class="ex-bajada">Armamos tu propio MayoristasYa: tu sitio, tu marca y los 3 packs adentro.</p>
 
-        <ul class="fn-lista">
-          <li>Dominio propio a tu nombre</li>
-          <li>Hosting funcionando incluido</li>
-          <li>Sitio con tu marca, listo para vender</li>
-          <li>Los 3 packs completos adentro</li>
-          <li>Te quedás con el 100% de las ganancias</li>
-          <li>Acompañamiento en la puesta en marcha</li>
-        </ul>
+          <ul class="ex-lista">
+            <li>Dominio propio a tu nombre</li>
+            <li>Hosting funcionando incluido</li>
+            <li>Sitio con tu marca, listo para vender</li>
+            <li>Los <b>3 packs completos</b> adentro</li>
+            <li>Te quedás con el <b>100% de las ganancias</b></li>
+            <li>Acompañamiento en la puesta en marcha</li>
+          </ul>
 
-        <div class="fn-ejemplos">
-          <span class="fn-ejemplos-tit">Páginas que ya armamos así</span>
-          <div class="fn-ejemplos-links">
-            <a href="https://mayoristastop.com" target="_blank" rel="noopener">
-              mayoristastop.com
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-            </a>
-            <a href="https://mayoristasarg.com" target="_blank" rel="noopener">
-              mayoristasarg.com
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          <div class="ex-ejemplos">
+            <span class="ex-ejemplos-tit">Páginas que ya armamos así</span>
+            <div class="ex-ejemplos-links">
+              <a href="https://mayoristastop.com" target="_blank" rel="noopener">
+                mayoristastop.com
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+              <a href="https://mayoristasarg.com" target="_blank" rel="noopener">
+                mayoristasarg.com
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <p class="ex-aclaracion">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8.5v4.5"/><path d="M12 16.5h.01"/></svg>
+            <span><strong>No incluye pasarela de pago automática.</strong> Las ventas se coordinan y se cobran por WhatsApp, como hacemos nosotros.</span>
+          </p>
+
+          <div class="ex-pie">
+            <div class="ex-precio">
+              <span class="pk-antes">$260.000</span>
+              <strong>$130.000</strong>
+              <span class="ex-mensual">+ $60.000 por mes de mantenimiento</span>
+            </div>
+            <a class="btn btn-primary btn-block js-buy" href="checkout.html?pack=negocio-mayorista">
+              Quiero mi negocio
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
           </div>
-        </div>
+        </article>
 
-        <p class="fn-aclaracion">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8.5v4.5"/><path d="M12 16.5h.01"/></svg>
-          <span><strong>No incluye pasarela de pago automática.</strong> Las ventas de tu página se coordinan y se cobran por WhatsApp, como hacemos nosotros. Si más adelante querés sumar Mercado Pago automático, lo presupuestamos aparte.</span>
-        </p>
-
-        <div class="fn-pie">
-          <div class="fn-precio">
-            <span class="pk-antes">$260.000</span>
-            <strong>$130.000</strong>
-            <span class="fn-mensual">+ $60.000 por mes de mantenimiento</span>
-          </div>
-          <a class="btn btn-primary js-buy" href="checkout.html?pack=negocio-mayorista">
-            Comprar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </article>
+      </div>
 
       <p class="pricing-note">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.93 7.93 0 0 0 3.85 1h0a7.94 7.94 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.64Z"/></svg>
@@ -1093,6 +1069,6 @@
 
 
 <!-- defer: tiene que correr DESPUÉS de pagos.js, que también lo usa -->
-<script src="js/main.js?v=20260902b" defer></script>
+<script src="js/main.js?v=20260914" defer></script>
 </body>
 </html>

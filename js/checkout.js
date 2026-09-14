@@ -22,6 +22,11 @@
       precio: 19999,
       antes: 40000,
     },
+    ebook: {
+      nombre: "De 0 a tu primer millón",
+      desc: "Ebook de 20 páginas, 17 capítulos",
+      precio: 5000,
+    },
     publicidad: {
       nombre: "Espacio Publicitario",
       desc: "Tu negocio publicado en MayoristasYa",
@@ -120,8 +125,19 @@
   /* ---------- Validación ---------- */
   var ckName = $("ckName");
   var ckEmail = $("ckEmail");
+  var ckEmail2 = $("ckEmail2");
   var ckNameError = $("ckNameError");
   var ckEmailError = $("ckEmailError");
+  var ckEmail2Error = $("ckEmail2Error");
+  var ckEmailOk = $("ckEmailOk");
+
+  var ES_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  /* Las mayúsculas y los espacios de más no hacen a dos correos distintos:
+     "Ana@Gmail.com " y "ana@gmail.com" son la misma casilla. */
+  function mismoEmail(a, b) {
+    return a.trim().toLowerCase() === b.trim().toLowerCase();
+  }
 
   function marcarError(input, span, mensaje) {
     span.textContent = mensaje;
@@ -138,6 +154,7 @@
   function validar(enfocar) {
     var name = ckName.value.trim();
     var email = ckEmail.value.trim();
+    var email2 = ckEmail2.value.trim();
     var primerFallo = null;
 
     if (name.length < 3) {
@@ -147,11 +164,21 @@
       limpiarError(ckName, ckNameError);
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!ES_EMAIL.test(email)) {
       marcarError(ckEmail, ckEmailError, "Ingresá un correo válido, ahí te mandamos el pack.");
       primerFallo = primerFallo || ckEmail;
     } else {
       limpiarError(ckEmail, ckEmailError);
+    }
+
+    if (!email2) {
+      marcarError(ckEmail2, ckEmail2Error, "Escribí tu correo otra vez para confirmarlo.");
+      primerFallo = primerFallo || ckEmail2;
+    } else if (!mismoEmail(email, email2)) {
+      marcarError(ckEmail2, ckEmail2Error, "Los dos correos no coinciden. Revisalos.");
+      primerFallo = primerFallo || ckEmail2;
+    } else {
+      limpiarError(ckEmail2, ckEmail2Error);
     }
 
     if (primerFallo) {
@@ -162,10 +189,34 @@
   }
 
   /* Limpia el error apenas el visitante corrige, sin esperar a que reenvíe. */
-  [[ckName, ckNameError], [ckEmail, ckEmailError]].forEach(function (par) {
+  [[ckName, ckNameError], [ckEmail, ckEmailError], [ckEmail2, ckEmail2Error]].forEach(function (par) {
     par[0].addEventListener("input", function () {
       if (par[1].textContent) limpiarError(par[0], par[1]);
     });
+  });
+
+  /* El tilde verde aparece solo cuando los dos correos están completos e
+     iguales. Es la confirmación que hace que valga la pena escribirlo dos
+     veces: se ve el resultado antes de pagar, no después. */
+  function revisarCoincidencia() {
+    var email = ckEmail.value.trim();
+    var email2 = ckEmail2.value.trim();
+    ckEmailOk.hidden = !(ES_EMAIL.test(email) && email2 && mismoEmail(email, email2));
+  }
+
+  [ckEmail, ckEmail2].forEach(function (campo) {
+    campo.addEventListener("input", revisarCoincidencia);
+    campo.addEventListener("blur", revisarCoincidencia);
+  });
+
+  /* Si ya escribió los dos y no coinciden, avisamos al salir del campo y no
+     al tocar "Pagar": es más fácil corregir mientras todavía está ahí. */
+  ckEmail2.addEventListener("blur", function () {
+    var email = ckEmail.value.trim();
+    var email2 = ckEmail2.value.trim();
+    if (email && email2 && !mismoEmail(email, email2)) {
+      marcarError(ckEmail2, ckEmail2Error, "Los dos correos no coinciden. Revisalos.");
+    }
   });
 
   /* ---------- Botón: pagar online ---------- */
@@ -238,6 +289,15 @@
           payment_type: "mercadopago",
           items: [{ item_id: packId, item_name: pack.nombre, price: pack.precio, quantity: 1 }],
         });
+      }
+
+      /* Se lo mostramos después en gracias.html, para que sepa a qué casilla
+         mirar. Es la misma pestaña, así que el dato sigue estando cuando
+         vuelve de Mercado Pago. */
+      try {
+        window.sessionStorage.setItem("mwCorreoCompra", datos.email);
+      } catch (err) {
+        /* modo privado: seguimos igual */
       }
 
       if (ckAlertaPago) ckAlertaPago.hidden = true;

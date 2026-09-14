@@ -1,14 +1,26 @@
 /* =========================================================
-   MayoristasYa.com — Catálogo comercial retro
+   MayoristasYa.com — Minimalismo suave (soft minimalism)
    ---------------------------------------------------------
-   La idea: una guía de proveedores impresa de los años 70.
-   Papel tibio en vez de blanco, tinta marrón en vez de negro,
-   rojo teja y verde botella como acentos, esquinas casi rectas
-   y sombras duras sin desenfoque, como una impresión offset.
+   Las cinco reglas del estilo. Si agregás algo nuevo, seguilas:
+
+   1. NADA DE BLANCO PURO NI NEGRO PURO. El fondo es lavanda muy
+      apagado (--cream) y el texto es violeta oscuro (--ink).
+   2. TODO REDONDEADO. Tarjetas 26px, botones y pastillas 999px.
+      No hay esquinas vivas en ningún lado.
+   3. SOMBRAS DIFUSAS, NO BORDES. Se separa por sombra suave y
+      cambio de fondo, casi nunca con una línea.
+   4. UN SOLO ACENTO. Violeta (--clay) para todo lo importante.
+      Verde solo para "gratis/incluido", ámbar solo para avisos.
+   5. MOVIMIENTO CORTO Y CON REBOTE. Nada dura más de 0.65s y
+      usa --bounce; siempre con salida por prefers-reduced-motion.
+
+   Los nombres de las variables (papel, tinta) quedaron de una
+   versión anterior tipo catálogo impreso. Los colores ya no son
+   esos, pero los nombres se mantienen para no romper 5000 líneas.
    ========================================================= */
 
 :root {
-  /* ---- Papel ---- */
+  /* ---- Fondos ---- */
   --cream: #f7f5fc;
   --cream-2: #f0ecfa;
   --cream-3: #e3dbf6;
@@ -103,8 +115,8 @@ html {
     scroll-behavior: auto;
   }
   *,
-  *::before,
-  *::after {
+*::before,
+*::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -297,7 +309,7 @@ section {
 
 @media (prefers-reduced-motion: reduce) {
   .js-buy:hover svg,
-  .header-cta:hover svg {
+.header-cta:hover svg {
     transform: none;
   }
 }
@@ -559,6 +571,27 @@ section {
 
 .ck-campo .field-error:empty {
   display: none;
+}
+
+/* Confirmación de que los dos correos son el mismo */
+.ck-ok {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sage);
+}
+
+.ck-ok[hidden] {
+  display: none;
+}
+
+.ck-ok svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
 /* ---------- Botonera ---------- */
@@ -914,13 +947,13 @@ section {
 /* Nada de esto si el visitante pidió menos movimiento */
 @media (prefers-reduced-motion: reduce) {
   .ck-col-resumen,
-  .ck-col-form,
-  .ck-garantias li,
-  .gracias-box .ok-icon,
-  .gracias-box > *,
-  .ck-campo input.has-error,
-  .ck-campo .field-error,
-  .btn-mp:disabled {
+.ck-col-form,
+.ck-garantias li,
+.gracias-box .ok-icon,
+.gracias-box > *,
+.ck-campo input.has-error,
+.ck-campo .field-error,
+.btn-mp:disabled {
     animation: none !important;
   }
 
@@ -942,7 +975,7 @@ section {
   }
 
   .ck-col-form,
-  .ck-resumen {
+.ck-resumen {
     padding: 1.25rem 1.1rem;
   }
 
@@ -1264,7 +1297,6 @@ section {
   box-shadow: var(--sh-sm);
   padding-block: 0.65rem;
 }
-
 
 
 .site-header .container {
@@ -1973,6 +2005,40 @@ body.checkout-open {
   animation-play-state: paused;
 }
 
+/* ---------- Arrastrar con el dedo ----------
+   Cuando el JavaScript toma el control, corre la pista él mismo con
+   requestAnimationFrame en vez de con la animación de CSS. Es lo único que
+   permite las dos cosas a la vez: que camine sola y que se pueda empujar.
+
+   La clase la pone el JavaScript. Si no corre (o si el navegador es viejo),
+   no pasa nada: queda la animación de CSS de arriba, como antes.
+
+   touch-action pan-y: el dedo vertical sigue haciendo scroll de la página,
+   y el horizontal nos llega a nosotros en vez de que lo coma el navegador. */
+.marquesina.js-arrastrable {
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.marquesina.js-arrastrable .marquesina-pista {
+  animation: none;
+  will-change: transform;
+}
+
+.marquesina.js-arrastrable.arrastrando {
+  cursor: grabbing;
+}
+
+/* Las tarjetas son links y textos: sin esto, arrastrar selecciona o
+   "agarra" la imagen en vez de mover el carrusel */
+.marquesina.js-arrastrable img,
+.marquesina.js-arrastrable a {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 /* Si alguien pidió menos movimiento, no corre nada: se deja deslizar a mano */
 @media (prefers-reduced-motion: reduce) {
   .marquesina {
@@ -2076,7 +2142,7 @@ body.checkout-open {
 /* --- Mobile / tablet: se mantiene la card apilada tal cual estaba --- */
 @media (max-width: 899.98px) {
   .negocio-main,
-  .negocio-aside {
+.negocio-aside {
     display: contents;
   }
 
@@ -2133,7 +2199,7 @@ body.checkout-open {
   }
 
   .negocio-main,
-  .negocio-aside {
+.negocio-aside {
     position: relative;
     z-index: 1;
   }
@@ -2143,7 +2209,7 @@ body.checkout-open {
   }
 
   .negocio-main,
-  .negocio-aside {
+.negocio-aside {
     display: flex;
     flex-direction: column;
   }
@@ -2210,7 +2276,7 @@ body.checkout-open {
   }
 
   .negocio-aside .btn-outline:hover,
-  .negocio-aside .btn-outline:focus-visible {
+.negocio-aside .btn-outline:focus-visible {
     background: var(--clay-hover);
     color: var(--card);
     border-color: var(--clay-dark);
@@ -3063,10 +3129,80 @@ body.checkout-open {
   justify-content: center;
 }
 
-.gracias-pasos li strong {
+/* Solo el título del paso ocupa su propio renglón. Los "strong" que van
+   dentro de la explicación (el nombre de un botón, por ejemplo) siguen
+   siendo parte de la frase. */
+.gracias-pasos li > strong:first-child {
   display: block;
   color: var(--ink);
   margin-bottom: 0.1rem;
+}
+
+.gracias-pasos li strong {
+  color: var(--ink);
+}
+
+/* Lo que hay que escribir en el buscador del correo, con pinta de campo de
+   búsqueda para que se entienda de un vistazo qué va tecleado */
+.gracias-buscar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--clay-tint);
+  color: var(--clay-dark);
+  font-weight: 800;
+}
+
+.gracias-destino {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--clay-dark);
+  word-break: break-all;
+}
+
+.gracias-carpetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.45rem 0;
+}
+
+.gracias-carpetas span {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--sh-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--body);
+}
+
+/* En celular los pasos son lo más largo de la página: si le dejamos los
+   márgenes de escritorio, en un teléfono de 375px queda una columna de texto
+   de 180px y cada renglón entran tres palabras. */
+@media (max-width: 560px) {
+  .gracias-box {
+    padding: 1.6rem 1.1rem 1.75rem;
+  }
+
+  .gracias-pasos {
+    padding: 1.2rem 1rem;
+    gap: 1.25rem;
+  }
+
+  .gracias-pasos li {
+    padding-left: 1.9rem;
+  }
+
+  .gracias-pasos li::before {
+    width: 21px;
+    height: 21px;
+    font-size: 0.7rem;
+  }
 }
 
 .gracias-ayuda {
@@ -3498,134 +3634,37 @@ body.checkout-open {
 }
 
 /* ---------- Lista de precios ---------- */
-/* ---------- Ficha del Negocio Mayorista ---------- */
-.ficha-negocio {
-  position: relative;
-  margin-top: 2.5rem;
-  background: var(--card);
-  border: 2px solid var(--ink);
-  border-radius: var(--radius-card-sm);
-  box-shadow: 6px 6px 0 var(--clay);
-  overflow: hidden;
-}
 
-.fn-tapa {
-  position: relative;
-  padding: 1.6rem 1.5rem 1.25rem;
-  background: var(--ink);
-  color: var(--card);
-}
-
-.fn-tapa h3 {
-  color: var(--card);
-  font-size: clamp(1.25rem, 3.5vw, 1.6rem);
-  margin-bottom: 0.4rem;
-}
-
-.fn-tapa p {
-  font-size: 0.93rem;
-  color: rgba(253, 251, 255, 0.78);
-  max-width: 60ch;
-}
-
-.fn-etiqueta {
-  display: inline-block;
-  font-family: var(--font-heading);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--gold);
-  padding: 0.22rem 0.6rem;
-  border-radius: 3px;
-  margin-bottom: 0.75rem;
-}
-
+/* El "i" de más información del Negocio Mayorista. Antes colgaba en la
+   esquina de una tarjeta oscura; ahora va al lado del título, así que se
+   viste con los colores normales de la página. */
 .fn-info {
-  position: absolute;
-  top: 1.4rem;
-  right: 1.4rem;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(253, 251, 255, 0.35);
-  color: var(--card);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s var(--ease);
+  width: 26px;
+  height: 26px;
+  margin-left: 0.4rem;
+  border-radius: 50%;
+  background: var(--clay-tint);
+  color: var(--clay-dark);
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: background 0.2s var(--ease), transform 0.25s var(--bounce);
 }
 
-.fn-info:hover {
-  background: rgba(253, 251, 255, 0.14);
+.fn-info:hover,
+.fn-info:focus-visible {
+  background: var(--clay);
+  color: var(--card);
+  transform: scale(1.12);
 }
 
 .fn-info svg {
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
 }
 
-.fn-lista {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem 1.5rem;
-  padding: 1.4rem 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .fn-lista {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.fn-lista li {
-  position: relative;
-  font-size: 0.9rem;
-  color: var(--body);
-  padding-left: 1.2rem;
-}
-
-.fn-lista li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--sage);
-  font-weight: 700;
-  font-size: 0.8rem;
-}
-
-.fn-pie {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.25rem 1.5rem 1.5rem;
-  border-top: 1px solid var(--line);
-  background: var(--cream);
-}
-
-.fn-precio {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
-
-.fn-precio strong {
-  font-family: var(--font-heading);
-  font-size: clamp(1.6rem, 4vw, 2rem);
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.05;
-  font-variant-numeric: tabular-nums;
-}
-
-.fn-mensual {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--clay);
-}
 
 /* ---------- Índice de rubros con puntos guía ---------- */
 .indice-rubros {
@@ -3817,6 +3856,102 @@ body.checkout-open {
 }
 
 /* =========================================================
+   PORTADA: LA ENTRADA
+   ---------------------------------------------------------
+   Está arriba de todo, así que no espera al scroll: arranca al cargar.
+   Cada parte sale un toque después que la anterior (el --d del HTML), y el
+   ojo termina donde queremos, en los botones.
+
+   TODO adentro de "no-preference": si el visitante configuró su celular
+   para ver menos movimiento, no se mueve absolutamente nada.
+   ========================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  /* El título se excluye del grupo y se animan sus renglones uno por uno:
+     si se movieran los dos, los hijos arrastrarían el movimiento del padre */
+  .pt-anima > *:not(.pt-titulo),
+  .pt-anima .pt-titulo > * {
+    animation: pt-entrar 0.75s var(--ease) var(--d, 0s) both;
+  }
+
+  @keyframes pt-entrar {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* El número entra con un rebotecito y después le pasa un brillo cada
+     tanto, como el reflejo sobre una letra de metal */
+  .pt-anima .pt-l1 {
+    animation:
+      pt-numero 0.8s var(--bounce) var(--d, 0s) both,
+      pt-brillo 7s ease-in-out 2s infinite;
+  }
+
+  @keyframes pt-numero {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.86);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* El brillo se hace con un degradado recortado contra el texto. Si el
+     navegador no sabe hacerlo, no entra acá y el número queda violeta y
+     quieto: nunca invisible. */
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .pt-anima .pt-l1 {
+      background-image: linear-gradient(
+        100deg,
+        var(--clay) 40%,
+        var(--clay-hover) 47%,
+        #9d7ef0 50%,
+        var(--clay-hover) 53%,
+        var(--clay) 60%
+      );
+      background-size: 320% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    @keyframes pt-brillo {
+      0%,
+      72% {
+        background-position: 100% 0;
+      }
+      100% {
+        background-position: 0 0;
+      }
+    }
+  }
+
+  /* El sello de la esquina ya viene rotado: se le anima solo la opacidad,
+     porque tocarle el transform lo enderezaría */
+  .portada .pt-sello {
+    animation: pt-asomar 1.1s var(--ease) 0.6s both;
+  }
+
+  @keyframes pt-asomar {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* =========================================================
    CAPA LIMPIA — todo redondeado, aire y transiciones suaves
    Nada de filetes duros ni sellos torcidos: la separación la
    hace el espacio y un cambio muy leve de fondo.
@@ -3847,39 +3982,6 @@ body.checkout-open {
 }
 
 /* ---------- Lista de precios: tarjetas flotando, sin filetes ---------- */
-/* ---------- Ficha del Negocio Mayorista ---------- */
-.ficha-negocio {
-  border: 0;
-  border-radius: var(--radius-card);
-  box-shadow: var(--sh-md);
-  margin-top: 2rem;
-}
-
-.fn-tapa {
-  background: linear-gradient(140deg, var(--clay), var(--clay-dark));
-  padding: 1.8rem 1.75rem 1.4rem;
-}
-
-.fn-etiqueta {
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--clay-dark);
-  padding: 0.28rem 0.85rem;
-}
-
-.fn-info {
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.fn-lista {
-  padding: 1.5rem 1.75rem;
-}
-
-.fn-pie {
-  padding: 1.4rem 1.75rem 1.6rem;
-  border-top: 1px solid var(--line);
-  background: var(--card-2);
-}
 
 /* ---------- Índice de rubros: pastillas, no renglones ---------- */
 .indice-rubros {
@@ -4016,471 +4118,56 @@ body.checkout-open {
     transform: none;
   }
   .pack-card:hover,
-  .indice-rubros li:hover,
-  .benefit-card:hover,
-  .step-card:hover,
-  .testimonio:hover,
-  .medio:hover {
+.indice-rubros li:hover,
+.benefit-card:hover,
+.step-card:hover,
+.testimonio:hover,
+.medio:hover {
     transform: none;
   }
 }
 
 /* =========================================================
-   PORTADA EN DOS COLUMNAS + VISTA PREVIA ANIMADA
+   PORTADA
+   ---------------------------------------------------------
+   Antes tenía dos columnas: el texto a la izquierda y una ficha con una lista
+   de proveedores de mentira a la derecha. La ficha se sacó, así que acá va una
+   sola columna centrada. Con el texto solo pegado a la izquierda y media
+   pantalla vacía al lado quedaba descolgado.
    ========================================================= */
 .pt-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
+  justify-items: center;
+}
+
+.pt-izq {
+  max-width: 46rem;
+  text-align: center;
+}
+
+.pt-izq .pt-titulo {
   align-items: center;
 }
 
-@media (min-width: 980px) {
-  .pt-grid {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: 3.5rem;
-  }
+.pt-izq .pt-l1 {
+  align-self: center;
 }
 
 .pt-izq .pt-bajada {
   margin-bottom: 2rem;
+  margin-inline: auto;
 }
 
-.pt-der {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.pt-izq .pt-acciones {
+  justify-content: center;
 }
 
-/* ---------- El escenario de la tarjeta ---------- */
-/* El padding deja lugar a los chips que cuelgan y al recorrido del flote */
-.pt-visual {
-  position: relative;
-  padding: 3.1rem 1.35rem 2.35rem;
-  isolation: isolate;
-}
-
-/* Dos manchas violetas que respiran detrás de la tarjeta */
-.pt-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(38px);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.pt-blob-a {
-  width: 62%;
-  aspect-ratio: 1;
-  top: -8%;
-  left: -6%;
-  background: rgba(109, 75, 216, 0.28);
-  animation: pt-respirar 9s ease-in-out infinite;
-}
-
-.pt-blob-b {
-  width: 52%;
-  aspect-ratio: 1;
-  bottom: -6%;
-  right: -4%;
-  background: rgba(47, 145, 200, 0.22);
-  animation: pt-respirar 11s ease-in-out infinite reverse;
-}
-
-@keyframes pt-respirar {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(6%, -5%) scale(1.14);
-  }
-}
-
-/* ---------- La tarjeta ----------
-   El flote vive en el marco, no en la tarjeta: así los chips (que son hijos
-   del marco) se mueven pegados a ella en vez de quedar sueltos en el aire. */
-.pt-marco {
-  position: relative;
-  animation: pt-flotar 7s ease-in-out infinite;
-}
-
-.pt-tarjeta {
-  position: relative;
-  background: var(--card);
-  border-radius: var(--radius-card);
-  box-shadow: 0 12px 30px -12px rgba(80, 55, 160, 0.22),
-    0 40px 70px -40px rgba(80, 55, 160, 0.4);
-  overflow: hidden;
-}
-
-@keyframes pt-flotar {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-.ptt-top {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.85rem 1.1rem;
-  background: var(--cream-2);
-}
-
-.ptt-punto {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--line-2);
-  flex-shrink: 0;
-}
-
-.ptt-punto:first-child {
-  background: var(--clay);
-  opacity: 0.5;
-}
-
-.ptt-arch {
-  margin-left: 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--muted);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ptt-cuerpo {
-  padding: 1.35rem 1.4rem 1.5rem;
-}
-
-.ptt-titulo {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.2;
-}
-
-.ptt-sub {
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin-bottom: 1.1rem;
-}
-
-/* ---------- Las filas se van encendiendo de a una ---------- */
-.ptt-filas {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.ptt-filas li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.55rem 0.7rem;
-  border-radius: 12px;
-  font-size: 0.88rem;
-  color: var(--body);
-  /* El ciclo dura 8s y hay 5 filas: cada una brilla 1,6s por turno */
-  animation: pt-encender 8s var(--ease) infinite;
-  animation-delay: var(--d, 0s);
-}
-
-.ptt-filas b {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--clay);
-  font-variant-numeric: tabular-nums;
-}
-
-@keyframes pt-encender {
-  0%,
-  20%,
-  100% {
-    background: transparent;
-    transform: translateX(0);
-  }
-  4%,
-  16% {
-    background: var(--clay-tint);
-    transform: translateX(4px);
-  }
-}
-
-.ptt-pie {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 1.1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
-}
-
-.ptt-barra {
-  flex: 1;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--cream-2);
-  overflow: hidden;
-}
-
-.ptt-barra-fill {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--clay), #4fa8d8);
-  animation: pt-cargar 8s var(--ease) infinite;
-}
-
-@keyframes pt-cargar {
-  0% {
-    width: 12%;
-  }
-  85%,
-  100% {
-    width: 100%;
-  }
-}
-
-.ptt-mas {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-/* Los chips flotantes se fueron: quedaban despegados de la tarjeta y el dato
-   ("te llega al instante") ya está en la tira de abajo. */
-
-@media (max-width: 560px) {
-  .pt-visual {
-    padding: 1.25rem 0.35rem 1.5rem;
-  }
-  .ptt-hoja {
-    padding: 1.2rem 0.95rem 1.15rem;
-    background-position: 0.35rem 1.2rem;
-    background-size: 3px calc(100% - 2.35rem);
-  }
-  .ptt-sello {
-    top: 1rem;
-    right: 0.75rem;
-  }
-  .ptt-filas li {
-    gap: 0.6rem;
-    padding: 0.6rem 0.4rem;
-  }
-  .ptf-ini {
-    width: 28px;
-    height: 28px;
-    border-radius: 9px;
-    font-size: 0.66rem;
-  }
-  .ptf-tel {
-    font-size: 0.7rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pt-blob,
-  .pt-marco,
-  .ptt-filas li,
-  .ptt-barra-fill {
-    animation: none;
-  }
-  .ptt-barra-fill {
-    width: 100%;
-  }
-}
 
 /* =========================================================
-   AJUSTES: PDF con contactos, botón subir a la izquierda,
-   y el +1000 con fondo remarcado
+   AJUSTES: el +1000 y el botón de subir
    ========================================================= */
-
-/* ---------- Barra superior tipo visor de PDF ---------- */
-.ptt-top {
-  gap: 0.6rem;
-  padding: 0.7rem 1rem;
-  background: var(--ink);
-}
-
-.ptt-pdf {
-  font-family: var(--font-heading);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--card);
-  background: #d3402f;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.ptt-top .ptt-arch {
-  margin-left: 0;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.73rem;
-}
-
-.ptt-pag {
-  margin-left: auto;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
-  flex-shrink: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-/* ---------- La hoja del PDF ---------- */
-.ptt-hoja {
-  position: relative;
-  padding: 1.7rem 1.5rem 1.6rem;
-  background: var(--card);
-  /* Renglones tenues, como una hoja impresa de verdad */
-  background-image: linear-gradient(
-    90deg,
-    var(--clay-tint) 0 3px,
-    transparent 3px
-  );
-  background-repeat: no-repeat;
-  background-position: 0.55rem 1.7rem;
-  background-size: 3px calc(100% - 3.3rem);
-}
-
-/* Sello de agua en la esquina, girado como un timbre */
-.ptt-sello {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.2rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.28rem;
-  padding: 0.28rem 0.55rem;
-  border: 1.5px solid rgba(37, 122, 81, 0.35);
-  border-radius: 7px;
-  font-size: 0.58rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(37, 122, 81, 0.62);
-  transform: rotate(-7deg);
-  pointer-events: none;
-}
-
-.ptt-sello b {
-  font-size: 0.7rem;
-  line-height: 1;
-}
-
-/* Etiqueta de la sección, arriba del título */
-.ptt-tag {
-  display: inline-block;
-  margin-bottom: 0.5rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-pill);
-  background: var(--clay-tint);
-  color: var(--clay-dark);
-  font-family: var(--font-heading);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.ptt-encabezado {
-  padding-bottom: 1rem;
-  margin-bottom: 0.85rem;
-  border-bottom: 2px solid var(--clay-tint);
-}
-
-.ptt-encabezado .ptt-sub {
-  margin-bottom: 0;
-}
-
-/* ---------- Cada contacto ---------- */
-.ptt-filas {
-  gap: 0.3rem;
-}
-
-.ptt-filas li {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.7rem 0.65rem;
-}
-
-/* Línea finita entre contactos, menos en el último */
-.ptt-filas li + li {
-  box-shadow: 0 -1px 0 var(--line) inset;
-}
-
-.ptf-ini {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  background: var(--clay-tint);
-  color: var(--clay-dark);
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.ptf-datos {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.ptf-datos b {
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.25;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ptf-datos small {
-  font-size: 0.7rem;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ptf-tel {
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: var(--clay);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* ---------- Pie de la hoja ---------- */
-.ptt-pie {
-  margin-top: 1.25rem;
-  padding-top: 1.05rem;
-}
-
-.ptt-mas {
-  font-size: 0.72rem;
-}
-
 
 /* El +1000 va limpio, sin fondo detrás */
 .pt-l1 {
@@ -5026,15 +4713,15 @@ body.checkout-open {
 
 @media (prefers-reduced-motion: reduce) {
   .pack-card.es-destacado::before,
-  .pk-off,
-  .packs-grid.is-visible .pack-card,
-  .packs-grid.is-visible .pk-lista li::after {
+.pk-off,
+.packs-grid.is-visible .pack-card,
+.packs-grid.is-visible .pk-lista li::after {
     animation: none;
   }
 
   .pack-card:hover,
-  .pack-card:hover .pk-num,
-  .pack-card:hover .btn svg {
+.pack-card:hover .pk-num,
+.pack-card:hover .btn svg {
     transform: none;
   }
 
@@ -5048,6 +4735,43 @@ body.checkout-open {
    ========================================================= */
 
 /* Linea siempre visible, discreta: esta ahi si la necesitan */
+/* Dónde va a aparecer el pack en el correo. Mismo formato que el aviso de
+   ayuda de abajo, pero en violeta: no es un problema, es una instrucción. */
+.ck-buscar {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-card-sm);
+  background: var(--clay-tint);
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.ck-buscar svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--clay);
+}
+
+.ck-buscar strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--ink);
+}
+
+.ck-buscar p {
+  margin: 0;
+}
+
+.ck-buscar b {
+  color: var(--clay-dark);
+}
+
 .ck-ayuda-pago {
   display: flex;
   align-items: flex-start;
@@ -5142,8 +4866,6 @@ body.checkout-open {
 }
 
 
-
-
 /* =========================================================
    PACKS: escalera de beneficios y sello de pago unico
    ========================================================= */
@@ -5192,76 +4914,7 @@ body.checkout-open {
 }
 
 /* ---------- Negocio Mayorista: ejemplos y aclaracion ---------- */
-.fn-ejemplos {
-  padding: 0 1.75rem 0.25rem;
-}
 
-.fn-ejemplos-tit {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-family: var(--font-heading);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.fn-ejemplos-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.fn-ejemplos-links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-pill);
-  background: var(--clay-tint);
-  color: var(--clay-dark);
-  font-size: 0.8rem;
-  font-weight: 700;
-  transition: background 0.25s var(--ease), transform 0.25s var(--bounce);
-}
-
-.fn-ejemplos-links a:hover,
-.fn-ejemplos-links a:focus-visible {
-  background: var(--clay);
-  color: var(--card);
-  transform: translateY(-2px);
-}
-
-.fn-ejemplos-links svg {
-  width: 13px;
-  height: 13px;
-}
-
-.fn-aclaracion {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.55rem;
-  margin: 1rem 1.75rem 0;
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius-card-sm);
-  background: var(--gold-tint);
-  font-size: 0.82rem;
-  line-height: 1.5;
-  color: var(--body);
-}
-
-.fn-aclaracion svg {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
-  margin-top: 0.12rem;
-  color: var(--gold);
-}
-
-.fn-aclaracion strong {
-  color: var(--ink);
-}
 
 .info-modal-ej {
   margin-bottom: 1rem;
@@ -5274,16 +4927,6 @@ body.checkout-open {
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 2px;
-}
-
-@media (max-width: 620px) {
-  .fn-ejemplos {
-    padding-inline: 1.25rem;
-  }
-
-  .fn-aclaracion {
-    margin-inline: 1.25rem;
-  }
 }
 
 /* =========================================================
@@ -5534,121 +5177,293 @@ body.checkout-open {
 
 @media (prefers-reduced-motion: reduce) {
   .af-anuncio,
-  .af-anuncio.esta-visible {
+.af-anuncio.esta-visible {
     transform: none;
     transition: opacity 0.2s linear;
   }
 
   .af-btn:hover,
-  .af-btn-fuerte:hover svg {
+.af-btn-fuerte:hover svg {
     transform: none;
   }
 }
 
 /* =========================================================
-   ESPACIO PUBLICITARIO
+   LOS OTROS TRES PRODUCTOS
    ---------------------------------------------------------
-   No es una lista de proveedores, es un servicio: por eso va afuera de la
-   grilla de packs. Muestra una maqueta de la notificacion real, porque
-   "asi se va a ver tu negocio" vende mucho mas que describirlo.
+   Ebook, Espacio Publicitario y Negocio Mayorista. Ninguno es una lista de
+   proveedores, así que no van en la grilla de packs: ahí se compararían
+   contra el 100 / 500 / 1000 y el ebook parecería "el pack más barato".
+
+   Antes eran tres fichas anchas, una abajo de la otra, cada una con su
+   propio diseño. En computadora eso ocupaba tres pantallas y no se podían
+   comparar. Ahora son tres tarjetas del mismo alto, una al lado de la otra.
    ========================================================= */
-.ficha-pub {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.75rem;
-  margin-top: 2rem;
-  padding: clamp(1.5rem, 3.5vw, 2.25rem);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  box-shadow: var(--sh-sm);
+.extras-cab {
+  margin: clamp(3rem, 6vw, 4.5rem) 0 1.5rem;
+  text-align: center;
 }
 
-@media (min-width: 860px) {
-  .ficha-pub {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
-    gap: 2.5rem;
-    align-items: center;
+.extras-cab h3 {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  margin-bottom: 0.35rem;
+}
+
+.extras-cab p {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.extras-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .extras-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
   }
 }
 
-.fp-etiqueta {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: var(--radius-pill);
-  background: var(--gold-tint);
-  color: var(--gold);
-  font-family: var(--font-heading);
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.fp-info h3 {
-  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
-  line-height: 1.2;
-  margin-bottom: 0.6rem;
-}
-
-.fp-info > p {
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: var(--muted);
-  margin-bottom: 1.1rem;
-  max-width: 48ch;
-}
-
-.fp-lista {
+.extra {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  padding: clamp(1.4rem, 2.6vw, 1.85rem);
+  background: var(--card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--sh-sm);
+  transition: transform 0.3s var(--bounce), box-shadow 0.3s var(--ease);
 }
 
-.fp-lista li {
-  position: relative;
-  padding-left: 1.75rem;
+.extra:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sh-md);
+}
+
+/* La más cara va remarcada, igual que el Pack 500 en la grilla de arriba */
+.extra.es-destacado {
+  background: var(--clay-tint);
+  box-shadow: var(--sh-md);
+}
+
+.ex-sello {
+  position: absolute;
+  top: -0.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background: var(--clay);
+  color: var(--card);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.ex-icono {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 0.9rem;
+  border-radius: 14px;
+  background: var(--cream-2);
+  color: var(--clay);
+}
+
+.extra.es-destacado .ex-icono {
+  background: var(--card);
+}
+
+.ex-icono svg {
+  width: 23px;
+  height: 23px;
+}
+
+.ex-etiqueta {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.extra h4 {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.ex-bajada {
   font-size: 0.88rem;
-  color: var(--body);
-  line-height: 1.4;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-bottom: 1.1rem;
 }
 
-.fp-lista li::before {
+.ex-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.ex-lista li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--body);
+}
+
+.ex-lista li::before {
   content: "";
   position: absolute;
   left: 0;
   top: 0.05em;
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 1.1rem;
+  height: 1.1rem;
   border-radius: 50%;
   background: var(--sage-tint);
 }
 
-.fp-lista li::after {
+.ex-lista li::after {
   content: "";
   position: absolute;
-  left: 0.4rem;
-  top: 0.3em;
-  width: 0.28rem;
-  height: 0.52rem;
+  left: 0.38rem;
+  top: 0.28em;
+  width: 0.26rem;
+  height: 0.5rem;
   border-right: 2px solid var(--sage);
   border-bottom: 2px solid var(--sage);
   transform: rotate(45deg);
 }
 
-/* ---------- Maqueta de la notificacion ---------- */
-.fp-muestra-tit {
+/* ---------- Los ejemplos del Negocio Mayorista ---------- */
+.ex-ejemplos {
+  margin-bottom: 1rem;
+}
+
+.ex-ejemplos-tit {
   display: block;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.45rem;
   font-family: var(--font-heading);
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 0.64rem;
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  text-align: center;
 }
+
+.ex-ejemplos-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ex-ejemplos-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  box-shadow: var(--sh-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clay-dark);
+  transition: transform 0.25s var(--bounce), background 0.2s var(--ease);
+}
+
+.ex-ejemplos-links a:hover,
+.ex-ejemplos-links a:focus-visible {
+  transform: translateY(-2px);
+  background: var(--clay);
+  color: var(--card);
+}
+
+.ex-ejemplos-links svg {
+  width: 13px;
+  height: 13px;
+}
+
+.ex-aclaracion {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-card-sm);
+  background: var(--gold-tint);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.ex-aclaracion svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--gold);
+}
+
+.ex-aclaracion strong {
+  color: var(--ink);
+}
+
+/* ---------- El pie: precio y botón ----------
+   margin-top: auto lo empuja abajo de todo. Como las tres tarjetas miden lo
+   mismo de alto, los tres botones quedan alineados aunque una tenga más
+   texto que las otras. */
+.ex-pie {
+  margin-top: auto;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+.extra.es-destacado .ex-pie {
+  border-top-color: rgba(108, 60, 224, 0.16);
+}
+
+.ex-precio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  margin-bottom: 0.85rem;
+}
+
+.ex-precio strong {
+  font-family: var(--font-heading);
+  font-size: clamp(1.7rem, 3.4vw, 2.1rem);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.ex-mensual {
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clay-dark);
+}
+
+/* ---------- Maqueta de la notificacion ---------- */
+
 
 .fp-demo {
   padding: 0.85rem 0.9rem 0.9rem;
@@ -5658,6 +5473,11 @@ body.checkout-open {
   box-shadow: var(--sh-sm);
   /* Flota apenas, para que se lea como una maqueta y no como algo real */
   animation: fp-flotar 5s ease-in-out infinite;
+}
+
+/* Adentro de la tarjeta angosta necesita su propio aire */
+.extra .fp-demo {
+  margin-bottom: 1.1rem;
 }
 
 @keyframes fp-flotar {
@@ -5761,33 +5581,7 @@ body.checkout-open {
 }
 
 /* ---------- Precio y boton ---------- */
-.fp-compra {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-}
 
-.fp-precio {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
-  margin-bottom: 0.9rem;
-}
-
-.fp-precio strong {
-  font-family: var(--font-heading);
-  font-size: clamp(1.9rem, 4.5vw, 2.3rem);
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-}
-
-.fp-precio .pk-unico {
-  align-self: center;
-}
 
 @media (prefers-reduced-motion: reduce) {
   .fp-demo {
@@ -5903,3 +5697,5 @@ body.checkout-open {
     font-size: 0.68rem;
   }
 }
+
+

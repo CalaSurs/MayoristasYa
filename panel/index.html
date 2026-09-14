@@ -228,8 +228,8 @@
 
   .nav-inferior {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    padding: 6px 6px calc(env(safe-area-inset-bottom) + 6px);
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    padding: 6px 4px calc(env(safe-area-inset-bottom) + 6px);
     background: var(--tarjeta);
     background: color-mix(in srgb, var(--tarjeta) 92%, transparent);
     -webkit-backdrop-filter: blur(14px);
@@ -238,10 +238,11 @@
   }
   .nav-btn {
     display: flex; flex-direction: column; align-items: center; gap: 2px;
-    padding: 4px 2px; border: 0; background: transparent; border-radius: 12px;
-    color: var(--suave); font-size: 11px; font-weight: 700;
+    padding: 4px 1px; border: 0; background: transparent; border-radius: 12px;
+    color: var(--suave); font-size: 10.5px; font-weight: 700;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
   }
-  .nav-ic { display: grid; place-items: center; width: 52px; height: 30px; border-radius: 999px; transition: background 0.2s var(--ease); }
+  .nav-ic { display: grid; place-items: center; width: 100%; max-width: 48px; height: 30px; border-radius: 999px; transition: background 0.2s var(--ease); }
   .nav-ic svg { width: 21px; height: 21px; }
   .nav-btn[aria-current="page"] { color: var(--acento-tinta); }
   .nav-btn[aria-current="page"] .nav-ic { background: var(--acento-suave); }
@@ -572,6 +573,67 @@
   .hoja-nota { margin: 12px 0 0; padding: 12px; border-radius: 14px; background: var(--fondo); font-size: 13px; }
   .hoja-nota.alerta-nota { background: var(--ambar-suave); color: var(--ambar); font-weight: 600; }
 
+  .hoja-acciones { display: flex; gap: 8px; margin-top: 14px; }
+  .hoja-acciones .btn-sec { flex: 1; justify-content: center; }
+
+  /* ---------- Enviar un pack a mano ---------- */
+  .envio-grid { display: grid; gap: 12px; }
+  @media (min-width: 1000px) { .envio-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 320px); align-items: start; } }
+
+  .campo-ancho { margin-bottom: 14px; }
+  .campo-ancho label { display: block; font-size: 13px; font-weight: 700; color: var(--tinta); margin-bottom: 6px; }
+  .campo-ancho .pista { display: block; margin-top: 5px; font-size: 12px; color: var(--suave); font-weight: 500; }
+  .campo-ancho input, .campo-ancho select {
+    width: 100%; height: 46px; padding: 0 12px;
+    border: 1.5px solid var(--linea-2); border-radius: 13px;
+    background: var(--tarjeta); color: var(--tinta);
+    /* 16px obligatorio: con menos, el iPhone hace zoom al tocar el campo */
+    font: 700 16px/1 var(--fuente);
+    -webkit-appearance: none; appearance: none;
+  }
+  .campo-ancho select { padding-right: 34px; background-image: none; }
+  .campo-ancho input:focus, .campo-ancho select:focus {
+    outline: none; border-color: var(--acento); box-shadow: 0 0 0 4px var(--acento-suave);
+  }
+  .campo-ancho input.mal, .campo-ancho select.mal { border-color: var(--rojo); }
+  .campo-ancho .mensaje-mal { display: block; margin-top: 5px; font-size: 12px; font-weight: 700; color: var(--rojo); }
+  .campo-ancho .mensaje-mal:empty { display: none; }
+
+  .select-ancho { position: relative; }
+  .select-ancho > svg {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; color: var(--suave); pointer-events: none;
+  }
+
+  .envio-resumen {
+    margin: 0 0 14px; padding: 13px 14px; border-radius: 14px;
+    background: var(--fondo); font-size: 13px; line-height: 1.5; color: var(--suave);
+  }
+  .envio-resumen strong { color: var(--tinta); }
+
+  .envio-aviso {
+    display: flex; gap: 9px; margin: 0 0 14px; padding: 12px 13px; border-radius: 14px;
+    background: var(--ambar-suave); color: var(--ambar); font-size: 12.5px;
+    line-height: 1.5; font-weight: 600;
+  }
+  .envio-aviso svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px; }
+  .envio-aviso[hidden] { display: none; }
+
+  .btn-enviar { width: 100%; height: 50px; }
+
+  .envio-ayuda { margin: 0; font-size: 12px; line-height: 1.6; color: var(--suave); }
+  .envio-ayuda + .envio-ayuda { margin-top: 10px; }
+
+  .envio-hechos { list-style: none; margin: 10px 0 0; display: flex; flex-direction: column; gap: 8px; }
+  .envio-hechos li {
+    display: flex; gap: 9px; align-items: flex-start;
+    padding: 10px 12px; border-radius: 13px; background: var(--fondo); font-size: 12.5px;
+  }
+  .envio-hechos .ok { color: var(--verde); flex-shrink: 0; }
+  .envio-hechos .ok svg { width: 16px; height: 16px; }
+  .envio-hechos b { display: block; color: var(--tinta); }
+  .envio-hechos span { color: var(--suave); }
+
   /* ---------- Aviso flotante ---------- */
   .toast {
     position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 86px); z-index: 70;
@@ -654,6 +716,10 @@
       <button type="button" class="nav-lat" data-seccion="productos">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 9-4 9 4-9 4-9-4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
         Productos
+      </button>
+      <button type="button" class="nav-lat" data-seccion="enviar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10.5 13.5"/><path d="M21 3 14.5 21l-4-7.5L3 9.5Z"/></svg>
+        Enviar
       </button>
       <button type="button" class="nav-lat" data-seccion="ajustes">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>
@@ -859,6 +925,91 @@
         </article>
       </section>
 
+      <!-- ===================== ENVIAR ===================== -->
+      <section class="seccion" id="sec-enviar" hidden>
+        <div class="envio-grid">
+          <article class="tarjeta">
+            <div class="tarjeta-cab">
+              <h2>Mandar un pack</h2>
+              <small>Le llega el mismo mail que en una compra</small>
+            </div>
+
+            <form id="formEnvio" novalidate>
+              <div class="campo-ancho">
+                <label for="envPack">Qué le mandás</label>
+                <div class="select-ancho">
+                  <select id="envPack"></select>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+                <span class="mensaje-mal" id="envPackMal"></span>
+              </div>
+
+              <div class="campo-ancho">
+                <label for="envNombre">A nombre de quién</label>
+                <input type="text" id="envNombre" autocomplete="off" autocapitalize="words"
+                       enterkeyhint="next" placeholder="Ana Pérez">
+                <span class="pista">Va en el saludo del mail: “Hola Ana”.</span>
+                <span class="mensaje-mal" id="envNombreMal"></span>
+              </div>
+
+              <div class="campo-ancho">
+                <label for="envEmail">A qué correo</label>
+                <input type="email" id="envEmail" autocomplete="off" inputmode="email"
+                       autocapitalize="off" autocorrect="off" spellcheck="false"
+                       enterkeyhint="done" placeholder="ana@gmail.com">
+                <span class="mensaje-mal" id="envEmailMal"></span>
+              </div>
+
+              <div class="campo-ancho">
+                <label for="envMonto">Cuánto te pagó</label>
+                <input type="text" id="envMonto" inputmode="numeric" autocomplete="off" placeholder="0">
+                <span class="pista">Se carga solo con el precio del pack. Poné <b>0</b> si es un regalo o una prueba.</span>
+              </div>
+
+              <div class="ajuste">
+                <div class="ajuste-txt">
+                  <strong id="lblAnotar">Anotarlo en la planilla</strong>
+                  <span>Si lo apagás, el mail sale igual pero no cuenta como venta.</span>
+                </div>
+                <button type="button" class="switch" id="swAnotar" role="switch" aria-checked="true" aria-labelledby="lblAnotar"></button>
+              </div>
+
+              <p class="envio-resumen" id="envResumen"></p>
+
+              <p class="envio-aviso" id="envAviso" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg>
+                <span id="envAvisoTexto"></span>
+              </p>
+
+              <button type="submit" class="btn btn-primario btn-enviar" id="btnEnviar">Enviar ahora</button>
+            </form>
+          </article>
+
+          <article class="tarjeta">
+            <h2 class="ajustes-tit">Para qué sirve</h2>
+            <p class="envio-ayuda">
+              Para cuando te pagaron <b>por fuera de la página</b>: una transferencia,
+              efectivo, o una venta que cerraste por WhatsApp. Le mandás el pack sin
+              tener que tocar la planilla a mano.
+            </p>
+            <p class="envio-ayuda">
+              Si el pedido <b>ya está en la planilla</b> y el mail se perdió, no uses
+              esto: entrá a <b>Ventas</b>, tocá el pedido y usá <b>Reenviar el mail</b>.
+              Así no te queda la venta duplicada.
+            </p>
+            <p class="envio-ayuda">
+              <b>Gmail deja mandar 100 mails por día.</b> Cada envío cuenta uno, así
+              que si algún día se corta, es por eso: espera hasta el otro día.
+            </p>
+
+            <h2 class="ajustes-tit" style="margin-top:18px">Últimos que mandaste</h2>
+            <ul class="envio-hechos" id="envHechos">
+              <li><span>Todavía no mandaste ninguno desde acá.</span></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
       <!-- ===================== AJUSTES ===================== -->
       <section class="seccion" id="sec-ajustes" hidden>
         <div class="ajustes-grid">
@@ -959,6 +1110,10 @@
       <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 9-4 9 4-9 4-9-4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></span>
       Productos
     </button>
+    <button type="button" class="nav-btn" data-seccion="enviar">
+      <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10.5 13.5"/><path d="M21 3 14.5 21l-4-7.5L3 9.5Z"/></svg></span>
+      Enviar
+    </button>
     <button type="button" class="nav-btn" data-seccion="ajustes">
       <span class="nav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></span>
       Ajustes
@@ -987,6 +1142,12 @@
     <div><dt>Referencia</dt><dd class="hoja-ref"><span class="num" id="hojaRef"></span><button type="button" class="link" id="hojaCopiar">Copiar</button></dd></div>
   </dl>
   <p class="hoja-nota" id="hojaNota"></p>
+  <div class="hoja-acciones" id="hojaAcciones">
+    <button type="button" class="btn-sec" id="hojaReenviar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10.5 13.5"/><path d="M21 3 14.5 21l-4-7.5L3 9.5Z"/></svg>
+      <span id="hojaReenviarTxt">Reenviar el mail</span>
+    </button>
+  </div>
 </section>
 
 <!-- Aviso flotante -->
@@ -1013,7 +1174,12 @@
   var LLAVE_PREFS = "mwPanelPrefs";
   var ZONA = "America/Argentina/Buenos_Aires";
   var DIA_MS = 86400000;
-  var SECCIONES = { resumen: "Resumen", ventas: "Ventas", productos: "Productos", ajustes: "Ajustes" };
+  var SECCIONES = {
+    resumen: "Resumen", ventas: "Ventas", productos: "Productos",
+    /* Corto a propósito: en la barra de arriba, en un celular angosto,
+       "Enviar un pack" se cortaba en "Enviar…" */
+    enviar: "Enviar", ajustes: "Ajustes"
+  };
   var RANGOS = ["hoy", "7d", "30d", "mes", "todo", "personal"];
 
   function $(id) { return document.getElementById(id); }
@@ -1086,7 +1252,14 @@
     conocidas: null, resaltar: {}, sinVer: 0, timer: null, firma: "",
     barraActiva: -1, demoLista: [], demoTicks: 0,
     filtro: "todas", pack: "", busqueda: "", mostrar: POR_PAGINA,
-    hojaAbierta: false, focoPrevio: null
+    hojaAbierta: false, focoPrevio: null,
+    /* Envíos a mano: la lista de packs viene del script, así no hay precios
+       escritos en dos lados. "enviados" es solo de esta sesión, para ver qué
+       mandaste recién sin tener que ir a buscarlo a Ventas. */
+    packs: [], enviando: false, anotar: true, montoTocado: false, enviados: [],
+    /* Las órdenes que creaste vos desde acá. Sirven para NO avisarte "nueva
+       venta" con sonido y vibración por un mail que acabás de mandar. */
+    propios: {}
   };
   var tituloBase = document.title;
 
@@ -1118,11 +1291,14 @@
   }
 
   function codigoPack(nombre) {
-    var digitos = String(nombre).match(/\d+/);
-    if (digitos) return digitos[0];
-    var n = String(nombre).toLowerCase();
+    var n = sinAcentos(nombre);
+    /* Lo que no es un pack numerado va primero: "De 0 a tu primer millón"
+       tiene un 0 adentro y si no, el ícono quedaría como un pack "0". */
     if (n.indexOf("public") > -1) return "PUB";
     if (n.indexOf("negocio") > -1) return "NEG";
+    if (n.indexOf("millon") > -1 || n.indexOf("ebook") > -1) return "LIB";
+    var digitos = String(nombre).match(/\d+/);
+    if (digitos) return digitos[0];
     return String(nombre).slice(0, 3).toUpperCase() || "?";
   }
 
@@ -1186,7 +1362,9 @@
     /* Venta nueva = pagada que antes no lo estaba (fila nueva, o pedido
        pendiente que Mercado Pago aprobó). La primera carga no avisa. */
     if (st.conocidas) {
-      var nuevas = pedidos.filter(function (x) { return x.pg && !st.conocidas[x.id]; });
+      var nuevas = pedidos.filter(function (x) {
+        return x.pg && !st.conocidas[x.id] && !st.propios[x.id];
+      });
       if (nuevas.length) avisarNuevas(nuevas);
     }
     st.conocidas = {};
@@ -1288,6 +1466,7 @@
     pintarUltimas();
     pintarVentas();
     pintarProductos();
+    pintarEnvio();
     pintarAjustes();
     pintarEstado();
   }
@@ -1817,6 +1996,265 @@
     });
   }
 
+  /* ======================= Enviar un pack a mano =======================
+     El script es el único que sabe los precios y qué packs existen: los manda
+     con los datos y acá solo los mostramos. Si mañana cambiás un precio en
+     Apps Script, el panel se entera solo. */
+  function guardarPacks(lista) {
+    var packs = [];
+    for (var i = 0; i < lista.length; i++) {
+      var p = lista[i];
+      if (!p || !p.id || !p.nombre) continue;
+      packs.push({
+        id: String(p.id).slice(0, 40),
+        nombre: String(p.nombre).slice(0, 60),
+        precio: Math.max(0, Number(p.precio) || 0),
+        listo: p.archivo !== false || p.tipo === "publicidad" || p.tipo === "servicio",
+        tipo: String(p.tipo || "")
+      });
+    }
+    var cambio = packs.length !== st.packs.length;
+    st.packs = packs;
+    if (cambio) llenarPacks();
+    pintarEnvio();
+  }
+
+  function packElegido() {
+    var id = $("envPack").value;
+    for (var i = 0; i < st.packs.length; i++) {
+      if (st.packs[i].id === id) return st.packs[i];
+    }
+    return null;
+  }
+
+  function llenarPacks() {
+    var sel = $("envPack"), antes = sel.value;
+    sel.textContent = "";
+    if (!st.packs.length) {
+      var vacio = el("option", "", "Todavía no cargaron los packs");
+      vacio.value = "";
+      sel.appendChild(vacio);
+      return;
+    }
+    st.packs.forEach(function (p) {
+      var o = el("option", "", p.nombre + " · " + plataReal(p.precio));
+      o.value = p.id;
+      sel.appendChild(o);
+    });
+    sel.value = antes && sel.querySelector('option[value="' + antes + '"]') ? antes : st.packs[0].id;
+    if (!st.montoTocado) ponerMontoDelPack();
+  }
+
+  function ponerMontoDelPack() {
+    var p = packElegido();
+    $("envMonto").value = p ? numero(p.precio) : "";
+  }
+
+  function montoDelForm() {
+    var n = Number(String($("envMonto").value).replace(/\D/g, ""));
+    return isFinite(n) ? Math.min(n, 99999999) : 0;
+  }
+
+  function pintarEnvio() {
+    $("swAnotar").setAttribute("aria-checked", String(st.anotar));
+
+    var p = packElegido();
+    var monto = montoDelForm();
+    var resumen = $("envResumen");
+    resumen.textContent = "";
+
+    if (!p) {
+      resumen.textContent = "Elegí qué querés mandar.";
+    } else {
+      /* Armado con nodos y no con HTML: el nombre del pack sale del script,
+         pero la regla en este panel es que nada de afuera se pinta como HTML. */
+      resumen.appendChild(document.createTextNode("Le va a llegar el mail de "));
+      resumen.appendChild(el("strong", "", p.nombre));
+      resumen.appendChild(document.createTextNode(
+        st.anotar
+          ? monto > 0
+            ? ", y en la planilla queda anotado como una venta de " + plataReal(monto) + "."
+            : ", y en la planilla queda anotado con monto $0 (no suma a tus ingresos)."
+          : ". No se anota en ningún lado."
+      ));
+    }
+
+    var aviso = $("envAviso");
+    if (p && !p.listo) {
+      $("envAvisoTexto").textContent =
+        "Este pack todavía no tiene el archivo cargado en Apps Script, así que el mail " +
+        "no va a poder salir. Subí el PDF a tu Drive y pegá su id en PACKS.";
+      aviso.hidden = false;
+    } else if (st.demo) {
+      $("envAvisoTexto").textContent = "Estás en la demo: acá no se manda ningún mail de verdad.";
+      aviso.hidden = false;
+    } else {
+      aviso.hidden = true;
+    }
+
+    pintarEnviados();
+  }
+
+  function pintarEnviados() {
+    var ul = $("envHechos");
+    ul.textContent = "";
+    if (!st.enviados.length) {
+      ul.appendChild(el("li", "", "Todavía no mandaste ninguno desde acá."));
+      return;
+    }
+    st.enviados.slice(0, 6).forEach(function (e) {
+      var li = el("li");
+      var ic = el("span", "ok");
+      ic.setAttribute("aria-hidden", "true");
+      ic.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>';
+      var txt = el("div");
+      txt.appendChild(el("b", "", e.pack));
+      txt.appendChild(el("span", "", e.email + " · " + fHoraMin.format(e.t)));
+      li.appendChild(ic);
+      li.appendChild(txt);
+      ul.appendChild(li);
+    });
+  }
+
+  function marcarCampo(id, mensaje) {
+    $(id).classList.toggle("mal", !!mensaje);
+    $(id + "Mal").textContent = mensaje || "";
+  }
+
+  function botonEnviando(encendido, texto) {
+    var b = $("btnEnviar");
+    b.disabled = encendido;
+    b.textContent = encendido ? texto || "Mandando…" : "Enviar ahora";
+  }
+
+  function enviarPack() {
+    if (st.enviando) return;
+
+    var p = packElegido();
+    var nombre = $("envNombre").value.trim();
+    var email = $("envEmail").value.trim();
+    var monto = montoDelForm();
+    var fallo = null;
+
+    marcarCampo("envPack", p ? "" : "Elegí un pack.");
+    if (!p) fallo = fallo || "envPack";
+
+    marcarCampo("envNombre", nombre.length >= 2 ? "" : "Poné al menos el nombre.");
+    if (nombre.length < 2) fallo = fallo || "envNombre";
+
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    marcarCampo("envEmail", emailOk ? "" : "Ese correo no es válido.");
+    if (!emailOk) fallo = fallo || "envEmail";
+
+    if (fallo) { $(fallo).focus(); return; }
+
+    var aDonde = p.nombre + "\npara " + nombre + "\na " + email;
+    if (!window.confirm("¿Mandar ahora?\n\n" + aDonde + "\n\nEl mail sale al toque y no se puede deshacer.")) return;
+
+    if (st.demo) {
+      st.enviados.unshift({ pack: p.nombre, email: email, t: Date.now() });
+      pintarEnviados();
+      mostrarToast("Así se vería", "En la demo no se manda ningún mail", "info");
+      return;
+    }
+
+    st.enviando = true;
+    botonEnviando(true);
+
+    llamarApi({
+      action: "enviar",
+      clave: st.clave,
+      pack: p.id,
+      nombre: nombre,
+      email: email,
+      monto: monto,
+      anotar: st.anotar
+    })
+      .then(function (d) {
+        if (d.ok === true) {
+          if (d.ref) st.propios[d.ref] = true;
+          st.enviados.unshift({ pack: d.pack || p.nombre, email: d.email || email, t: Date.now() });
+          $("envNombre").value = "";
+          $("envEmail").value = "";
+          st.montoTocado = false;
+          ponerMontoDelPack();
+          mostrarToast("Mail enviado", (d.pack || p.nombre) + " · " + (d.email || email));
+          pedirDatos(); /* para que la venta aparezca ya mismo en el panel */
+          return;
+        }
+        mostrarToast("No se pudo enviar", textoDeError(d.error), "info");
+        if (d.error === "clave") cerrarSesion("La clave ya no funciona. Pegá la nueva.");
+      })
+      .catch(function () {
+        mostrarToast(
+          "No sabemos si salió",
+          "Se cortó la conexión. Mirá tu casilla de enviados antes de repetirlo.",
+          "info"
+        );
+      })
+      .then(function () {
+        st.enviando = false;
+        botonEnviando(false);
+        pintarEnvio();
+      });
+  }
+
+  function textoDeError(error) {
+    if (error === "pack") return "Falta cargar el archivo de ese pack en Apps Script";
+    if (error === "email") return "El correo no es válido";
+    if (error === "nombre") return "Falta el nombre";
+    if (error === "no_esta") return "Ese pedido ya no está en la planilla";
+    if (error === "envio") return "Gmail lo rechazó. Puede ser el límite de 100 por día";
+    if (error === "sin_configurar") return "Todavía no generaste la clave del panel";
+    if (error === "clave") return "La clave ya no sirve";
+    return "Probá de nuevo en un rato";
+  }
+
+  function reenviarPedido() {
+    if (!pedidoEnHoja || st.enviando) return;
+    var p = pedidoEnHoja;
+
+    if (!p.r) {
+      mostrarToast("Sin número de orden", "Ese pedido es viejo: mandáselo desde Enviar un pack", "info");
+      return;
+    }
+
+    if (st.demo) {
+      mostrarToast("Así se vería", "En la demo no se manda ningún mail", "info");
+      return;
+    }
+
+    if (!window.confirm(
+      "¿Volver a mandarle el mail?\n\n" + p.p + "\nOrden " + p.r +
+      "\n\nVa al mismo correo con el que compró."
+    )) return;
+
+    var boton = $("hojaReenviar");
+    st.enviando = true;
+    boton.disabled = true;
+
+    llamarApi({ action: "reenviar", clave: st.clave, ref: p.r })
+      .then(function (d) {
+        if (d.ok === true) {
+          st.enviados.unshift({ pack: d.pack || p.p, email: d.email || "su correo", t: Date.now() });
+          mostrarToast("Mail reenviado", (d.pack || p.p) + " · " + (d.email || ""));
+          cerrarDetalle();
+          pedirDatos();
+          return;
+        }
+        mostrarToast("No se pudo reenviar", textoDeError(d.error), "info");
+        if (d.error === "clave") cerrarSesion("La clave ya no funciona. Pegá la nueva.");
+      })
+      .catch(function () {
+        mostrarToast("No sabemos si salió", "Se cortó la conexión. Revisá tu casilla de enviados.", "info");
+      })
+      .then(function () {
+        st.enviando = false;
+        boton.disabled = false;
+        pintarEnviados();
+      });
+  }
+
   /* ---------- Ajustes ---------- */
   function pintarAjustes() {
     if (document.activeElement !== $("ajMeta")) $("ajMeta").value = prefs.meta ? numero(prefs.meta) : "";
@@ -1891,6 +2329,13 @@
     } else {
       nota.textContent = "Llegó a la pantalla de pago pero no lo completó. Puede que haya pagado por otro medio o que lo haya abandonado.";
     }
+
+    /* Reenviar solo tiene sentido si el pedido tiene número de orden: es lo
+       único con lo que el script puede encontrar la fila en la planilla. */
+    var reenviable = !!p.r;
+    $("hojaAcciones").hidden = !reenviable;
+    $("hojaReenviar").disabled = false;
+    $("hojaReenviarTxt").textContent = p.en ? "Reenviar el mail" : "Mandarle el mail ahora";
 
     $("hojaFondo").hidden = false;
     $("hoja").hidden = false;
@@ -2060,6 +2505,7 @@
             guardar(LLAVE_CLAVE, st.clave);
             mostrarApp();
           }
+          if (Array.isArray(d.packs)) guardarPacks(d.packs);
           recibir(Array.isArray(d.pedidos) ? d.pedidos : []);
           return;
         }
@@ -2095,6 +2541,39 @@
       });
   }
 
+  /* ======================= Pedirle algo al script =======================
+     Igual que pedirDatos, pero para las acciones que cambian algo (mandar un
+     mail). Devuelve una promesa con lo que respondió el script.
+
+     Sin reintentos a propósito: si no sabemos si el mail salió, reintentar
+     solo puede terminar en que el cliente reciba dos. Ante la duda, avisamos
+     y que la persona decida. */
+  function llamarApi(cuerpo, msTope) {
+    var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var corte = setTimeout(function () { if (ctrl) ctrl.abort(); }, msTope || 30000);
+
+    return fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(cuerpo),
+      cache: "no-store",
+      redirect: "follow",
+      credentials: "omit",
+      signal: ctrl ? ctrl.signal : undefined
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        clearTimeout(corte);
+        return d || {};
+      }, function (e) {
+        clearTimeout(corte);
+        throw e;
+      });
+  }
+
   /* ======================= Entrar, salir y navegar ======================= */
   function mostrarErrorLogin(msg) { var e = $("errorLogin"); e.textContent = msg; e.hidden = false; }
   function ocultarErrorLogin() { $("errorLogin").hidden = true; }
@@ -2110,7 +2589,8 @@
       else b.removeAttribute("aria-current");
     });
     $("tituloSeccion").textContent = SECCIONES[seccion];
-    $("barraPeriodo").hidden = seccion === "ajustes";
+    /* En Ajustes y en Enviar no hay nada que filtrar por fecha */
+    $("barraPeriodo").hidden = seccion === "ajustes" || seccion === "enviar";
     window.scrollTo(0, 0);
     pintarTodo(true);
   }
@@ -2132,6 +2612,12 @@
     st.enCurso = false; st.error = false; st.ultimaOk = 0; st.sinVer = 0;
     st.barraActiva = -1; st.demoLista = []; st.demoTicks = 0;
     st.filtro = "todas"; st.pack = ""; st.busqueda = ""; st.mostrar = POR_PAGINA;
+    st.packs = []; st.enviando = false; st.anotar = true; st.montoTocado = false;
+    st.enviados = []; st.propios = {};
+    $("envNombre").value = ""; $("envEmail").value = ""; $("envMonto").value = "";
+    ["envPack", "envNombre", "envEmail"].forEach(function (id) { marcarCampo(id, ""); });
+    botonEnviando(false);
+    llenarPacks();
     document.title = tituloBase;
     $("btnActualizar").classList.remove("girando");
     cerrarDetalle();
@@ -2214,6 +2700,10 @@
     st.logueado = true;
     st.demoLista = generarDemo();
     st.ultimaOk = Date.now();
+    /* Para que la sección Enviar también se pueda mirar en la demo */
+    guardarPacks(PACKS_DEMO.map(function (p, i) {
+      return { id: "demo-" + i, nombre: p[0], precio: p[1], archivo: true, tipo: "proveedores" };
+    }));
     mostrarApp();
     recibir(st.demoLista);
     programar();
@@ -2363,6 +2853,39 @@
 
   $("btnExportar").addEventListener("click", exportarCSV);
 
+  /* Enviar */
+  $("formEnvio").addEventListener("submit", function (e) {
+    e.preventDefault();
+    enviarPack();
+  });
+
+  $("envPack").addEventListener("change", function () {
+    /* Si todavía no tocó el monto, lo seguimos acompañando con el precio del
+       pack. Apenas lo escribe él, la decisión es suya y no se la pisamos. */
+    if (!st.montoTocado) ponerMontoDelPack();
+    pintarEnvio();
+  });
+
+  $("envMonto").addEventListener("input", function () {
+    st.montoTocado = true;
+    pintarEnvio();
+  });
+
+  $("envMonto").addEventListener("blur", function () {
+    this.value = numero(montoDelForm());
+  });
+
+  ["envNombre", "envEmail"].forEach(function (id) {
+    $(id).addEventListener("input", function () {
+      if ($(id + "Mal").textContent) marcarCampo(id, "");
+    });
+  });
+
+  $("swAnotar").addEventListener("click", function () {
+    st.anotar = !st.anotar;
+    pintarEnvio();
+  });
+
   /* Ajustes */
   function alternarDiscreto() {
     prefs.discreto = !prefs.discreto;
@@ -2429,6 +2952,7 @@
   $("hojaCerrar").addEventListener("click", cerrarDetalle);
   $("hojaFondo").addEventListener("click", cerrarDetalle);
   $("hojaCopiar").addEventListener("click", copiarReferencia);
+  $("hojaReenviar").addEventListener("click", reenviarPedido);
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && st.hojaAbierta) cerrarDetalle();

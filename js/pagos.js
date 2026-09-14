@@ -21,6 +21,31 @@
 
   var enCurso = false;
 
+  /**
+   * Un identificador al azar, distinto para cada compra.
+   *
+   * POR QUÉ HACE FALTA: más abajo el formulario se manda DOS veces (el intento
+   * normal y el plan B). Sin esto, el script anotaba el pedido las dos veces y
+   * la misma compra aparecía duplicada en la planilla. Como los dos envíos
+   * llevan el mismo token, el script reconoce que es una sola compra.
+   */
+  function nuevoToken() {
+    try {
+      if (window.crypto && window.crypto.getRandomValues) {
+        var a = new Uint8Array(8);
+        window.crypto.getRandomValues(a);
+        var s = "";
+        for (var i = 0; i < a.length; i++) s += (a[i] + 256).toString(16).slice(1);
+        return s;
+      }
+    } catch (e) {
+      /* seguimos con el plan de abajo */
+    }
+    return (
+      Date.now().toString(36) + Math.random().toString(36).slice(2, 10)
+    ).replace(/[^a-z0-9]/g, "");
+  }
+
   function crearFormulario(datos, target) {
     var form = document.createElement("form");
     form.method = "POST";
@@ -33,6 +58,7 @@
       pack_id: datos.packId,
       nombre: datos.nombre,
       email: datos.email,
+      token: datos.token,
     };
 
     Object.keys(campos).forEach(function (nombre) {
@@ -72,6 +98,14 @@
     if (!window.mwPagoConfigurado || enCurso) return false;
     enCurso = true;
 
+    /* Se calcula una sola vez y lo comparten los dos envíos de abajo */
+    var envio = {
+      packId: datos.packId,
+      nombre: datos.nombre,
+      email: datos.email,
+      token: nuevoToken(),
+    };
+
     var nombreFrame = "mwPagoFrame";
     var iframe = document.createElement("iframe");
     iframe.name = nombreFrame;
@@ -96,15 +130,16 @@
 
     window.addEventListener("message", alRecibir);
 
-    crearFormulario(datos, nombreFrame).submit();
+    crearFormulario(envio, nombreFrame).submit();
 
     /* Plan B: si en 9 segundos no llegó el link, navegamos a Apps Script
-       como antes. Peor experiencia, pero la venta no se pierde. */
+       como antes. Peor experiencia, pero la venta no se pierde. Va con el
+       mismo token, así el pedido queda anotado una sola vez. */
     window.setTimeout(function () {
       if (listo) return;
       listo = true;
       window.removeEventListener("message", alRecibir);
-      crearFormulario(datos, null).submit();
+      crearFormulario(envio, null).submit();
     }, ESPERA_MS);
 
     return true;

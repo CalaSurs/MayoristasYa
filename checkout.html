@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#6d4bd8">
 <!-- Google Analytics (GA4) - configurar ID en js/analytics.js -->
-<script src="js/analytics.js?v=20260902b" defer></script>
+<script src="js/analytics.js?v=20260914" defer></script>
 <!-- Pago con Mercado Pago - configurar URL en js/pagos.js -->
-<script src="js/pagos.js?v=20260902b" defer></script>
+<script src="js/pagos.js?v=20260914" defer></script>
 <title>Finalizar compra | MayoristasYa.com</title>
 <meta name="description" content="Completá tus datos y elegí cómo pagar tu pack de proveedores mayoristas.">
 <meta name="robots" content="noindex, nofollow">
@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20260902b">
+<link rel="stylesheet" href="css/styles.css?v=20260914">
 </head>
 <body class="checkout-page">
 <a class="skip-link" href="#main">Saltar al contenido principal</a>
@@ -64,9 +64,24 @@
             <label for="ckEmail">Correo electrónico</label>
             <input type="email" id="ckEmail" name="email" autocomplete="email"
                    inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false"
-                   enterkeyhint="done" placeholder="ana@gmail.com" required>
+                   enterkeyhint="next" placeholder="ana@gmail.com" required>
             <span class="field-error" id="ckEmailError" role="alert"></span>
             <span class="ck-ayuda">Acá te mandamos el pack. Revisalo bien antes de pagar.</span>
+          </div>
+
+          <!-- Se escribe dos veces a propósito: si el correo tiene una letra
+               mal, el pack se manda a una casilla que no existe y el comprador
+               se queda esperando algo que nunca va a llegar. -->
+          <div class="ck-campo">
+            <label for="ckEmail2">Repetí tu correo</label>
+            <input type="email" id="ckEmail2" name="email2" autocomplete="off"
+                   inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false"
+                   enterkeyhint="done" placeholder="ana@gmail.com" required>
+            <span class="field-error" id="ckEmail2Error" role="alert"></span>
+            <span class="ck-ok" id="ckEmailOk" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+              Los dos correos coinciden
+            </span>
           </div>
 
           <div class="ck-pagos">
@@ -103,6 +118,18 @@
               <span>¿Se te complicó el pago o no te llegó el pack?
                 <a href="#" id="ckProblemaWsp" target="_blank" rel="noopener">Escribinos por WhatsApp</a> y lo resolvemos al toque.</span>
             </p>
+
+            <!-- Se avisa ANTES de pagar: el que sabe dónde buscarlo no escribe
+                 a las 3 de la mañana pensando que lo estafaron. -->
+            <div class="ck-buscar" id="ckBuscar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <div>
+                <strong>Después de pagar, buscá “MayoristasYa” en tu correo</strong>
+                <p>Te llega como archivo adjunto. Si no lo ves en Recibidos, entrá a tu
+                  correo, tocá la lupa, escribí <b>MayoristasYa</b> y revisá también
+                  <b>spam</b> y <b>promociones</b>.</p>
+              </div>
+            </div>
 
             <p class="ck-legal">
               Al continuar aceptás los <a href="terminos.html">términos y condiciones</a>
@@ -178,6 +205,6 @@
   </div>
 </footer>
 
-<script src="js/checkout.js?v=20260902b" defer></script>
+<script src="js/checkout.js?v=20260914" defer></script>
 </body>
 </html>
