@@ -61,6 +61,18 @@
       token: datos.token,
     };
 
+    /* Negocio Mayorista viene con la ficha de armado (nombre del negocio,
+       rubro, colores...). Viaja como un solo campo en JSON: el script la
+       guarda en la planilla y te la manda por mail. Los demás packs no
+       mandan nada acá. */
+    if (datos.ficha) {
+      try {
+        campos.ficha = JSON.stringify(datos.ficha);
+      } catch (e) {
+        /* si no se puede armar, la compra sigue igual */
+      }
+    }
+
     Object.keys(campos).forEach(function (nombre) {
       var input = document.createElement("input");
       input.type = "hidden";
@@ -103,6 +115,7 @@
       packId: datos.packId,
       nombre: datos.nombre,
       email: datos.email,
+      ficha: datos.ficha,
       token: nuevoToken(),
     };
 

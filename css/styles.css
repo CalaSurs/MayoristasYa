@@ -3987,6 +3987,9 @@ body.checkout-open {
 .indice-rubros {
   display: flex;
   flex-wrap: wrap;
+  /* Centradas: el ultimo renglon casi nunca se llena, y alineadas a la
+     izquierda dejaban una pastilla sola colgando abajo. */
+  justify-content: center;
   gap: 0.65rem;
   border-top: 0;
 }
@@ -5244,9 +5247,9 @@ body.checkout-open {
   box-shadow: var(--sh-md);
 }
 
-/* La más cara va remarcada, igual que el Pack 500 en la grilla de arriba */
+/* La más cara se remarca con la sombra y la cinta, nada más: el fondo
+   violeta la separaba demasiado de las otras dos. */
 .extra.es-destacado {
-  background: var(--clay-tint);
   box-shadow: var(--sh-md);
 }
 
@@ -5277,9 +5280,6 @@ body.checkout-open {
   color: var(--clay);
 }
 
-.extra.es-destacado .ex-icono {
-  background: var(--card);
-}
 
 .ex-icono svg {
   width: 23px;
@@ -5435,9 +5435,6 @@ body.checkout-open {
   border-top: 1px solid var(--line);
 }
 
-.extra.es-destacado .ex-pie {
-  border-top-color: rgba(108, 60, 224, 0.16);
-}
 
 .ex-precio {
   display: flex;
@@ -5699,3 +5696,978 @@ body.checkout-open {
 }
 
 
+/* =========================================================
+   CHECKOUT DE NEGOCIO MAYORISTA
+   ---------------------------------------------------------
+   Los packs son un archivo que se manda; esto es una página que hay que
+   armar. El formulario pide lo necesario para arrancar, y al costado se
+   va dibujando un boceto con lo que escribe: la compra se siente el
+   principio de algo, no el final de una venta.
+   ========================================================= */
+.ck-armado {
+  margin: 1.75rem 0;
+  padding: 1.4rem;
+  border-radius: var(--radius-card);
+  background: var(--clay-tint);
+}
+
+.ck-armado-cab {
+  margin-bottom: 1.35rem;
+}
+
+.ck-paso {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.28rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--clay);
+  color: var(--card);
+  font-family: var(--font-heading);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ck-armado-cab h2 {
+  font-size: 1.2rem;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+  color: var(--ink);
+}
+
+.ck-armado-cab p {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.ck-opcional {
+  margin-left: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: lowercase;
+}
+
+/* select y textarea comparten la pinta de los input de arriba */
+.ck-campo select,
+.ck-campo textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius-input);
+  font-family: var(--font-body);
+  /* 16px, igual que los input: con menos, el iPhone hace zoom al tocarlos */
+  font-size: 16px;
+  color: var(--ink);
+  min-height: 48px;
+  transition: border-color 0.15s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ck-campo textarea {
+  line-height: 1.55;
+  resize: vertical;
+}
+
+/* La flechita del desplegable, dibujada acá para que sea igual en todos
+   los navegadores (la de fábrica cambia bastante de uno a otro) */
+.ck-campo select {
+  padding-right: 2.4rem;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2355506b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 18px 18px;
+}
+
+.ck-campo select:focus,
+.ck-campo textarea:focus {
+  outline: none;
+  border-color: var(--clay);
+}
+
+.ck-campo select.has-error,
+.ck-campo textarea.has-error {
+  border-color: var(--danger);
+}
+
+/* Color y logo entran juntos: son dos respuestas cortas */
+.ck-dos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 0.9rem;
+}
+
+@media (min-width: 420px) {
+  .ck-dos {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- El boceto ---------- */
+.ck-vista {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.ck-vista-tit {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ck-navegador {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--card);
+  box-shadow: var(--sh-sm);
+  /* El color lo cambia el desplegable de arriba, en vivo */
+  --tinta: var(--clay);
+}
+
+.ckn-barra {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--cream-2);
+}
+
+.ckn-punto {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line-2);
+  flex-shrink: 0;
+}
+
+.ckn-url {
+  flex: 1;
+  margin-left: 0.35rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  font-size: 0.66rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ckn-pagina {
+  padding: 0.7rem;
+}
+
+.ckn-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.ckn-marca {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tinta);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s var(--ease);
+}
+
+.ckn-btn {
+  flex-shrink: 0;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--tinta);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  transition: background 0.3s var(--ease);
+}
+
+.ckn-hero {
+  padding: 0.9rem 0 0.75rem;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.ckn-hero b {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--tinta);
+  transition: color 0.3s var(--ease);
+}
+
+.ckn-hero span {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.ckn-hero em {
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ckn-packs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+}
+
+.ckn-packs span {
+  height: 26px;
+  border-radius: 7px;
+  background: var(--cream-2);
+}
+
+.ckn-packs span:nth-child(2) {
+  background: var(--tinta);
+  opacity: 0.22;
+  transition: background 0.3s var(--ease);
+}
+
+.ck-vista-pie {
+  margin-top: 0.55rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ---------- Etiqueta "Nuevo" en las tarjetas de abajo ---------- */
+.ex-sello.es-nuevo {
+  background: var(--sage);
+}
+
+/* ---------- Los capítulos que van pasando ----------
+   Rellena el hueco que le queda a la tarjeta del ebook (las tres miden lo
+   mismo de alto y esta tiene menos texto) y de paso cuenta lo que hay
+   adentro del libro, que antes ocupaba una lista de 17 renglones. */
+/* flex: 1 hace que esta caja se estire hasta llenar lo que sobra. Las tres
+   tarjetas miden lo mismo de alto y esta tiene menos texto, así que antes le
+   quedaban 200px de blanco abajo: ahora se los queda la lista. */
+.ex-capitulos {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  /* En celular las tarjetas miden lo suyo y no sobra nada: este mínimo es
+     el que garantiza que igual se vean tres renglones pasando. */
+  min-height: 7.5rem;
+  margin-bottom: 1.1rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: var(--radius-card-sm);
+  background: var(--cream-2);
+}
+
+.exc-tit {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* La ventana toma el alto que haya quedado; la lista se corre por detrás.
+   Los bordes se desvanecen para que los renglones no aparezcan de golpe. */
+.exc-ventana {
+  flex: 1 1 0;
+  min-height: 1.5rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+}
+
+.exc-lista li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+  color: var(--body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exc-lista li i {
+  font-style: normal;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.7rem;
+  color: var(--clay);
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .exc-lista {
+    animation: exc-pasar 42s linear infinite;
+  }
+
+  /* 14 capítulos de 1.5rem = 21rem, que es un juego entero. Al llegar ahí
+     vuelve a cero y en pantalla se ve exactamente lo mismo, porque abajo
+     está la copia: el salto no se nota. */
+  @keyframes exc-pasar {
+    to {
+      transform: translateY(-21rem);
+    }
+  }
+}
+
+/* =========================================================
+   CHECKOUT: REDES Y COLOR
+   ========================================================= */
+.ck-grupo {
+  border: 0;
+  padding: 0;
+  margin-bottom: 1.25rem;
+}
+
+.ck-grupo legend {
+  padding: 0;
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ck-redes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* La casilla de verdad queda escondida pero sigue siendo la que manda:
+   se puede llegar con el teclado y el lector de pantalla la anuncia. */
+.ck-red input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.ck-red span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  /* 44px de alto: es lo mínimo para que un dedo no falle */
+  min-height: 44px;
+  padding: 0 0.95rem;
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  box-shadow: inset 0 0 0 2px var(--line);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: box-shadow 0.18s var(--ease), color 0.18s var(--ease),
+    background 0.18s var(--ease), transform 0.2s var(--bounce);
+}
+
+.ck-red span::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+  background: var(--line);
+  flex-shrink: 0;
+  transition: background 0.18s var(--ease);
+}
+
+.ck-red input:checked + span {
+  background: var(--clay-tint);
+  box-shadow: inset 0 0 0 2px var(--clay);
+  color: var(--clay-dark);
+}
+
+.ck-red input:checked + span::before {
+  background: var(--clay);
+  /* El tilde va dibujado adentro del cuadradito */
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5L20 7'/%3E%3C/svg%3E");
+  background-size: 11px 11px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ck-red input:focus-visible + span {
+  outline: 2px solid var(--clay);
+  outline-offset: 2px;
+}
+
+.ck-red span:active {
+  transform: scale(0.96);
+}
+
+/* ---------- El color ---------- */
+.ck-color {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.ck-color input[type="color"] {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: none;
+  box-shadow: var(--sh-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* El cuadrito del navegador trae su propio marco: se lo sacamos para que
+   quede redondeado como el resto de la página */
+.ck-color input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.ck-color input[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: 14px;
+}
+
+.ck-color input[type="color"]::-moz-color-swatch {
+  border: 0;
+  border-radius: 14px;
+}
+
+.ck-color-datos strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.ck-color-datos span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* La escala: el color elegido y sus tonos, que es con lo que se arma todo */
+.ck-tonos {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ck-tonos span {
+  height: 26px;
+  border-radius: 6px;
+  transition: background 0.25s var(--ease);
+}
+
+.ck-sugeridos {
+  margin-top: 0.85rem;
+}
+
+.ck-sugeridos-tit {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.ck-muestras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.ck-muestra {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--m);
+  box-shadow: var(--sh-sm);
+  cursor: pointer;
+  transition: transform 0.2s var(--bounce);
+}
+
+.ck-muestra:hover,
+.ck-muestra:focus-visible {
+  transform: scale(1.15);
+}
+
+/* ---------- Las redes en el boceto ---------- */
+.ckn-redes {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.6rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+}
+
+.ckn-red {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: var(--tinta-suave, var(--cream-2));
+  color: var(--tinta-fuerte, var(--muted));
+  font-size: 0.6rem;
+  font-weight: 800;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+/* =========================================================
+   QUE EL CELULAR NO SE TRABE AL BAJAR
+   ---------------------------------------------------------
+   Nada de esto cambia cómo se ve la página. Es solo trabajo que el
+   teléfono estaba haciendo de más mientras uno hace scroll.
+
+   El problema: bajando hasta los packs, el celular tenía que dibujar al
+   mismo tiempo el fondo borroso del encabezado, dos carruseles corriendo,
+   la mancha que respira detrás del pack destacado y el reflejo que lo
+   cruza. Todo eso se recalcula en cada cuadro, y ahí aparecen los tirones.
+   ========================================================= */
+
+/* 1) Lo que no está en pantalla se queda quieto. Una animación que no se
+      ve no se pierde nada; el JavaScript le pone esta clase cuando la
+      sección sale de la vista y se la saca cuando vuelve. */
+.esta-quieto,
+.esta-quieto::before,
+.esta-quieto::after {
+  animation-play-state: paused !important;
+}
+
+/* 2) Le avisamos al navegador cuáles se mueven siempre, para que las
+      dibuje aparte en vez de rehacer la pantalla entera. */
+.marquesina-pista,
+.pk-brillo,
+.pack-card.es-destacado::before {
+  will-change: transform;
+}
+
+/* 3) El encabezado borroso: en celular sale caro.
+      El fondo con transparencia y desenfoque obliga a volver a difuminar
+      todo lo que pasa por atrás, cuadro por cuadro. En pantallas chicas lo
+      dejamos opaco: con 0.9 de opacidad casi no se notaba el desenfoque, y
+      es lo que más alivia el scroll. En computadora queda como estaba. */
+@media (max-width: 860px) {
+  .site-header {
+    background: var(--cream);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* 4) Las sombras y los movimientos al pasar el mouse no tienen sentido en
+      una pantalla táctil, y cada transición es trabajo extra. */
+@media (hover: none) {
+  .pack-card,
+  .extra,
+  .ex-ejemplos-links a,
+  .ck-muestra,
+  .fn-info {
+    transition: none;
+  }
+}
+
+/* El botón "Otro": abre el selector del sistema, con todos los colores.
+   Va al lado de los ocho de siempre para que se note que esos son un
+   atajo y no la lista completa. */
+.ck-muestra-otro {
+  display: grid;
+  place-items: center;
+  background: conic-gradient(
+    #e05252,
+    #e0a852,
+    #c9d152,
+    #52c97a,
+    #52b5d1,
+    #6d4bd8,
+    #c952c9,
+    #e05252
+  );
+  color: var(--card);
+}
+
+.ck-muestra-otro svg {
+  width: 16px;
+  height: 16px;
+  /* El signo tiene que leerse sobre cualquier parte del degradado */
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+}
+
+.ck-muestra-texto {
+  align-self: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+/* La maqueta del anuncio en el checkout no flota: acá no es un boceto,
+   es tal cual va a salir, y moviéndose se lee peor. */
+.ck-vista .fp-demo {
+  animation: none;
+  border-style: solid;
+}
+
+/* =========================================================
+   CELULAR: BENEFICIOS Y PASOS
+   ---------------------------------------------------------
+   En pantalla chica los dos eran seis y cuatro tarjetas gigantes, una
+   abajo de la otra: cada una se comía media pantalla y había que scrollear
+   un rato largo para leer seis frases cortas.
+
+   Los beneficios pasan a ser renglones de una sola lista, con el ícono al
+   costado. Los pasos pasan a ser una línea de tiempo: los números unidos
+   por una línea, que es lo que hace entender que son un recorrido y no
+   cuatro cosas sueltas. En computadora no cambia nada.
+   ========================================================= */
+@media (max-width: 639px) {
+  /* ---------- Beneficios: una sola tarjeta con renglones ---------- */
+  .benefits-grid {
+    gap: 0;
+    padding: 0.2rem 1.1rem;
+    background: var(--card);
+    border-radius: var(--radius-card);
+    box-shadow: var(--sh-sm);
+  }
+
+  .benefit-card {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 0.9rem;
+    padding: 1rem 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Un filete finito entre renglón y renglón, menos arriba del primero */
+  .benefit-card + .benefit-card {
+    border-top: 1px solid var(--line);
+  }
+
+  .benefit-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .benefit-icon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    margin-bottom: 0;
+  }
+
+  .benefit-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .benefit-card h3 {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  .benefit-card p {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0.15rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  /* ---------- Pasos: línea de tiempo ---------- */
+  .steps-grid {
+    gap: 0;
+  }
+
+  .step-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    column-gap: 0.95rem;
+    padding: 0 0 1.5rem;
+    text-align: left;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .step-card:last-child {
+    padding-bottom: 0;
+  }
+
+  .step-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* La línea que baja del número al paso siguiente. Del último no sale:
+     ahí termina el recorrido. */
+  .step-card:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 17px;
+    top: 42px;
+    bottom: 4px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--clay-tint);
+  }
+
+  .step-num {
+    grid-column: 1;
+    grid-row: 1;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .step-card h3 {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  .step-card p {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0.15rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+}
+
+/* =========================================================
+   LA PORTADA OCUPA LA PANTALLA ENTERA
+   ---------------------------------------------------------
+   Al entrar se ve la portada y nada más: el título, la explicación y los
+   dos botones, centrados en el alto de la pantalla.
+
+   El descuento le resta: arriba de la portada están el cartel de la oferta
+   y el encabezado, que ocupan lugar propio. Sin restarlos, la portada
+   terminaría más abajo del borde y el visitante vería un pedazo cortado de
+   lo que sigue. El JavaScript mide esos dos y lo guarda en --sobre-portada;
+   los 124px son por si no llega a medirlos.
+
+   svh y no vh: en el celular, vh cuenta la pantalla SIN las barras del
+   navegador, así que al entrar la portada quedaba más alta que lo que se
+   ve y empujaba los botones abajo del borde. svh usa el alto chico, el que
+   de verdad está disponible.
+   ========================================================= */
+.portada {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - var(--sobre-portada, 124px));
+  /* El relleno de antes se sumaba al alto mínimo y la portada terminaba
+     unos píxeles más abajo del borde, dejando asomar lo que sigue. Ahora
+     el aire lo da el centrado; esto es solo el respiro mínimo para cuando
+     el contenido no entra y la portada tiene que crecer. */
+  padding-block: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+@supports (height: 100svh) {
+  .portada {
+    min-height: calc(100svh - var(--sobre-portada, 124px));
+  }
+}
+
+.portada > .container {
+  width: 100%;
+}
+
+/* Si la pantalla es muy bajita (un celular apaisado), que no fuerce nada:
+   vale más que entre el contenido a que ocupe una pantalla exacta. */
+@media (max-height: 520px) {
+  .portada {
+    min-height: 0;
+  }
+}
+
+/* ---------- El +1000, más grande en celular ----------
+   Tenía un piso de 4rem que en pantallas angostas le ganaba al 17vw, así
+   que en un celular se veía igual de chico que en una tablet. Ahora crece
+   con la pantalla y el tope lo pone el ancho disponible, no un número. */
+@media (max-width: 760px) {
+  .pt-l1 {
+    font-size: clamp(5rem, 27vw, 9rem);
+  }
+}
+
+/* Los botones tenían un margen abajo que separaba la portada de lo que
+   seguía. Ahora que la portada ocupa la pantalla entera y el contenido va
+   centrado, ese margen sobra: dejaba 36px más de aire abajo que arriba y
+   el bloque se veía corrido para arriba. */
+.portada .pt-acciones {
+  margin-bottom: 0;
+}
+
+/* En un celular bajito (un iPhone SE, por ejemplo) quedaban 546px para la
+   portada y el contenido medía 559: asomaban 13px de la sección siguiente.
+   Recortamos dos separaciones, no el número: el +1000 grande es justo lo
+   que se quiso agrandar. */
+@media (max-width: 760px) and (max-height: 700px) {
+  .pt-kicker {
+    margin-bottom: 0.85rem;
+  }
+
+  .pt-titulo {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* =========================================================
+   EL FONDO DE LA PORTADA
+   ---------------------------------------------------------
+   Estaba plano y se veía apagado. Ahora tiene dos luces violetas que se
+   mueven muy despacio y una trama de puntitos que se desvanece hacia los
+   bordes: da profundidad sin ensuciar, y el texto sigue leyéndose igual
+   porque todo va con muy poca opacidad.
+
+   Las luces son degradados radiales y NO filter: blur(). Un elemento
+   borroso adentro de un contenedor con overflow hidden hace que algunos
+   navegadores dibujen mal la sección entera.
+   ========================================================= */
+.pt-fondo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  /* Se apaga en el medio, que es donde va el texto, y se enciende hacia
+     los bordes. Asi el titulo y la bajada quedan sobre el fondo limpio de
+     siempre y el contraste no cambia ni un punto. */
+  -webkit-mask-image: radial-gradient(ellipse 58% 50% at 50% 48%, transparent 34%, #000 100%);
+  mask-image: radial-gradient(ellipse 58% 50% at 50% 48%, transparent 34%, #000 100%);
+}
+
+/* El contenido va por encima del fondo */
+.portada > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.pt-luz {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.pt-luz-1 {
+  top: -26vmax;
+  right: -16vmax;
+  width: 58vmax;
+  height: 58vmax;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(109, 75, 216, 0.3),
+    rgba(109, 75, 216, 0.14) 55%,
+    transparent 75%
+  );
+}
+
+.pt-luz-2 {
+  bottom: -24vmax;
+  left: -18vmax;
+  width: 48vmax;
+  height: 48vmax;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(138, 112, 232, 0.24),
+    rgba(192, 138, 46, 0.11) 55%,
+    transparent 75%
+  );
+}
+
+/* Los puntitos: la máscara los apaga en los bordes, así el texto del medio
+   queda sobre un fondo limpio y la textura solo se intuye alrededor. */
+.pt-trama {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(109, 75, 216, 0.17) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pt-luz-1 {
+    animation: pt-luz-va 20s ease-in-out infinite;
+  }
+
+  .pt-luz-2 {
+    animation: pt-luz-viene 26s ease-in-out infinite;
+  }
+
+  @keyframes pt-luz-va {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-7%, 9%) scale(1.14);
+    }
+  }
+
+  @keyframes pt-luz-viene {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(9%, -7%) scale(1.18);
+    }
+  }
+}
+
+/* En celular las luces son más chicas en proporción, si no tapan todo */
+@media (max-width: 640px) {
+  .pt-luz-1 {
+    top: -30vmax;
+    right: -20vmax;
+  }
+
+  .pt-luz-2 {
+    bottom: -28vmax;
+    left: -20vmax;
+  }
+
+  .pt-trama {
+    background-size: 20px 20px;
+    opacity: 0.6;
+  }
+}

@@ -112,6 +112,266 @@
 
   if (pack.mensual) $("ckMensual").hidden = false;
 
+  /* ---------- Negocio Mayorista: la ficha de armado ----------
+     Solo para este pack. Los otros son un archivo que se manda; este es una
+     página que hay que construir, así que le preguntamos lo mínimo para
+     arrancar y le mostramos un boceto que se arma con lo que va escribiendo. */
+  var esNegocio = packId === "negocio-mayorista";
+  var negNombre = $("ckNegNombre");
+  var negWsp = $("ckNegWsp");
+  var negDominio = $("ckNegDominio");
+  var negColor = $("ckNegColor");
+  var negLogo = $("ckNegLogo");
+  var negNotas = $("ckNegNotas");
+
+  /* Las redes que marcó, en el orden en que están en pantalla */
+  function redesElegidas() {
+    var puestas = [];
+    document.querySelectorAll(".js-red").forEach(function (c) {
+      if (c.checked) puestas.push(c.value);
+    });
+    return puestas;
+  }
+
+  if (esNegocio) {
+    $("ckArmado").hidden = false;
+    $("ckVista").hidden = false;
+    $("ckTitulo").textContent = "Armemos tu negocio";
+    $("ckSub").textContent =
+      "Completá tus datos, contame cómo la querés y elegí cómo pagar. " +
+      "Apenas entra el pago arranco con tu página.";
+
+    var vistaMarca = $("ckVistaMarca");
+    var vistaUrl = $("ckVistaUrl");
+    var vistaRedes = $("ckVistaRedes");
+    var navegador = document.querySelector(".ck-navegador");
+    var colorHex = $("ckColorHex");
+    var tonos = $("ckTonos").children;
+
+    /* Un nombre de negocio sirve como dirección web si le sacamos los
+       acentos, los espacios y todo lo que no sea letra o número. */
+    function comoDominio(texto) {
+      return texto
+        .normalize("NFD")
+        .replace(/[̀-ͯ]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+    }
+
+    /* ---------- Un color, cinco tonos ----------
+       De un solo color salen todos los demás mezclándolo con blanco o con
+       negro. Por eso la página se ve de una marca: no hay colores sueltos,
+       son todos el mismo con más o menos luz. */
+    function aRgb(hex) {
+      var h = hex.replace("#", "");
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      return [
+        parseInt(h.slice(0, 2), 16),
+        parseInt(h.slice(2, 4), 16),
+        parseInt(h.slice(4, 6), 16),
+      ];
+    }
+
+    /* cuanto = 0 deja el color igual; 1 lo lleva del todo al destino */
+    function mezclar(hex, destino, cuanto) {
+      var c = aRgb(hex);
+      return (
+        "rgb(" +
+        c
+          .map(function (v, i) {
+            return Math.round(v + (destino[i] - v) * cuanto);
+          })
+          .join(",") +
+        ")"
+      );
+    }
+
+    var BLANCO = [255, 255, 255];
+    var NEGRO = [22, 18, 34];
+
+    function pintarTonos(hex) {
+      var escala = [
+        mezclar(hex, BLANCO, 0.85),
+        mezclar(hex, BLANCO, 0.55),
+        hex,
+        mezclar(hex, NEGRO, 0.28),
+        mezclar(hex, NEGRO, 0.55),
+      ];
+      for (var i = 0; i < tonos.length && i < escala.length; i++) {
+        tonos[i].style.background = escala[i];
+      }
+      navegador.style.setProperty("--tinta", hex);
+      navegador.style.setProperty("--tinta-suave", escala[0]);
+      navegador.style.setProperty("--tinta-fuerte", escala[3]);
+      colorHex.textContent = hex.toUpperCase();
+    }
+
+    function pintarRedes() {
+      var puestas = redesElegidas();
+      vistaRedes.textContent = "";
+      if (!puestas.length) return;
+      puestas.forEach(function (nombre) {
+        var punto = document.createElement("span");
+        punto.className = "ckn-red";
+        /* La inicial alcanza: es un boceto, no el logo de cada red */
+        punto.textContent = nombre.charAt(0);
+        punto.title = nombre;
+        vistaRedes.appendChild(punto);
+      });
+    }
+
+    function pintarVista() {
+      var marca = negNombre.value.trim();
+      var dominio = negDominio.value.trim();
+
+      vistaMarca.textContent = marca || "Tu Negocio";
+
+      if (dominio) {
+        vistaUrl.textContent = dominio.replace(/^https?:\/\//i, "").replace(/\/+$/, "");
+      } else {
+        var sugerida = comoDominio(marca);
+        vistaUrl.textContent = sugerida ? sugerida + ".com" : "tunegocio.com";
+      }
+    }
+
+    [negNombre, negDominio].forEach(function (campo) {
+      campo.addEventListener("input", pintarVista);
+    });
+
+    negColor.addEventListener("input", function () {
+      pintarTonos(negColor.value);
+    });
+
+    /* Los cuadraditos de abajo son un atajo: cargan el color en el mismo
+       campo, así después lo puede seguir retocando a mano. */
+    document.querySelectorAll(".js-tono").forEach(function (b) {
+      b.addEventListener("click", function () {
+        negColor.value = b.getAttribute("data-tono");
+        pintarTonos(negColor.value);
+      });
+    });
+
+    /* "Otro": abre el selector del sistema, con todos los colores.
+       showPicker es lo correcto; donde no existe, tocar el campo hace lo
+       mismo. */
+    var otroColor = $("ckOtroColor");
+    if (otroColor) {
+      otroColor.addEventListener("click", function () {
+        try {
+          if (typeof negColor.showPicker === "function") negColor.showPicker();
+          else negColor.click();
+        } catch (err) {
+          negColor.click();
+        }
+      });
+    }
+
+    document.querySelectorAll(".js-red").forEach(function (c) {
+      c.addEventListener("change", pintarRedes);
+    });
+
+    pintarVista();
+    pintarTonos(negColor.value);
+    pintarRedes();
+
+    /* Cuántas letras le quedan: el campo corta en 500 y sin el contador se
+       nota recién cuando deja de escribir. */
+    var cuenta = $("ckNegNotasCuenta");
+    negNotas.addEventListener("input", function () {
+      cuenta.textContent = String(negNotas.value.length);
+    });
+  }
+
+  /* ---------- Espacio Publicitario: los datos del anuncio ----------
+     Acá la vista previa no es un boceto: es la notificación de verdad, con
+     el mismo dibujo que se ve en la portada. Lo que escribe es lo que sale. */
+  var esPublicidad = packId === "publicidad";
+  var pubNombre = $("ckPubNombre");
+  var pubRubro = $("ckPubRubro");
+  var pubFrase = $("ckPubFrase");
+  var pubWsp = $("ckPubWsp");
+  var pubWeb = $("ckPubWeb");
+  var pubIg = $("ckPubIg");
+  var pubTt = $("ckPubTt");
+  var pubNotas = $("ckPubNotas");
+
+  if (esPublicidad) {
+    $("ckAnuncio").hidden = false;
+    $("ckVistaPub").hidden = false;
+    $("ckTitulo").textContent = "Publiquemos tu negocio";
+    $("ckSub").textContent =
+      "Completá tus datos, escribí tu anuncio y elegí cómo pagar. " +
+      "Apenas entra el pago lo dejo publicado.";
+
+    function pintarAnuncio() {
+      var nombre = pubNombre.value.trim();
+      var rubro = pubRubro.value.trim();
+      var frase = pubFrase.value.trim();
+      var wsp = pubWsp.value.trim();
+      var web = pubWeb.value.trim();
+
+      $("ckPubVistaNombre").textContent = nombre || "Tu Negocio";
+      $("ckPubVistaRubro").textContent = rubro || "Tu rubro";
+      $("ckPubVistaFrase").textContent = frase || "La frase que quieras, con lo que vendés.";
+      $("ckPubVistaTel").textContent = wsp || "Tu teléfono";
+
+      /* Las iniciales del nombre, como en la ficha de Cala Imports */
+      var palabras = nombre.split(/\s+/).filter(Boolean);
+      var iniciales = palabras.length
+        ? (palabras[0].charAt(0) + (palabras[1] ? palabras[1].charAt(0) : "")).toUpperCase()
+        : "TU";
+      $("ckPubIni").textContent = iniciales;
+
+      /* La pastillita repite el rubro, que es lo que hace que se entienda
+         de un vistazo de qué es el anuncio */
+      $("ckPubVistaBadge").textContent = rubro || "Tu oferta";
+
+      /* Si no puso web, el botón fuerte manda al WhatsApp */
+      $("ckPubVistaBtn").textContent = web ? "Ver catálogo" : "Escribinos";
+    }
+
+    [pubNombre, pubRubro, pubFrase, pubWsp, pubWeb].forEach(function (campo) {
+      campo.addEventListener("input", pintarAnuncio);
+    });
+
+    var cuentaFrase = $("ckPubFraseCuenta");
+    pubFrase.addEventListener("input", function () {
+      cuentaFrase.textContent = String(pubFrase.value.length);
+    });
+
+    pintarAnuncio();
+  }
+
+  function fichaPublicidad() {
+    if (!esPublicidad) return null;
+    return {
+      nombre: pubNombre.value.trim(),
+      rubro: pubRubro.value.trim(),
+      frase: pubFrase.value.trim(),
+      wsp: pubWsp.value.trim(),
+      web: pubWeb.value.trim(),
+      instagram: pubIg.value.trim(),
+      tiktok: pubTt.value.trim(),
+      notas: pubNotas.value.trim(),
+    };
+  }
+
+  /* Lo que escribió, listo para mandar. Devuelve null si no es este pack. */
+  function fichaNegocio() {
+    if (esPublicidad) return fichaPublicidad();
+    if (!esNegocio) return null;
+    var puestas = redesElegidas();
+    return {
+      nombre: negNombre.value.trim(),
+      wsp: negWsp.value.trim(),
+      dominio: negDominio.value.trim(),
+      redes: puestas.length ? puestas.length + ": " + puestas.join(", ") : "ninguna por ahora",
+      color: negColor.value.toUpperCase(),
+      logo: negLogo.value,
+      notas: negNotas.value.trim(),
+    };
+  }
+
   /* ---------- WhatsApp ---------- */
   var WSP_BASE = "https://wa.me/" + CONFIG.whatsappNumber + "?text=";
   document.querySelectorAll(".js-wsp").forEach(function (el) {
@@ -181,15 +441,75 @@
       limpiarError(ckEmail2, ckEmail2Error);
     }
 
+    /* Los tres de la ficha de armado. Sin el nombre del negocio, el rubro y
+       un WhatsApp no se puede empezar la página, así que son obligatorios
+       igual que el correo. El resto puede quedar vacío. */
+    if (esNegocio) {
+      if (negNombre.value.trim().length < 2) {
+        marcarError(negNombre, $("ckNegNombreError"), "Poné el nombre que va a llevar tu página.");
+        primerFallo = primerFallo || negNombre;
+      } else {
+        limpiarError(negNombre, $("ckNegNombreError"));
+      }
+
+      /* Ocho dígitos es lo mínimo de un número argentino sin el 0 ni el 15 */
+      if (negWsp.value.replace(/\D/g, "").length < 8) {
+        marcarError(negWsp, $("ckNegWspError"), "Escribí el WhatsApp de tu negocio, con característica.");
+        primerFallo = primerFallo || negWsp;
+      } else {
+        limpiarError(negWsp, $("ckNegWspError"));
+      }
+    }
+
+    /* El anuncio no se puede publicar sin el nombre, el rubro, la frase y un
+       WhatsApp: son las cuatro cosas que salen en la notificación. */
+    if (esPublicidad) {
+      [
+        [pubNombre, "ckPubNombreError", 2, "Poné el nombre de tu negocio."],
+        [pubRubro, "ckPubRubroError", 3, "Decinos tu rubro: es lo que se lee arriba."],
+        [pubFrase, "ckPubFraseError", 10, "Escribí una frase corta de qué vendés."],
+      ].forEach(function (c) {
+        if (c[0].value.trim().length < c[2]) {
+          marcarError(c[0], $(c[1]), c[3]);
+          primerFallo = primerFallo || c[0];
+        } else {
+          limpiarError(c[0], $(c[1]));
+        }
+      });
+
+      if (pubWsp.value.replace(/\D/g, "").length < 8) {
+        marcarError(pubWsp, $("ckPubWspError"), "Escribí tu WhatsApp, con característica.");
+        primerFallo = primerFallo || pubWsp;
+      } else {
+        limpiarError(pubWsp, $("ckPubWspError"));
+      }
+    }
+
     if (primerFallo) {
-      if (enfocar) primerFallo.focus();
+      if (enfocar) {
+        primerFallo.focus();
+        /* Si el que falla es un campo de la ficha, puede estar bastante más
+           abajo que el botón: lo llevamos a la vista además de enfocarlo. */
+        primerFallo.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       return null;
     }
-    return { name: name, email: email };
+    return { name: name, email: email, ficha: fichaNegocio() };
   }
 
   /* Limpia el error apenas el visitante corrige, sin esperar a que reenvíe. */
-  [[ckName, ckNameError], [ckEmail, ckEmailError], [ckEmail2, ckEmail2Error]].forEach(function (par) {
+  var pares = [[ckName, ckNameError], [ckEmail, ckEmailError], [ckEmail2, ckEmail2Error]];
+  if (esNegocio) {
+    pares.push([negNombre, $("ckNegNombreError")]);
+    pares.push([negWsp, $("ckNegWspError")]);
+  }
+  if (esPublicidad) {
+    pares.push([pubNombre, $("ckPubNombreError")]);
+    pares.push([pubRubro, $("ckPubRubroError")]);
+    pares.push([pubFrase, $("ckPubFraseError")]);
+    pares.push([pubWsp, $("ckPubWspError")]);
+  }
+  pares.forEach(function (par) {
     par[0].addEventListener("input", function () {
       if (par[1].textContent) limpiarError(par[0], par[1]);
     });
@@ -319,6 +639,7 @@
         packId: packId,
         nombre: datos.name,
         email: datos.email,
+        ficha: datos.ficha,
       });
     });
   }
@@ -340,6 +661,26 @@
     l.push("Datos de contacto:");
     l.push("Nombre: " + datos.name);
     l.push("Email: " + datos.email);
+
+    /* La ficha va también por acá: el que paga por transferencia manda el
+       mensaje y ya llega con todo para empezar a armarle la página. */
+    if (datos.ficha) {
+      l.push("");
+      l.push(esPublicidad ? "Los datos de mi anuncio:" : "Para armar mi página:");
+      l.push("Negocio: " + datos.ficha.nombre);
+      if (datos.ficha.rubro) l.push("Rubro: " + datos.ficha.rubro);
+      if (datos.ficha.frase) l.push("Frase: " + datos.ficha.frase);
+      l.push("WhatsApp: " + datos.ficha.wsp);
+      if (datos.ficha.web) l.push("Web: " + datos.ficha.web);
+      if (datos.ficha.instagram) l.push("Instagram: " + datos.ficha.instagram);
+      if (datos.ficha.tiktok) l.push("TikTok: " + datos.ficha.tiktok);
+      if (datos.ficha.dominio) l.push("Dominio que quiero: " + datos.ficha.dominio);
+      if (datos.ficha.redes) l.push("Redes que quiero: " + datos.ficha.redes);
+      if (datos.ficha.color) l.push("Color: " + datos.ficha.color);
+      if (datos.ficha.logo) l.push("Logo: " + datos.ficha.logo);
+      if (datos.ficha.notas) l.push("Nota: " + datos.ficha.notas);
+    }
+
     l.push("");
     l.push("Voy a realizar la transferencia a la siguiente cuenta:");
     l.push("Alias: " + CONFIG.transfer.alias);
@@ -362,11 +703,48 @@
         email: datos.email,
         items: pack.nombre,
         total: pack.precio,
+        ficha: datos.ficha,
       });
     }
 
     window.location.href = url;
   });
+
+  /* ---------- La vista previa, cerca de donde se escribe ----------
+     En computadora el resumen va a la derecha y la vista previa se ve al
+     lado del formulario. En celular el resumen va ARRIBA de todo (primero
+     ves qué comprás y cuánto), y entonces la vista previa quedaba a unos
+     900px de los campos: se armaba sola y nadie la veía.
+
+     Así que en pantalla chica la bajamos, justo debajo de los campos. Si se
+     gira el teléfono o se agranda la ventana, vuelve a su lugar. */
+  var laVista = esNegocio ? $("ckVista") : esPublicidad ? $("ckVistaPub") : null;
+  var losCampos = esNegocio ? $("ckArmado") : esPublicidad ? $("ckAnuncio") : null;
+
+  if (laVista && losCampos && window.matchMedia) {
+    var suLugar = laVista.parentNode;
+    var elMarcador = document.createComment("vista previa");
+    suLugar.insertBefore(elMarcador, laVista);
+
+    var angosto = window.matchMedia("(max-width: 859px)");
+
+    function acomodarVista(consulta) {
+      if (consulta.matches) {
+        if (laVista.parentNode !== losCampos.parentNode) {
+          losCampos.parentNode.insertBefore(laVista, losCampos.nextSibling);
+        }
+      } else if (laVista.parentNode !== suLugar) {
+        suLugar.insertBefore(laVista, elMarcador);
+      }
+    }
+
+    acomodarVista(angosto);
+
+    /* addListener es lo viejo, pero algunos Safari todavía no tienen el
+       addEventListener de matchMedia */
+    if (angosto.addEventListener) angosto.addEventListener("change", acomodarVista);
+    else if (angosto.addListener) angosto.addListener(acomodarVista);
+  }
 
   /* ---------- Año del footer ---------- */
   var y = $("year");

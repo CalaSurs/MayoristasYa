@@ -621,6 +621,74 @@
     }
   }
 
+  /* ---------- La portada ocupa la pantalla entera ----------
+     Arriba de la portada están el cartel de la oferta y el encabezado, que
+     ocupan su propio lugar. Si la portada midiera una pantalla completa,
+     terminaría más abajo del borde y se vería cortado lo que sigue. Así que
+     medimos esos dos y el CSS se los resta.
+
+     Se vuelve a medir al girar el teléfono y cuando el cartel se cierra. */
+  var portada = document.querySelector(".portada");
+  if (portada) {
+    var elCartel = document.getElementById("offerBanner");
+    var elHeader = document.getElementById("siteHeader");
+
+    function medirLoDeArriba() {
+      var alto = 0;
+      /* offsetParent en null = está escondido, y entonces no ocupa nada */
+      if (elCartel && elCartel.offsetParent !== null) alto += elCartel.offsetHeight;
+      if (elHeader) alto += elHeader.offsetHeight;
+      document.documentElement.style.setProperty("--sobre-portada", alto + "px");
+    }
+
+    medirLoDeArriba();
+    window.addEventListener("resize", medirLoDeArriba);
+    window.addEventListener("orientationchange", medirLoDeArriba);
+
+    /* Las tipografías cambian el alto del encabezado cuando terminan de
+       cargar, así que medimos otra vez cuando eso pasa */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(medirLoDeArriba);
+    }
+  }
+
+  /* ---------- Que no se mueva lo que no se ve ----------
+     Bajando hasta los packs el celular daba tirones: tenía que dibujar a la
+     vez los dos carruseles, la mancha que respira detrás del pack destacado,
+     el reflejo que lo cruza y los adornos que flotan. Todo eso se recalcula
+     en cada cuadro, esté o no en pantalla.
+
+     Acá le ponemos la clase "esta-quieto" a lo que está fuera de la vista,
+     y se la sacamos cuando vuelve. Como una animación que no se ve no se
+     mira, no se pierde nada: el scroll queda liviano y todo sigue igual.
+
+     El margen de 200px es a propósito: arranca a moverse un poco antes de
+     asomar, así nunca se ve el arranque. */
+  if ("IntersectionObserver" in window) {
+    var animados = document.querySelectorAll(
+      ".marquesina-pista, .pack-card.es-destacado, .pk-brillo, .fp-demo, " +
+        ".doc-card, .float-pill, .exc-lista, .offer-banner, .pt-luz"
+    );
+
+    if (animados.length) {
+      var vigia = new IntersectionObserver(
+        function (entradas) {
+          entradas.forEach(function (e) {
+            e.target.classList.toggle("esta-quieto", !e.isIntersecting);
+          });
+        },
+        { rootMargin: "200px 0px" }
+      );
+
+      animados.forEach(function (el) {
+        /* Empieza quieto: las que ya están en pantalla se destraban solas
+           en el primer aviso del vigía, que llega enseguida. */
+        el.classList.add("esta-quieto");
+        vigia.observe(el);
+      });
+    }
+  }
+
   /* ---------- Footer year ---------- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();

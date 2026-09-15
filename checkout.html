@@ -50,7 +50,7 @@
       <!-- ---------- Columna: formulario ---------- -->
       <section class="ck-col-form" aria-labelledby="ckTitulo">
         <h1 id="ckTitulo">Finalizar compra</h1>
-        <p class="ck-sub">Completá tus datos y elegí cómo querés pagar. Te enviamos el pack al correo que cargues.</p>
+        <p class="ck-sub" id="ckSub">Completá tus datos y elegí cómo querés pagar. Te enviamos el pack al correo que cargues.</p>
 
         <form id="ckForm" novalidate>
           <div class="ck-campo">
@@ -83,6 +83,218 @@
               Los dos correos coinciden
             </span>
           </div>
+
+          <!-- ===== Solo para Negocio Mayorista =====
+               No es una lista de contactos: es una página que hay que armar.
+               Preguntarle esto acá sirve para dos cosas. Para él, que la compra
+               se sienta el arranque del proyecto y no el final de una venta.
+               Para nosotros, empezar con todo en la mano en vez de perseguirlo
+               por WhatsApp. Para los otros packs queda escondido. -->
+          <section class="ck-armado" id="ckArmado" hidden aria-labelledby="ckArmadoTit">
+            <header class="ck-armado-cab">
+              <span class="ck-paso">Y ya arrancamos</span>
+              <h2 id="ckArmadoTit">Contame cómo la querés</h2>
+              <p>Con esto empiezo a prepararla apenas entre el pago. Lo que todavía
+                no tengas decidido, dejalo vacío: lo vemos juntos por WhatsApp.</p>
+            </header>
+
+            <div class="ck-campo">
+              <label for="ckNegNombre">¿Cómo se va a llamar tu negocio?</label>
+              <input type="text" id="ckNegNombre" name="neg_nombre" autocomplete="organization"
+                     autocapitalize="words" enterkeyhint="next" maxlength="40"
+                     placeholder="Mayorista del Sur" required>
+              <span class="field-error" id="ckNegNombreError" role="alert"></span>
+              <span class="ck-ayuda">Es el nombre que va a aparecer arriba de todo en tu página.</span>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckNegWsp">WhatsApp donde te van a escribir tus clientes</label>
+              <input type="tel" id="ckNegWsp" name="neg_wsp" autocomplete="tel"
+                     inputmode="tel" enterkeyhint="next" maxlength="25"
+                     placeholder="11 5555-4444" required>
+              <span class="field-error" id="ckNegWspError" role="alert"></span>
+              <span class="ck-ayuda">Puede ser distinto al tuyo personal. Todos los botones de tu página van a llevar acá.</span>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckNegDominio">¿Qué dirección web te gustaría? <span class="ck-opcional">opcional</span></label>
+              <input type="text" id="ckNegDominio" name="neg_dominio"
+                     autocapitalize="off" autocorrect="off" spellcheck="false"
+                     inputmode="url" enterkeyhint="next" maxlength="60"
+                     placeholder="mayoristadelsur.com">
+              <span class="ck-ayuda">Si está ocupada te propongo dos o tres parecidas antes de comprarla.</span>
+            </div>
+
+            <!-- Se pregunta qué redes QUERÉS, no cuáles tenés: la mayoría
+                 todavía no las creó y no queremos que eso lo frene acá. -->
+            <fieldset class="ck-campo ck-grupo">
+              <legend>¿Qué redes querés que tenga tu página?</legend>
+
+              <div class="ck-redes">
+                <label class="ck-red">
+                  <input type="checkbox" class="js-red" value="Instagram" checked>
+                  <span>Instagram</span>
+                </label>
+                <label class="ck-red">
+                  <input type="checkbox" class="js-red" value="TikTok" checked>
+                  <span>TikTok</span>
+                </label>
+                <label class="ck-red">
+                  <input type="checkbox" class="js-red" value="WhatsApp">
+                  <span>WhatsApp</span>
+                </label>
+                <label class="ck-red">
+                  <input type="checkbox" class="js-red" value="Facebook">
+                  <span>Facebook</span>
+                </label>
+                <label class="ck-red">
+                  <input type="checkbox" class="js-red" value="YouTube">
+                  <span>YouTube</span>
+                </label>
+              </div>
+
+              <span class="ck-ayuda">
+                <strong>No hace falta que ya las tengas.</strong> Marcá las que quieras
+                y te dejo el lugar preparado; cuando las crees, me pasás el usuario y
+                las conecto.
+              </span>
+            </fieldset>
+
+            <!-- Un color y nada más. La página entera se arma con tonos de ese,
+                 que es lo que hace que se vea de una marca y no de un collage. -->
+            <div class="ck-campo">
+              <label for="ckNegColor">El color de tu marca</label>
+
+              <div class="ck-color">
+                <input type="color" id="ckNegColor" name="neg_color" value="#6d4bd8"
+                       aria-describedby="ckColorAyuda">
+                <div class="ck-color-datos">
+                  <strong id="ckColorHex">#6D4BD8</strong>
+                  <span id="ckColorAyuda">Tocá el cuadrito y elegí el que quieras.</span>
+                </div>
+              </div>
+
+              <div class="ck-tonos" id="ckTonos" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="ck-ayuda">Toda tu página usa estos tonos, que salen del color que elegiste.</span>
+
+              <div class="ck-sugeridos">
+                <span class="ck-sugeridos-tit">O usá uno de estos:</span>
+                <div class="ck-muestras">
+                  <button type="button" class="ck-muestra js-tono" data-tono="#6d4bd8" style="--m:#6d4bd8" aria-label="Violeta"></button>
+                  <button type="button" class="ck-muestra js-tono" data-tono="#1f6fd0" style="--m:#1f6fd0" aria-label="Azul"></button>
+                  <button type="button" class="ck-muestra js-tono" data-tono="#2e7d50" style="--m:#2e7d50" aria-label="Verde"></button>
+                  <button type="button" class="ck-muestra js-tono" data-tono="#c33b3b" style="--m:#c33b3b" aria-label="Rojo"></button>
+                  <button type="button" class="ck-muestra js-tono" data-tono="#d2762a" style="--m:#d2762a" aria-label="Naranja"></button>
+                  <button type="button" class="ck-muestra js-tono" data-tono="#c08a2e" style="--m:#c08a2e" aria-label="Dorado"></button>
+                  <button type="button" class="ck-muestra js-tono" data-tono="#0f7a86" style="--m:#0f7a86" aria-label="Turquesa"></button>
+                  <button type="button" class="ck-muestra js-tono" data-tono="#2b2b38" style="--m:#2b2b38" aria-label="Negro"></button>
+
+                  <!-- Abre el selector del teléfono, con todos los colores.
+                       Va acá para que se vea que los ocho de arriba son un
+                       atajo y no las únicas opciones. -->
+                  <button type="button" class="ck-muestra ck-muestra-otro" id="ckOtroColor"
+                          aria-label="Elegir otro color">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>
+                  </button>
+                  <span class="ck-muestra-texto">Otro</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckNegLogo">¿Tenés logo?</label>
+              <select id="ckNegLogo" name="neg_logo">
+                <option value="ya lo tengo" selected>Sí, ya lo tengo</option>
+                <option value="necesita logo">No, necesito uno</option>
+              </select>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckNegNotas">¿Algo más que quieras contarme? <span class="ck-opcional">opcional</span></label>
+              <textarea id="ckNegNotas" name="neg_notas" rows="3" maxlength="500"
+                        placeholder="Una página que te guste, algo que no quieras que tenga, para cuándo la necesitás…"></textarea>
+              <span class="ck-ayuda"><span id="ckNegNotasCuenta">0</span>/500</span>
+            </div>
+          </section>
+
+          <!-- ===== Solo para el Espacio Publicitario =====
+               Antes esto se pedía por mail después de pagar ("mandame estos 6
+               datos"), y había que perseguirlo. Preguntándolo acá, el anuncio
+               se puede publicar el mismo día. -->
+          <section class="ck-armado" id="ckAnuncio" hidden aria-labelledby="ckAnuncioTit">
+            <header class="ck-armado-cab">
+              <span class="ck-paso">Y sale publicado</span>
+              <h2 id="ckAnuncioTit">¿Qué querés que diga tu anuncio?</h2>
+              <p>Esto es exactamente lo que van a ver los que entran al sitio.
+                Se va armando acá al lado mientras escribís.</p>
+            </header>
+
+            <div class="ck-campo">
+              <label for="ckPubNombre">Nombre de tu negocio</label>
+              <input type="text" id="ckPubNombre" name="pub_nombre" autocomplete="organization"
+                     autocapitalize="words" enterkeyhint="next" maxlength="28"
+                     placeholder="Cala Imports" required>
+              <span class="field-error" id="ckPubNombreError" role="alert"></span>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckPubRubro">Tu rubro</label>
+              <input type="text" id="ckPubRubro" name="pub_rubro"
+                     autocapitalize="sentences" enterkeyhint="next" maxlength="24"
+                     placeholder="Tecnología" required>
+              <span class="field-error" id="ckPubRubroError" role="alert"></span>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckPubFrase">Una frase corta de qué vendés</label>
+              <input type="text" id="ckPubFrase" name="pub_frase"
+                     autocapitalize="sentences" enterkeyhint="next" maxlength="80"
+                     placeholder="Auriculares y fundas al por mayor, envíos a todo el país." required>
+              <span class="field-error" id="ckPubFraseError" role="alert"></span>
+              <span class="ck-ayuda"><span id="ckPubFraseCuenta">0</span>/80 &middot; dos renglones, no más: es una notificación.</span>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckPubWsp">Tu WhatsApp</label>
+              <input type="tel" id="ckPubWsp" name="pub_wsp" autocomplete="tel"
+                     inputmode="tel" enterkeyhint="next" maxlength="25"
+                     placeholder="11 5555-4444" required>
+              <span class="field-error" id="ckPubWspError" role="alert"></span>
+              <span class="ck-ayuda">El botón del anuncio abre un chat con vos.</span>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckPubWeb">Tu página web <span class="ck-opcional">opcional</span></label>
+              <input type="text" id="ckPubWeb" name="pub_web"
+                     autocapitalize="off" autocorrect="off" spellcheck="false"
+                     inputmode="url" enterkeyhint="next" maxlength="60"
+                     placeholder="calaimports.shop">
+            </div>
+
+            <div class="ck-dos">
+              <div class="ck-campo">
+                <label for="ckPubIg">Instagram <span class="ck-opcional">opcional</span></label>
+                <input type="text" id="ckPubIg" name="pub_ig"
+                       autocapitalize="off" autocorrect="off" spellcheck="false"
+                       enterkeyhint="next" maxlength="40" placeholder="@cala.imports">
+              </div>
+
+              <div class="ck-campo">
+                <label for="ckPubTt">TikTok <span class="ck-opcional">opcional</span></label>
+                <input type="text" id="ckPubTt" name="pub_tt"
+                       autocapitalize="off" autocorrect="off" spellcheck="false"
+                       enterkeyhint="next" maxlength="40" placeholder="@cala.imports">
+              </div>
+            </div>
+
+            <div class="ck-campo">
+              <label for="ckPubNotas">¿Algo más? <span class="ck-opcional">opcional</span></label>
+              <textarea id="ckPubNotas" name="pub_notas" rows="2" maxlength="300"
+                        placeholder="Una promoción puntual, desde cuándo querés que salga…"></textarea>
+            </div>
+          </section>
 
           <div class="ck-pagos">
             <button type="button" class="btn btn-mp btn-block btn-lg" id="btnPagarMP" hidden>
@@ -169,8 +381,67 @@
 
           <p class="ck-mensual" id="ckMensual" hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-            <span>Además, <strong>$30.000 por mes</strong> de mantenimiento de tu página.</span>
+            <span>Además, <strong>$60.000 por mes</strong> de mantenimiento de tu página.</span>
           </p>
+
+          <!-- Vista previa: se arma sola con lo que va escribiendo arriba.
+               No es la página final, es para que vea que esto ya arrancó. -->
+          <div class="ck-vista" id="ckVista" hidden>
+            <span class="ck-vista-tit">Así va a empezar a verse</span>
+
+            <div class="ck-navegador" aria-hidden="true">
+              <div class="ckn-barra">
+                <span class="ckn-punto"></span>
+                <span class="ckn-punto"></span>
+                <span class="ckn-punto"></span>
+                <span class="ckn-url" id="ckVistaUrl">tunegocio.com</span>
+              </div>
+
+              <div class="ckn-pagina">
+                <div class="ckn-header">
+                  <strong class="ckn-marca" id="ckVistaMarca">Tu Negocio</strong>
+                  <span class="ckn-btn">Ver packs</span>
+                </div>
+                <div class="ckn-hero">
+                  <b>+1000</b>
+                  <span>proveedores de +25 rubros</span>
+                </div>
+                <div class="ckn-packs">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="ckn-redes" id="ckVistaRedes"></div>
+              </div>
+            </div>
+
+            <p class="ck-vista-pie">Es un boceto. El diseño final lo vemos juntos.</p>
+          </div>
+
+          <!-- La misma maqueta que está en la portada, pero con sus datos.
+               Acá no es un boceto: es tal cual como va a salir. -->
+          <div class="ck-vista" id="ckVistaPub" hidden>
+            <span class="ck-vista-tit">Así va a salir tu anuncio</span>
+
+            <div class="fp-demo" aria-hidden="true">
+              <span class="fpd-agarre"></span>
+              <div class="fpd-cabeza">
+                <span class="fpd-ini" id="ckPubIni">TU</span>
+                <div class="fpd-id">
+                  <strong id="ckPubVistaNombre">Tu Negocio</strong>
+                  <span>Publicidad &middot; <span id="ckPubVistaRubro">Tu rubro</span></span>
+                </div>
+              </div>
+              <p class="fpd-texto">
+                <span class="fpd-badge" id="ckPubVistaBadge">Tu oferta</span>
+                <span id="ckPubVistaFrase">La frase que quieras, con lo que vendés.</span>
+              </p>
+              <div class="fpd-botones">
+                <span class="fpd-btn fpd-btn-fuerte" id="ckPubVistaBtn">Ver catálogo</span>
+                <span class="fpd-btn" id="ckPubVistaTel">Tu teléfono</span>
+              </div>
+            </div>
+
+            <p class="ck-vista-pie">Rota con los demás anunciantes cada 3 minutos.</p>
+          </div>
 
           <ul class="ck-garantias">
             <li>

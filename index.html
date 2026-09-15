@@ -196,6 +196,16 @@
 
   <!-- ===================== PORTADA ===================== -->
   <section class="portada" id="hero">
+
+    <!-- El fondo: dos luces violetas que se mueven muy despacio y una trama
+         de puntitos que se desvanece hacia los bordes. Es decoración pura,
+         por eso va escondida para los lectores de pantalla. -->
+    <div class="pt-fondo" aria-hidden="true">
+      <span class="pt-luz pt-luz-1"></span>
+      <span class="pt-luz pt-luz-2"></span>
+      <span class="pt-trama"></span>
+    </div>
+
     <div class="container">
 
       <div class="pt-sello">
@@ -425,6 +435,7 @@
 
         <!-- 1. El libro: los packs te dicen a quién comprarle, este qué hacer -->
         <article class="extra extra-libro" style="--i:0">
+          <span class="ex-sello es-nuevo">Nuevo</span>
           <div class="ex-icono" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5Z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5"/><path d="M8.5 7.5h6M8.5 11h4"/></svg>
           </div>
@@ -438,6 +449,50 @@
             <li>Precios y márgenes con un <b>ejemplo real</b></li>
             <li>Termina con un <b>plan de 90 días</b></li>
           </ul>
+
+          <!-- Los capítulos van pasando de a uno. Antes estaban los 17 en una
+               lista, que ocupaba media pantalla; así se ven igual pero sin
+               comerse la tarjeta, y de paso llenan el hueco de abajo. -->
+          <div class="ex-capitulos" aria-hidden="true">
+            <span class="exc-tit">Adentro vas a encontrar</span>
+            <div class="exc-ventana">
+              <!-- La lista va DOS veces. La segunda es copia exacta de la
+                   primera: cuando el desplazamiento llega justo al final del
+                   primer juego, vuelve a cero y en pantalla se ve lo mismo,
+                   así que el salto no existe. -->
+              <ul class="exc-lista">
+                <li><i>01</i> Mentalidad: la base de todo</li>
+                <li><i>02</i> Empezar con casi nada</li>
+                <li><i>03</i> Qué vender: validar antes de arriesgar</li>
+                <li><i>04</i> Conseguir proveedores y negociar</li>
+                <li><i>05</i> Precios y márgenes, con ejemplo real</li>
+                <li><i>06</i> Monotributo y ARCA</li>
+                <li><i>07</i> MercadoLibre: que no te bajen la publicación</li>
+                <li><i>09</i> Fotos y textos que venden</li>
+                <li><i>11</i> Instagram, TikTok y WhatsApp Business</li>
+                <li><i>13</i> Las finanzas de tu negocio</li>
+                <li><i>14</i> Escalar: de revendedor a marca</li>
+                <li><i>15</i> De 0 a millonario: los 5 niveles</li>
+                <li><i>16</i> Errores que hunden emprendimientos</li>
+                <li><i>17</i> Tu plan de 90 días + checklist</li>
+
+                <li aria-hidden="true"><i>01</i> Mentalidad: la base de todo</li>
+                <li aria-hidden="true"><i>02</i> Empezar con casi nada</li>
+                <li aria-hidden="true"><i>03</i> Qué vender: validar antes de arriesgar</li>
+                <li aria-hidden="true"><i>04</i> Conseguir proveedores y negociar</li>
+                <li aria-hidden="true"><i>05</i> Precios y márgenes, con ejemplo real</li>
+                <li aria-hidden="true"><i>06</i> Monotributo y ARCA</li>
+                <li aria-hidden="true"><i>07</i> MercadoLibre: que no te bajen la publicación</li>
+                <li aria-hidden="true"><i>09</i> Fotos y textos que venden</li>
+                <li aria-hidden="true"><i>11</i> Instagram, TikTok y WhatsApp Business</li>
+                <li aria-hidden="true"><i>13</i> Las finanzas de tu negocio</li>
+                <li aria-hidden="true"><i>14</i> Escalar: de revendedor a marca</li>
+                <li aria-hidden="true"><i>15</i> De 0 a millonario: los 5 niveles</li>
+                <li aria-hidden="true"><i>16</i> Errores que hunden emprendimientos</li>
+                <li aria-hidden="true"><i>17</i> Tu plan de 90 días + checklist</li>
+              </ul>
+            </div>
+          </div>
 
           <div class="ex-pie">
             <div class="ex-precio">
@@ -456,6 +511,7 @@
 
         <!-- 2. Espacio publicitario: se vende mostrando cómo se ve -->
         <article class="extra extra-pub" style="--i:1">
+          <span class="ex-sello es-nuevo">Nuevo</span>
           <div class="ex-icono" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3l7-4.5v14l-7-4.5H4Z"/><path d="M18 9a4 4 0 0 1 0 6"/></svg>
           </div>
@@ -578,32 +634,32 @@
         </div>
       </header>
 
-      <ul class="indice-rubros stagger reveal">
-        <li style="--i:0"><span class="idx-nom">Ropa</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">130</span></li>
-        <li style="--i:1"><span class="idx-nom">Zapatillas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">95</span></li>
-        <li style="--i:2"><span class="idx-nom">Electrónica</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">140</span></li>
-        <li style="--i:3"><span class="idx-nom">Perfumería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">85</span></li>
-        <li style="--i:4"><span class="idx-nom">Cosmética</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">78</span></li>
-        <li style="--i:5"><span class="idx-nom">Hogar</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">110</span></li>
-        <li style="--i:6"><span class="idx-nom">Ferretería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">60</span></li>
-        <li style="--i:7"><span class="idx-nom">Juguetes</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">72</span></li>
-        <li style="--i:8"><span class="idx-nom">Tecnología</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">90</span></li>
-        <li style="--i:9"><span class="idx-nom">Accesorios</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">88</span></li>
-        <li style="--i:10"><span class="idx-nom">Celulares</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">65</span></li>
-        <li style="--i:11"><span class="idx-nom">Muebles</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">54</span></li>
-        <li style="--i:12"><span class="idx-nom">Iluminación</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">40</span></li>
-        <li style="--i:13"><span class="idx-nom">Mascotas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">58</span></li>
-        <li style="--i:14"><span class="idx-nom">Alimentos</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">76</span></li>
-        <li style="--i:15"><span class="idx-nom">Librería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">45</span></li>
-        <li style="--i:16"><span class="idx-nom">Bebidas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">50</span></li>
-        <li style="--i:17"><span class="idx-nom">Deportes</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">82</span></li>
-        <li style="--i:18"><span class="idx-nom">Automotor</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">48</span></li>
-        <li style="--i:19"><span class="idx-nom">Herramientas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">55</span></li>
-        <li style="--i:20"><span class="idx-nom">Bazar</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">110</span></li>
-        <li style="--i:21"><span class="idx-nom">Regalería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">42</span></li>
-        <li style="--i:22"><span class="idx-nom">Camping</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">38</span></li>
-        <li style="--i:23"><span class="idx-nom">Bicicletas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">36</span></li>
-        <li style="--i:24"><span class="idx-nom">Oficina</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">40</span></li>
+      <ul class="indice-rubros reveal">
+        <li><span class="idx-nom">Ropa</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">130</span></li>
+        <li><span class="idx-nom">Zapatillas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">95</span></li>
+        <li><span class="idx-nom">Electrónica</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">140</span></li>
+        <li><span class="idx-nom">Perfumería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">85</span></li>
+        <li><span class="idx-nom">Cosmética</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">78</span></li>
+        <li><span class="idx-nom">Hogar</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">110</span></li>
+        <li><span class="idx-nom">Ferretería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">60</span></li>
+        <li><span class="idx-nom">Juguetes</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">72</span></li>
+        <li><span class="idx-nom">Tecnología</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">90</span></li>
+        <li><span class="idx-nom">Accesorios</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">88</span></li>
+        <li><span class="idx-nom">Celulares</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">65</span></li>
+        <li><span class="idx-nom">Muebles</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">54</span></li>
+        <li><span class="idx-nom">Iluminación</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">40</span></li>
+        <li><span class="idx-nom">Mascotas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">58</span></li>
+        <li><span class="idx-nom">Alimentos</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">76</span></li>
+        <li><span class="idx-nom">Librería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">45</span></li>
+        <li><span class="idx-nom">Bebidas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">50</span></li>
+        <li><span class="idx-nom">Deportes</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">82</span></li>
+        <li><span class="idx-nom">Automotor</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">48</span></li>
+        <li><span class="idx-nom">Herramientas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">55</span></li>
+        <li><span class="idx-nom">Bazar</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">110</span></li>
+        <li><span class="idx-nom">Regalería</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">42</span></li>
+        <li><span class="idx-nom">Camping</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">38</span></li>
+        <li><span class="idx-nom">Bicicletas</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">36</span></li>
+        <li><span class="idx-nom">Oficina</span><span class="idx-puntos" aria-hidden="true"></span><span class="idx-num">40</span></li>
       </ul>
 
       <p class="indice-pie">
